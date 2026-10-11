@@ -38,9 +38,16 @@ jobs:
 
           version = Version(os.environ["VERSION"])
           path = pathlib.Path("pyproject.toml")
+          previous = re.search(r'(?m)^version = "(.*)"$', path.read_text()).group(1)
           text, count = re.subn(r'(?m)^version = ".*"$', f'version = "{version}"', path.read_text(), count=1)
           assert count == 1, "pyproject.toml has no version line"
           path.write_text(text)
+
+          # The User-Agent names the version; the next sync regenerates it from pyproject.toml.
+          wrapper = pathlib.Path("src/usepylon/core/client_wrapper.py")
+          agent = f'"usepylon/{previous}"'
+          assert agent in wrapper.read_text(), f"{wrapper} has no {agent} User-Agent to update"
+          wrapper.write_text(wrapper.read_text().replace(agent, f'"usepylon/{version}"'))
           with open(os.environ["GITHUB_ENV"], "a") as env:
               env.write(f"RELEASE_VERSION={version}\nPRERELEASE={str(version.is_prerelease).lower()}\n")
           PY
