@@ -8,7 +8,7 @@ from .task_comment import TaskComment
 
 
 class UpdateTaskCommentResponseBody(UniversalBaseModel):
-    data: typing.Optional[TaskComment] = None
+    data: TaskComment
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

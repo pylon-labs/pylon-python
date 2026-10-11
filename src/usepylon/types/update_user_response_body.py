@@ -8,7 +8,7 @@ from .user import User
 
 
 class UpdateUserResponseBody(UniversalBaseModel):
-    data: typing.Optional[User] = None
+    data: User
     request_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The request ID for tracking.

@@ -8,7 +8,7 @@ from .bulk_issue_result import BulkIssueResult
 
 
 class MarkIssuesAsSpamResponseBody(UniversalBaseModel):
-    data: typing.Optional[BulkIssueResult] = None
+    data: BulkIssueResult
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

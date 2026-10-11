@@ -8,7 +8,7 @@ from .issue_thread import IssueThread
 
 
 class CreateIssueThreadResponseBody(UniversalBaseModel):
-    data: typing.Optional[IssueThread] = None
+    data: IssueThread
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

@@ -8,7 +8,7 @@ from .call_recording import CallRecording
 
 
 class UpdateCallRecordingResponseBody(UniversalBaseModel):
-    data: typing.Optional[CallRecording] = None
+    data: CallRecording
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

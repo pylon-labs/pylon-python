@@ -8,7 +8,7 @@ from .create_activity_response_data import CreateActivityResponseData
 
 
 class CreateActivityResponseBody(UniversalBaseModel):
-    data: typing.Optional[CreateActivityResponseData] = None
+    data: CreateActivityResponseData
     request_id: str
 
     if IS_PYDANTIC_V2:

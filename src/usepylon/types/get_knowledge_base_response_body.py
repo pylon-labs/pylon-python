@@ -8,7 +8,7 @@ from .knowledge_base import KnowledgeBase
 
 
 class GetKnowledgeBaseResponseBody(UniversalBaseModel):
-    data: typing.Optional[KnowledgeBase] = None
+    data: KnowledgeBase
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

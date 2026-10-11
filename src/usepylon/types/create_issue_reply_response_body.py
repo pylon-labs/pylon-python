@@ -8,7 +8,7 @@ from .create_issue_reply_response_data import CreateIssueReplyResponseData
 
 
 class CreateIssueReplyResponseBody(UniversalBaseModel):
-    data: typing.Optional[CreateIssueReplyResponseData] = None
+    data: CreateIssueReplyResponseData
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

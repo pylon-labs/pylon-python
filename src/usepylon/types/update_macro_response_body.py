@@ -8,7 +8,7 @@ from .macro import Macro
 
 
 class UpdateMacroResponseBody(UniversalBaseModel):
-    data: typing.Optional[Macro] = None
+    data: Macro
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

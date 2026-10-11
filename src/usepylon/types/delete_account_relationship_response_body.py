@@ -8,7 +8,7 @@ from .account_relationship import AccountRelationship
 
 
 class DeleteAccountRelationshipResponseBody(UniversalBaseModel):
-    data: typing.Optional[AccountRelationship] = None
+    data: AccountRelationship
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

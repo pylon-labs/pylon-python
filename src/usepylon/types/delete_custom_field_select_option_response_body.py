@@ -8,7 +8,7 @@ from .delete_custom_field_select_option_response_data import DeleteCustomFieldSe
 
 
 class DeleteCustomFieldSelectOptionResponseBody(UniversalBaseModel):
-    data: typing.Optional[DeleteCustomFieldSelectOptionResponseData] = None
+    data: DeleteCustomFieldSelectOptionResponseData
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

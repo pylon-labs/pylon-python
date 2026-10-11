@@ -9,7 +9,7 @@ from .task import Task
 
 
 class ImportTaskResponseBody(UniversalBaseModel):
-    data: typing.Optional[Task] = None
+    data: Task
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

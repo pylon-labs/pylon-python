@@ -8,7 +8,7 @@ from .delete_account_highlight_response_data import DeleteAccountHighlightRespon
 
 
 class DeleteAccountHighlightResponseBody(UniversalBaseModel):
-    data: typing.Optional[DeleteAccountHighlightResponseData] = None
+    data: DeleteAccountHighlightResponseData
     request_id: str
 
     if IS_PYDANTIC_V2:

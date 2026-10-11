@@ -8,7 +8,7 @@ from .tag import Tag
 
 
 class CreateTagResponseBody(UniversalBaseModel):
-    data: typing.Optional[Tag] = None
+    data: Tag
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

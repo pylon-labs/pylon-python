@@ -8,7 +8,7 @@ from .survey import Survey
 
 
 class GetSurveyResponseBody(UniversalBaseModel):
-    data: typing.Optional[Survey] = None
+    data: Survey
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

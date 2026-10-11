@@ -8,7 +8,7 @@ from .team import Team
 
 
 class CreateTeamResponseBody(UniversalBaseModel):
-    data: typing.Optional[Team] = None
+    data: Team
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

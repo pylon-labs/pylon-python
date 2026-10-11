@@ -8,7 +8,7 @@ from .account_highlight import AccountHighlight
 
 
 class UpdateAccountHighlightResponseBody(UniversalBaseModel):
-    data: typing.Optional[AccountHighlight] = None
+    data: AccountHighlight
     request_id: str
 
     if IS_PYDANTIC_V2:

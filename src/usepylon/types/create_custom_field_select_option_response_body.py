@@ -8,7 +8,7 @@ from .custom_field_definition_select_option import CustomFieldDefinitionSelectOp
 
 
 class CreateCustomFieldSelectOptionResponseBody(UniversalBaseModel):
-    data: typing.Optional[CustomFieldDefinitionSelectOption] = None
+    data: CustomFieldDefinitionSelectOption
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

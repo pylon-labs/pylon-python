@@ -8,7 +8,7 @@ from .feature_request import FeatureRequest
 
 
 class CreateFeatureRequestResponseBody(UniversalBaseModel):
-    data: typing.Optional[FeatureRequest] = None
+    data: FeatureRequest
     request_id: str
 
     if IS_PYDANTIC_V2:

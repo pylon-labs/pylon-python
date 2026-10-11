@@ -8,7 +8,7 @@ from .message import Message
 
 
 class RedactMessageResponseBody(UniversalBaseModel):
-    data: typing.Optional[Message] = None
+    data: Message
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

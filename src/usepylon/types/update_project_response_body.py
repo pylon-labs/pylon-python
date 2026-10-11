@@ -8,7 +8,7 @@ from .project import Project
 
 
 class UpdateProjectResponseBody(UniversalBaseModel):
-    data: typing.Optional[Project] = None
+    data: Project
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

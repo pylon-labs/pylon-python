@@ -8,7 +8,7 @@ from .api_custom_object import ApiCustomObject
 
 
 class CreateCustomObjectResponseBody(UniversalBaseModel):
-    data: typing.Optional[ApiCustomObject] = None
+    data: ApiCustomObject
     request_id: str
 
     if IS_PYDANTIC_V2:

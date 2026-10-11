@@ -8,7 +8,7 @@ from .feature_request import FeatureRequest
 
 
 class LinkFeatureRequestExternalIssueResponseBody(UniversalBaseModel):
-    data: typing.Optional[FeatureRequest] = None
+    data: FeatureRequest
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.
