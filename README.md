@@ -6,11 +6,11 @@ The official Python SDK for the [Pylon API](https://docs.usepylon.com).
 
 ## Installation
 
-Install the wheel attached to a [GitHub release](https://github.com/pylon-labs/pylon-python/releases):
-
 ```bash
-pip install https://github.com/pylon-labs/pylon-python/releases/download/v0.1.0a1/usepylon-0.1.0a1-py3-none-any.whl
+pip install --pre usepylon
 ```
+
+`--pre` is needed while only alpha releases exist.
 
 Requires Python 3.9 or later.
 
