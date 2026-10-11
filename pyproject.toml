@@ -17,7 +17,8 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "httpx>=0.21.2",
+    # The generated client imports httpx internals that 1.0 removes.
+    "httpx>=0.21.2,<1",
     "pydantic>=1.9.2",
     "typing_extensions>=4.0.0",
 ]

@@ -7,10 +7,8 @@ The official Python SDK for the [Pylon API](https://docs.usepylon.com).
 ## Installation
 
 ```bash
-pip install --pre usepylon
+pip install usepylon
 ```
-
-`--pre` is needed while only alpha releases exist.
 
 Requires Python 3.9 or later.
 
