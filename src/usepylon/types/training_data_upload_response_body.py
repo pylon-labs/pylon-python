@@ -8,7 +8,7 @@ from .training_data import TrainingData
 
 
 class TrainingDataUploadResponseBody(UniversalBaseModel):
-    data: typing.Optional[TrainingData] = None
+    data: TrainingData
     request_id: str
 
     if IS_PYDANTIC_V2:

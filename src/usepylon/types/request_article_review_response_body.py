@@ -8,7 +8,7 @@ from .request_article_review_data import RequestArticleReviewData
 
 
 class RequestArticleReviewResponseBody(UniversalBaseModel):
-    data: typing.Optional[RequestArticleReviewData] = None
+    data: RequestArticleReviewData
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

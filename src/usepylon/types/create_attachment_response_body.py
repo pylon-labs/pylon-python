@@ -8,7 +8,7 @@ from .attachment import Attachment
 
 
 class CreateAttachmentResponseBody(UniversalBaseModel):
-    data: typing.Optional[Attachment] = None
+    data: Attachment
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

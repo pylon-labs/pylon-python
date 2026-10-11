@@ -8,7 +8,7 @@ from .collection import Collection
 
 
 class UpdateCollectionResponseBody(UniversalBaseModel):
-    data: typing.Optional[Collection] = None
+    data: Collection
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

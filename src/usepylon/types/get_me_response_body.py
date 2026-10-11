@@ -8,7 +8,7 @@ from .me import Me
 
 
 class GetMeResponseBody(UniversalBaseModel):
-    data: typing.Optional[Me] = None
+    data: Me
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

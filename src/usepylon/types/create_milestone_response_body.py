@@ -8,7 +8,7 @@ from .milestone import Milestone
 
 
 class CreateMilestoneResponseBody(UniversalBaseModel):
-    data: typing.Optional[Milestone] = None
+    data: Milestone
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

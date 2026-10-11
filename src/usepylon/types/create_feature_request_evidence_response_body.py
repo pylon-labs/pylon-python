@@ -8,7 +8,7 @@ from .feature_request_evidence import FeatureRequestEvidence
 
 
 class CreateFeatureRequestEvidenceResponseBody(UniversalBaseModel):
-    data: typing.Optional[FeatureRequestEvidence] = None
+    data: FeatureRequestEvidence
     request_id: str
 
     if IS_PYDANTIC_V2:

@@ -8,7 +8,7 @@ from .account_notebook_note import AccountNotebookNote
 
 
 class CreateAccountNotebookNoteResponseBody(UniversalBaseModel):
-    data: typing.Optional[AccountNotebookNote] = None
+    data: AccountNotebookNote
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

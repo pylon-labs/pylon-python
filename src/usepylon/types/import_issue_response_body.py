@@ -9,7 +9,7 @@ from .issue import Issue
 
 
 class ImportIssueResponseBody(UniversalBaseModel):
-    data: typing.Optional[Issue] = None
+    data: Issue
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

@@ -8,7 +8,7 @@ from .route_redirect import RouteRedirect
 
 
 class CreateRouteRedirectResponseBody(UniversalBaseModel):
-    data: typing.Optional[RouteRedirect] = None
+    data: RouteRedirect
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

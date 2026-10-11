@@ -10,7 +10,7 @@ from .ticket_form import TicketForm
 
 
 class GetTicketFormResponseBody(UniversalBaseModel):
-    data: typing.Optional[TicketForm] = None
+    data: TicketForm
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

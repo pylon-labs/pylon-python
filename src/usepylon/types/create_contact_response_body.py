@@ -8,7 +8,7 @@ from .contact import Contact
 
 
 class CreateContactResponseBody(UniversalBaseModel):
-    data: typing.Optional[Contact] = None
+    data: Contact
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

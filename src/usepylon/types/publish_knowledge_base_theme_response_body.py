@@ -8,7 +8,7 @@ from .knowledge_base_theme import KnowledgeBaseTheme
 
 
 class PublishKnowledgeBaseThemeResponseBody(UniversalBaseModel):
-    data: typing.Optional[KnowledgeBaseTheme] = None
+    data: KnowledgeBaseTheme
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

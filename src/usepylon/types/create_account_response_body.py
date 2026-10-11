@@ -8,7 +8,7 @@ from .account import Account
 
 
 class CreateAccountResponseBody(UniversalBaseModel):
-    data: typing.Optional[Account] = None
+    data: Account
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

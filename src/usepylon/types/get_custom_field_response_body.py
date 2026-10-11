@@ -8,7 +8,7 @@ from .custom_field_definition import CustomFieldDefinition
 
 
 class GetCustomFieldResponseBody(UniversalBaseModel):
-    data: typing.Optional[CustomFieldDefinition] = None
+    data: CustomFieldDefinition
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.

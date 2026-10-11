@@ -10,7 +10,7 @@ from .article import Article
 
 
 class CreateArticleResponseBody(UniversalBaseModel):
-    data: typing.Optional[Article] = None
+    data: Article
     request_id: str = pydantic.Field()
     """
     The request ID for tracking.
