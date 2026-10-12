@@ -247,6 +247,7 @@ if typing.TYPE_CHECKING:
     from .skipped_issue import SkippedIssue
     from .sla_times import SlaTimes
     from .slack_info import SlackInfo
+    from .slack_message_info import SlackMessageInfo
     from .snooze_issue_response_body import SnoozeIssueResponseBody
     from .submit_ticket_form_field import SubmitTicketFormField
     from .submit_ticket_form_response_body import SubmitTicketFormResponseBody
@@ -553,6 +554,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SkippedIssue": ".skipped_issue",
     "SlaTimes": ".sla_times",
     "SlackInfo": ".slack_info",
+    "SlackMessageInfo": ".slack_message_info",
     "SnoozeIssueResponseBody": ".snooze_issue_response_body",
     "SubmitTicketFormField": ".submit_ticket_form_field",
     "SubmitTicketFormResponseBody": ".submit_ticket_form_response_body",
@@ -883,6 +885,7 @@ __all__ = [
     "SkippedIssue",
     "SlaTimes",
     "SlackInfo",
+    "SlackMessageInfo",
     "SnoozeIssueResponseBody",
     "SubmitTicketFormField",
     "SubmitTicketFormResponseBody",
