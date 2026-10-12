@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .email_message_info import EmailMessageInfo
 from .message_author import MessageAuthor
+from .slack_message_info import SlackMessageInfo
 
 
 class Message(UniversalBaseModel):
@@ -37,6 +38,7 @@ class Message(UniversalBaseModel):
     The HTML body of the message.
     """
 
+    slack_info: typing.Optional[SlackMessageInfo] = None
     source: str = pydantic.Field()
     """
     The source of the message.
