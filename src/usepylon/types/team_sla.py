@@ -10,6 +10,8 @@ from .sla_times import SlaTimes
 class TeamSla(UniversalBaseModel):
     first_resolution: typing.Optional[SlaTimes] = None
     first_response: typing.Optional[SlaTimes] = None
+    follow_up: typing.Optional[SlaTimes] = None
+    next_reply: typing.Optional[SlaTimes] = None
     resolution: typing.Optional[SlaTimes] = None
     team_id: str = pydantic.Field()
     """

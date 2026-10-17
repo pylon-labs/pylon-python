@@ -68,7 +68,7 @@ class ImportIssueRequest(UniversalBaseModel):
 
     requester_id: typing.Optional[str] = pydantic.Field(default=None)
     """
-    ContactID that the issue should be on behalf of.
+    ContactID that the issue should be on behalf of. If omitted, the issue has no requester.
     """
 
     resolution_time: typing.Optional[dt.datetime] = pydantic.Field(default=None)

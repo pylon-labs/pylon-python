@@ -169,6 +169,7 @@ if typing.TYPE_CHECKING:
     from .get_training_data_response_body import GetTrainingDataResponseBody
     from .get_user_response_body import GetUserResponseBody
     from .get_user_roles_response_body import GetUserRolesResponseBody
+    from .get_user_statuses_response_body import GetUserStatusesResponseBody
     from .get_users_response_body import GetUsersResponseBody
     from .import_contact_request_body import ImportContactRequestBody
     from .import_contact_request_body_portal_role import ImportContactRequestBodyPortalRole
@@ -306,6 +307,7 @@ if typing.TYPE_CHECKING:
     from .upload_account_file_response_body import UploadAccountFileResponseBody
     from .user import User
     from .user_role import UserRole
+    from .user_status import UserStatus
     from .visibility import Visibility
     from .visibility_input import VisibilityInput
     from .visibility_input_type import VisibilityInputType
@@ -476,6 +478,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetTrainingDataResponseBody": ".get_training_data_response_body",
     "GetUserResponseBody": ".get_user_response_body",
     "GetUserRolesResponseBody": ".get_user_roles_response_body",
+    "GetUserStatusesResponseBody": ".get_user_statuses_response_body",
     "GetUsersResponseBody": ".get_users_response_body",
     "ImportContactRequestBody": ".import_contact_request_body",
     "ImportContactRequestBodyPortalRole": ".import_contact_request_body_portal_role",
@@ -613,6 +616,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UploadAccountFileResponseBody": ".upload_account_file_response_body",
     "User": ".user",
     "UserRole": ".user_role",
+    "UserStatus": ".user_status",
     "Visibility": ".visibility",
     "VisibilityInput": ".visibility_input",
     "VisibilityInputType": ".visibility_input_type",
@@ -807,6 +811,7 @@ __all__ = [
     "GetTrainingDataResponseBody",
     "GetUserResponseBody",
     "GetUserRolesResponseBody",
+    "GetUserStatusesResponseBody",
     "GetUsersResponseBody",
     "ImportContactRequestBody",
     "ImportContactRequestBodyPortalRole",
@@ -944,6 +949,7 @@ __all__ = [
     "UploadAccountFileResponseBody",
     "User",
     "UserRole",
+    "UserStatus",
     "Visibility",
     "VisibilityInput",
     "VisibilityInputType",

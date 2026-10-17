@@ -24,7 +24,6 @@ from ..types.get_user_response_body import GetUserResponseBody
 from ..types.get_users_response_body import GetUsersResponseBody
 from ..types.search_users_response_body import SearchUsersResponseBody
 from ..types.user import User
-from .types.update_user_request_body_status import UpdateUserRequestBodyStatus
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -416,7 +415,7 @@ class RawUsersClient:
         avatar_url: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
-        status: typing.Optional[UpdateUserRequestBodyStatus] = OMIT,
+        status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[GetUserResponseBody]:
         """
@@ -438,8 +437,8 @@ class RawUsersClient:
         role_id : typing.Optional[str]
             The role_id of the user.
 
-        status : typing.Optional[UpdateUserRequestBodyStatus]
-            The new user status for the user. Can be one of `active`, `away`, or `out_of_office`.
+        status : typing.Optional[str]
+            The new status for the user: `active`, `away`, `out_of_office`, or a custom status slug from GET /user-statuses.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -938,7 +937,7 @@ class AsyncRawUsersClient:
         avatar_url: typing.Optional[str] = OMIT,
         name: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
-        status: typing.Optional[UpdateUserRequestBodyStatus] = OMIT,
+        status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[GetUserResponseBody]:
         """
@@ -960,8 +959,8 @@ class AsyncRawUsersClient:
         role_id : typing.Optional[str]
             The role_id of the user.
 
-        status : typing.Optional[UpdateUserRequestBodyStatus]
-            The new user status for the user. Can be one of `active`, `away`, or `out_of_office`.
+        status : typing.Optional[str]
+            The new status for the user: `active`, `away`, `out_of_office`, or a custom status slug from GET /user-statuses.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

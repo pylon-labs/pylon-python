@@ -7,9 +7,14 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ArticleTranslationInput(UniversalBaseModel):
-    body_html: str = pydantic.Field()
+    body_html: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The translated HTML body of the article.
+    The translated HTML body of the article. Required unless body_markdown is set.
+    """
+
+    body_markdown: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The translated body of the article in markdown, instead of body_html.
     """
 
     language: str = pydantic.Field()
