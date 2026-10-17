@@ -194,8 +194,9 @@ class RawArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -217,11 +218,14 @@ class RawArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -257,6 +261,7 @@ class RawArticlesClient:
             json={
                 "author_user_id": author_user_id,
                 "body_html": body_html,
+                "body_markdown": body_markdown,
                 "collection_id": collection_id,
                 "is_published": is_published,
                 "is_unlisted": is_unlisted,
@@ -606,6 +611,7 @@ class RawArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -634,6 +640,9 @@ class RawArticlesClient:
 
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -672,6 +681,7 @@ class RawArticlesClient:
             json={
                 "author_user_id": author_user_id,
                 "body_html": body_html,
+                "body_markdown": body_markdown,
                 "collection_id": collection_id,
                 "is_published": is_published,
                 "is_unlisted": is_unlisted,
@@ -1074,8 +1084,9 @@ class AsyncRawArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -1097,11 +1108,14 @@ class AsyncRawArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -1137,6 +1151,7 @@ class AsyncRawArticlesClient:
             json={
                 "author_user_id": author_user_id,
                 "body_html": body_html,
+                "body_markdown": body_markdown,
                 "collection_id": collection_id,
                 "is_published": is_published,
                 "is_unlisted": is_unlisted,
@@ -1486,6 +1501,7 @@ class AsyncRawArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -1514,6 +1530,9 @@ class AsyncRawArticlesClient:
 
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -1552,6 +1571,7 @@ class AsyncRawArticlesClient:
             json={
                 "author_user_id": author_user_id,
                 "body_html": body_html,
+                "body_markdown": body_markdown,
                 "collection_id": collection_id,
                 "is_published": is_published,
                 "is_unlisted": is_unlisted,

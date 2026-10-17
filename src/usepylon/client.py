@@ -38,6 +38,7 @@ if typing.TYPE_CHECKING:
     from .ticket_forms.client import AsyncTicketFormsClient, TicketFormsClient
     from .training_data.client import AsyncTrainingDataClient, TrainingDataClient
     from .user_roles.client import AsyncUserRolesClient, UserRolesClient
+    from .user_statuses.client import AsyncUserStatusesClient, UserStatusesClient
     from .users.client import AsyncUsersClient, UsersClient
 
 
@@ -153,6 +154,7 @@ class Pylon:
         self._ticket_forms: typing.Optional[TicketFormsClient] = None
         self._training_data: typing.Optional[TrainingDataClient] = None
         self._user_roles: typing.Optional[UserRolesClient] = None
+        self._user_statuses: typing.Optional[UserStatusesClient] = None
         self._users: typing.Optional[UsersClient] = None
 
     @property
@@ -380,6 +382,14 @@ class Pylon:
         return self._user_roles
 
     @property
+    def user_statuses(self):
+        if self._user_statuses is None:
+            from .user_statuses.client import UserStatusesClient  # noqa: E402
+
+            self._user_statuses = UserStatusesClient(client_wrapper=self._client_wrapper)
+        return self._user_statuses
+
+    @property
     def users(self):
         if self._users is None:
             from .users.client import UsersClient  # noqa: E402
@@ -521,6 +531,7 @@ class AsyncPylon:
         self._ticket_forms: typing.Optional[AsyncTicketFormsClient] = None
         self._training_data: typing.Optional[AsyncTrainingDataClient] = None
         self._user_roles: typing.Optional[AsyncUserRolesClient] = None
+        self._user_statuses: typing.Optional[AsyncUserStatusesClient] = None
         self._users: typing.Optional[AsyncUsersClient] = None
 
     @property
@@ -746,6 +757,14 @@ class AsyncPylon:
 
             self._user_roles = AsyncUserRolesClient(client_wrapper=self._client_wrapper)
         return self._user_roles
+
+    @property
+    def user_statuses(self):
+        if self._user_statuses is None:
+            from .user_statuses.client import AsyncUserStatusesClient  # noqa: E402
+
+            self._user_statuses = AsyncUserStatusesClient(client_wrapper=self._client_wrapper)
+        return self._user_statuses
 
     @property
     def users(self):

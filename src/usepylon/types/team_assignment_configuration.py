@@ -7,6 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TeamAssignmentConfiguration(UniversalBaseModel):
+    assignable_user_statuses: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The slugs of the user statuses members must show to be assigned. See GET /user-statuses.
+    Empty defers to only_assign_if_user_active.
+    """
+
     assignment_method: str = pydantic.Field()
     """
     How issues are routed to team members. One of routing, schedule, manual, pull_queue.
@@ -14,7 +20,9 @@ class TeamAssignmentConfiguration(UniversalBaseModel):
 
     only_assign_if_user_active: bool = pydantic.Field()
     """
-    Whether issues are only assigned to members who are currently active.
+    Whether automatic assignment is restricted by user status. When assignable_user_statuses
+    is empty, true means only members with an Active status; when it is non-empty, this is
+    always true and the list decides.
     """
 
     override_existing_assignee: bool = pydantic.Field()

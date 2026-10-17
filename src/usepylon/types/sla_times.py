@@ -8,6 +8,11 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SlaTimes(UniversalBaseModel):
+    assignee_id_at_breach: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user the issue was assigned to when the breach was detected, if it breached.
+    """
+
     breach_time: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     The time at which it breaches (or has breached), if any.
@@ -15,12 +20,17 @@ class SlaTimes(UniversalBaseModel):
 
     business_hours_seconds: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The elapsed business-hours time in seconds, if any.
+    The part of `seconds` that falls within support hours, if any.
+    """
+
+    resolving_user_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user whose action resolved it, if any. Absent when it was resolved by a contact or automation.
     """
 
     seconds: typing.Optional[int] = pydantic.Field(default=None)
     """
-    The elapsed time in seconds, if any.
+    The elapsed time in seconds, counting only time the issue spent in states that count toward this SLA. May be less than the time between the SLA's start and `time`.
     """
 
     time: typing.Optional[dt.datetime] = pydantic.Field(default=None)

@@ -106,8 +106,9 @@ class ArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -129,11 +130,14 @@ class ArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -170,15 +174,15 @@ class ArticlesClient:
         client.knowledge_bases.articles.create(
             knowledge_base_id="id",
             author_user_id="author_user_id",
-            body_html="body_html",
             title="title",
         )
         """
         _response = self._raw_client.create(
             knowledge_base_id,
             author_user_id=author_user_id,
-            body_html=body_html,
             title=title,
+            body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
@@ -284,6 +288,7 @@ class ArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -312,6 +317,9 @@ class ArticlesClient:
 
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -361,6 +369,7 @@ class ArticlesClient:
             article_id,
             author_user_id=author_user_id,
             body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
@@ -525,8 +534,9 @@ class AsyncArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -548,11 +558,14 @@ class AsyncArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -594,7 +607,6 @@ class AsyncArticlesClient:
             await client.knowledge_bases.articles.create(
                 knowledge_base_id="id",
                 author_user_id="author_user_id",
-                body_html="body_html",
                 title="title",
             )
 
@@ -604,8 +616,9 @@ class AsyncArticlesClient:
         _response = await self._raw_client.create(
             knowledge_base_id,
             author_user_id=author_user_id,
-            body_html=body_html,
             title=title,
+            body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
@@ -727,6 +740,7 @@ class AsyncArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
@@ -755,6 +769,9 @@ class AsyncArticlesClient:
 
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -812,6 +829,7 @@ class AsyncArticlesClient:
             article_id,
             author_user_id=author_user_id,
             body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
