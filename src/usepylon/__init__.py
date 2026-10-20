@@ -170,6 +170,7 @@ if typing.TYPE_CHECKING:
         GetTrainingDataResponseBody,
         GetUserResponseBody,
         GetUserRolesResponseBody,
+        GetUserStatusesResponseBody,
         GetUsersResponseBody,
         ImportContactRequestBody,
         ImportContactRequestBodyPortalRole,
@@ -307,6 +308,7 @@ if typing.TYPE_CHECKING:
         UploadAccountFileResponseBody,
         User,
         UserRole,
+        UserStatus,
         Visibility,
         VisibilityInput,
         VisibilityInputType,
@@ -353,6 +355,7 @@ if typing.TYPE_CHECKING:
         ticket_forms,
         training_data,
         user_roles,
+        user_statuses,
         users,
     )
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
@@ -378,7 +381,6 @@ if typing.TYPE_CHECKING:
         UploadFilesTrainingDataRequestVisibility,
         UploadTrainingDataFileContentRequestBodyVisibility,
     )
-    from .users import UpdateUserRequestBodyStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".types",
     "AccountHighlight": ".types",
@@ -556,6 +558,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetTrainingDataResponseBody": ".types",
     "GetUserResponseBody": ".types",
     "GetUserRolesResponseBody": ".types",
+    "GetUserStatusesResponseBody": ".types",
     "GetUsersResponseBody": ".types",
     "ImportContactRequestBody": ".types",
     "ImportContactRequestBodyPortalRole": ".types",
@@ -703,13 +706,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateTaskCommentResponseBody": ".types",
     "UpdateTaskResponseBody": ".types",
     "UpdateTeamResponseBody": ".types",
-    "UpdateUserRequestBodyStatus": ".users",
     "UpdateUserResponseBody": ".types",
     "UploadAccountFileResponseBody": ".types",
     "UploadFilesTrainingDataRequestVisibility": ".training_data",
     "UploadTrainingDataFileContentRequestBodyVisibility": ".training_data",
     "User": ".types",
     "UserRole": ".types",
+    "UserStatus": ".types",
     "Visibility": ".types",
     "VisibilityInput": ".types",
     "VisibilityInputType": ".types",
@@ -744,6 +747,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ticket_forms": ".ticket_forms",
     "training_data": ".training_data",
     "user_roles": ".user_roles",
+    "user_statuses": ".user_statuses",
     "users": ".users",
 }
 
@@ -946,6 +950,7 @@ __all__ = [
     "GetTrainingDataResponseBody",
     "GetUserResponseBody",
     "GetUserRolesResponseBody",
+    "GetUserStatusesResponseBody",
     "GetUsersResponseBody",
     "ImportContactRequestBody",
     "ImportContactRequestBodyPortalRole",
@@ -1093,13 +1098,13 @@ __all__ = [
     "UpdateTaskCommentResponseBody",
     "UpdateTaskResponseBody",
     "UpdateTeamResponseBody",
-    "UpdateUserRequestBodyStatus",
     "UpdateUserResponseBody",
     "UploadAccountFileResponseBody",
     "UploadFilesTrainingDataRequestVisibility",
     "UploadTrainingDataFileContentRequestBodyVisibility",
     "User",
     "UserRole",
+    "UserStatus",
     "Visibility",
     "VisibilityInput",
     "VisibilityInputType",
@@ -1134,5 +1139,6 @@ __all__ = [
     "ticket_forms",
     "training_data",
     "user_roles",
+    "user_statuses",
     "users",
 ]

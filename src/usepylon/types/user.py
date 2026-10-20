@@ -60,9 +60,7 @@ class User(UniversalBaseModel):
 
     status: str = pydantic.Field()
     """
-    The status of the user.
-    
-    Known values: ``, `active`, `away`, `out_of_office`. This list is not exhaustive.
+    The status of the user. Standard values are `active`, `away`, and `out_of_office`; custom status slugs are also supported. See GET /user-statuses for each status's category.
     """
 
     if IS_PYDANTIC_V2:

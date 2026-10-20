@@ -34,9 +34,19 @@ class Article(UniversalBaseModel):
     The current draft content of the article in HTML. This is the latest version, which may differ from the published version.
     """
 
+    current_draft_content_markdown: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The current draft content of the article in markdown. This is the latest version, which may differ from the published version.
+    """
+
     current_published_content_html: typing.Optional[str] = pydantic.Field(default=None)
     """
     The current published content of the article in HTML.
+    """
+
+    current_published_content_markdown: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The current published content of the article in markdown.
     """
 
     id: str = pydantic.Field()

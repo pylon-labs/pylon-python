@@ -142,6 +142,7 @@ class IssuesClient:
         contact_id: typing.Optional[str] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
+        custom_issue_source_id: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         destination_metadata: typing.Optional[DestinationMetadata] = OMIT,
         priority: typing.Optional[CreateIssueRequestPriority] = OMIT,
@@ -190,6 +191,9 @@ class IssuesClient:
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this issue.
+
+        custom_issue_source_id : typing.Optional[str]
+            The ID of a custom issue source (created in the App Directory under Chat > Add Custom Chat App). Sets the issue source to the custom source's slug. Use this for channels Pylon doesn't natively support (e.g. WeChat). Cannot be combined with destination_metadata.
 
         customer_portal_visible : typing.Optional[bool]
             Whether the issue should be visible in the customer portal. When destination is "customer_portal", this is set to true and cannot be false.
@@ -258,6 +262,7 @@ class IssuesClient:
             contact_id=contact_id,
             created_at=created_at,
             custom_fields=custom_fields,
+            custom_issue_source_id=custom_issue_source_id,
             customer_portal_visible=customer_portal_visible,
             destination_metadata=destination_metadata,
             priority=priority,
@@ -742,6 +747,9 @@ class IssuesClient:
         issue_id: str,
         *,
         body_html: str,
+        bcc_emails: typing.Optional[typing.Sequence[str]] = OMIT,
+        cc_emails: typing.Optional[typing.Sequence[str]] = OMIT,
+        to_emails: typing.Optional[typing.Sequence[str]] = OMIT,
         user_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateIssueDraftReplyResponseBody:
@@ -757,6 +765,15 @@ class IssuesClient:
 
         body_html : str
             The draft body in HTML.
+
+        bcc_emails : typing.Optional[typing.Sequence[str]]
+            The draft's BCC recipients. See to_emails.
+
+        cc_emails : typing.Optional[typing.Sequence[str]]
+            The draft's CC recipients. See to_emails.
+
+        to_emails : typing.Optional[typing.Sequence[str]]
+            The draft's To recipients. If any of to_emails, cc_emails, or bcc_emails is provided, the draft uses exactly those lists and an omitted list is saved empty; omit all three to use the composer's default recipients.
 
         user_id : typing.Optional[str]
             The active Pylon user who should own and see the draft. Defaults to the API-token user when it is a human Pylon user; required for unlinked or service API tokens.
@@ -782,7 +799,13 @@ class IssuesClient:
         )
         """
         _response = self._raw_client.create_draft_reply(
-            issue_id, body_html=body_html, user_id=user_id, request_options=request_options
+            issue_id,
+            body_html=body_html,
+            bcc_emails=bcc_emails,
+            cc_emails=cc_emails,
+            to_emails=to_emails,
+            user_id=user_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -1248,6 +1271,7 @@ class AsyncIssuesClient:
         contact_id: typing.Optional[str] = OMIT,
         created_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
+        custom_issue_source_id: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         destination_metadata: typing.Optional[DestinationMetadata] = OMIT,
         priority: typing.Optional[CreateIssueRequestPriority] = OMIT,
@@ -1296,6 +1320,9 @@ class AsyncIssuesClient:
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this issue.
+
+        custom_issue_source_id : typing.Optional[str]
+            The ID of a custom issue source (created in the App Directory under Chat > Add Custom Chat App). Sets the issue source to the custom source's slug. Use this for channels Pylon doesn't natively support (e.g. WeChat). Cannot be combined with destination_metadata.
 
         customer_portal_visible : typing.Optional[bool]
             Whether the issue should be visible in the customer portal. When destination is "customer_portal", this is set to true and cannot be false.
@@ -1372,6 +1399,7 @@ class AsyncIssuesClient:
             contact_id=contact_id,
             created_at=created_at,
             custom_fields=custom_fields,
+            custom_issue_source_id=custom_issue_source_id,
             customer_portal_visible=customer_portal_visible,
             destination_metadata=destination_metadata,
             priority=priority,
@@ -1923,6 +1951,9 @@ class AsyncIssuesClient:
         issue_id: str,
         *,
         body_html: str,
+        bcc_emails: typing.Optional[typing.Sequence[str]] = OMIT,
+        cc_emails: typing.Optional[typing.Sequence[str]] = OMIT,
+        to_emails: typing.Optional[typing.Sequence[str]] = OMIT,
         user_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateIssueDraftReplyResponseBody:
@@ -1938,6 +1969,15 @@ class AsyncIssuesClient:
 
         body_html : str
             The draft body in HTML.
+
+        bcc_emails : typing.Optional[typing.Sequence[str]]
+            The draft's BCC recipients. See to_emails.
+
+        cc_emails : typing.Optional[typing.Sequence[str]]
+            The draft's CC recipients. See to_emails.
+
+        to_emails : typing.Optional[typing.Sequence[str]]
+            The draft's To recipients. If any of to_emails, cc_emails, or bcc_emails is provided, the draft uses exactly those lists and an omitted list is saved empty; omit all three to use the composer's default recipients.
 
         user_id : typing.Optional[str]
             The active Pylon user who should own and see the draft. Defaults to the API-token user when it is a human Pylon user; required for unlinked or service API tokens.
@@ -1971,7 +2011,13 @@ class AsyncIssuesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_draft_reply(
-            issue_id, body_html=body_html, user_id=user_id, request_options=request_options
+            issue_id,
+            body_html=body_html,
+            bcc_emails=bcc_emails,
+            cc_emails=cc_emails,
+            to_emails=to_emails,
+            user_id=user_id,
+            request_options=request_options,
         )
         return _response.data
 

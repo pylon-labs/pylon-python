@@ -16,6 +16,7 @@ from .mini_contact import MiniContact
 from .mini_issue import MiniIssue
 from .mini_team import MiniTeam
 from .mini_user import MiniUser
+from .sla_times import SlaTimes
 from .slack_info import SlackInfo
 from .team_sla import TeamSla
 
@@ -109,9 +110,19 @@ class Issue(UniversalBaseModel):
     The time of the first resolution of the issue, if any. Frozen at the issue's first resolution and never updated on reopen/re-resolve.
     """
 
+    first_response_assignee_id_at_breach: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user the issue was assigned to when its first response SLA breached, if it breached.
+    """
+
     first_response_breach_time: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     The time by which the issue's first response SLA will breach, if any. Only present for issues with an active first response SLA.
+    """
+
+    first_response_resolving_user_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user whose action resolved the issue's first response SLA. Absent when resolved by a contact or automation.
     """
 
     first_response_seconds: typing.Optional[int] = pydantic.Field(default=None)
@@ -124,6 +135,7 @@ class Issue(UniversalBaseModel):
     The time of the first response to the issue, if any.
     """
 
+    follow_up: typing.Optional[SlaTimes] = None
     id: str = pydantic.Field()
     """
     The ID of the issue.
@@ -144,6 +156,7 @@ class Issue(UniversalBaseModel):
     The link to the issue in Pylon.
     """
 
+    next_reply: typing.Optional[SlaTimes] = None
     number: int = pydantic.Field()
     """
     The number of the issue.
@@ -156,9 +169,19 @@ class Issue(UniversalBaseModel):
 
     parent_issue_group: typing.Optional[MiniIssue] = None
     requester: typing.Optional[MiniContact] = None
+    resolution_assignee_id_at_breach: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user the issue was assigned to when its resolution SLA breached, if it breached.
+    """
+
     resolution_breach_time: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     The time by which the issue's resolution SLA will breach, if any. Only present for open issues with an active resolution SLA.
+    """
+
+    resolution_resolving_user_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the user whose action resolved the issue's resolution SLA. Absent when resolved by a contact or automation.
     """
 
     resolution_seconds: typing.Optional[int] = pydantic.Field(default=None)
@@ -225,6 +248,11 @@ class Issue(UniversalBaseModel):
     workspace_email: typing.Optional[str] = pydantic.Field(default=None)
     """
     The email address connected to the Pylon workspace through which the issue's email conversation is routed. For inbound issues, this is the address that received the original email.
+    """
+
+    workspace_phone_number: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The WhatsApp, SMS, or voice phone number connected to the Pylon workspace through which the issue's conversation is routed. For inbound issues, this is the number the customer messaged or called.
     """
 
     if IS_PYDANTIC_V2:
