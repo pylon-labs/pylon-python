@@ -5035,6 +5035,14 @@ client.issues.create(
 <dl>
 <dd>
 
+**custom_issue_source_id:** `typing.Optional[str]` — The ID of a custom issue source (created in the App Directory under Chat > Add Custom Chat App). Sets the issue source to the custom source's slug. Use this for channels Pylon doesn't natively support (e.g. WeChat). Cannot be combined with destination_metadata.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **customer_portal_visible:** `typing.Optional[bool]` — Whether the issue should be visible in the customer portal. When destination is "customer_portal", this is set to true and cannot be false.
     
 </dd>
@@ -6040,6 +6048,30 @@ client.issues.create_draft_reply(
 <dd>
 
 **body_html:** `str` — The draft body in HTML.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bcc_emails:** `typing.Optional[typing.List[str]]` — The draft's BCC recipients. See to_emails.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cc_emails:** `typing.Optional[typing.List[str]]` — The draft's CC recipients. See to_emails.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to_emails:** `typing.Optional[typing.List[str]]` — The draft's To recipients. If any of to_emails, cc_emails, or bcc_emails is provided, the draft uses exactly those lists and an omitted list is saved empty; omit all three to use the composer's default recipients.
     
 </dd>
 </dl>
@@ -11122,6 +11154,72 @@ client.user_roles.list()
 </dl>
 </details>
 
+## UserStatuses
+<details><summary><code>client.user_statuses.<a href="src/usepylon/user_statuses/client.py">list</a>() -> GetUserStatusesResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the built-in and custom user statuses for the organization. Use `slug` in a team's `assignment_configuration.assignable_user_statuses`.
+
+**Rate limit:** 30 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.user_statuses.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users
 <details><summary><code>client.users.<a href="src/usepylon/users/client.py">list</a>(...) -> GetUsersResponseBody</code></summary>
 <dl>
@@ -11451,7 +11549,7 @@ client.users.update(
 <dl>
 <dd>
 
-**status:** `typing.Optional[UpdateUserRequestBodyStatus]` — The new user status for the user. Can be one of `active`, `away`, or `out_of_office`.
+**status:** `typing.Optional[str]` — The new status for the user: `active`, `away`, `out_of_office`, or a custom status slug from GET /user-statuses.
     
 </dd>
 </dl>
@@ -13996,7 +14094,6 @@ client = Pylon(
 client.knowledge_bases.articles.create(
     knowledge_base_id="id",
     author_user_id="author_user_id",
-    body_html="body_html",
     title="title",
 )
 
@@ -14030,7 +14127,7 @@ client.knowledge_bases.articles.create(
 <dl>
 <dd>
 
-**body_html:** `str` — The HTML body of the article.
+**title:** `str` — The title of the article.
     
 </dd>
 </dl>
@@ -14038,7 +14135,15 @@ client.knowledge_bases.articles.create(
 <dl>
 <dd>
 
-**title:** `str` — The title of the article.
+**body_html:** `typing.Optional[str]` — The HTML body of the article. Required unless body_markdown is set.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**body_markdown:** `typing.Optional[str]` — The body of the article in markdown, instead of body_html.
     
 </dd>
 </dl>
@@ -14063,6 +14168,14 @@ client.knowledge_bases.articles.create(
 <dd>
 
 **is_unlisted:** `typing.Optional[bool]` — Whether the article is accessible only via a direct link. Defaults to false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**position:** `typing.Optional[int]` — The zero-based position among the parent's articles and subcollections. Defaults to the end. Positions beyond the end append the article.
     
 </dd>
 </dl>
@@ -14370,6 +14483,14 @@ client.knowledge_bases.articles.update(
 <dl>
 <dd>
 
+**body_markdown:** `typing.Optional[str]` — The body of the article in markdown, instead of body_html. Saved and published the same way.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **collection_id:** `typing.Optional[str]` — The ID of the collection containing the article.
     
 </dd>
@@ -14395,6 +14516,14 @@ client.knowledge_bases.articles.update(
 <dd>
 
 **language:** `typing.Optional[str]` — The language code of the translation to update. If not provided, the default language (original article) will be updated.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**position:** `typing.Optional[int]` — The zero-based position among the parent's articles and subcollections. Omit to keep the current position, or append when moving to another collection. Positions beyond the end append the article. When collection_id is provided, applies within the destination collection.
     
 </dd>
 </dl>

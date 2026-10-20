@@ -64,6 +64,11 @@ class Account(UniversalBaseModel):
     The time of the latest customer activity.
     """
 
+    latest_vendor_activity_time: str = pydantic.Field()
+    """
+    The time of the latest vendor activity.
+    """
+
     logo_url: str = pydantic.Field()
     """
     The logo URL of the account.

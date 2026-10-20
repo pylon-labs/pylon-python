@@ -106,11 +106,13 @@ class ArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
+        position: typing.Optional[int] = OMIT,
         slug: typing.Optional[str] = OMIT,
         translations: typing.Optional[typing.Sequence[ArticleTranslationInput]] = OMIT,
         visibility_config: typing.Optional[ArticleVisibilityConfig] = OMIT,
@@ -129,11 +131,14 @@ class ArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -143,6 +148,9 @@ class ArticlesClient:
 
         is_unlisted : typing.Optional[bool]
             Whether the article is accessible only via a direct link. Defaults to false.
+
+        position : typing.Optional[int]
+            The zero-based position among the parent's articles and subcollections. Defaults to the end. Positions beyond the end append the article.
 
         slug : typing.Optional[str]
             The slug of the article. Defaults to a slug based on the title.
@@ -170,18 +178,19 @@ class ArticlesClient:
         client.knowledge_bases.articles.create(
             knowledge_base_id="id",
             author_user_id="author_user_id",
-            body_html="body_html",
             title="title",
         )
         """
         _response = self._raw_client.create(
             knowledge_base_id,
             author_user_id=author_user_id,
-            body_html=body_html,
             title=title,
+            body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
+            position=position,
             slug=slug,
             translations=translations,
             visibility_config=visibility_config,
@@ -284,10 +293,12 @@ class ArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
         language: typing.Optional[str] = OMIT,
+        position: typing.Optional[int] = OMIT,
         publish_updated_body_html: typing.Optional[bool] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -313,6 +324,9 @@ class ArticlesClient:
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
 
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
+
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
 
@@ -324,6 +338,9 @@ class ArticlesClient:
 
         language : typing.Optional[str]
             The language code of the translation to update. If not provided, the default language (original article) will be updated.
+
+        position : typing.Optional[int]
+            The zero-based position among the parent's articles and subcollections. Omit to keep the current position, or append when moving to another collection. Positions beyond the end append the article. When collection_id is provided, applies within the destination collection.
 
         publish_updated_body_html : typing.Optional[bool]
             Whether to publish the updated body_html. Defaults to false, which leaves the change as a draft.
@@ -361,10 +378,12 @@ class ArticlesClient:
             article_id,
             author_user_id=author_user_id,
             body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
             language=language,
+            position=position,
             publish_updated_body_html=publish_updated_body_html,
             tag_ids=tag_ids,
             title=title,
@@ -525,11 +544,13 @@ class AsyncArticlesClient:
         knowledge_base_id: str,
         *,
         author_user_id: str,
-        body_html: str,
         title: str,
+        body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
+        position: typing.Optional[int] = OMIT,
         slug: typing.Optional[str] = OMIT,
         translations: typing.Optional[typing.Sequence[ArticleTranslationInput]] = OMIT,
         visibility_config: typing.Optional[ArticleVisibilityConfig] = OMIT,
@@ -548,11 +569,14 @@ class AsyncArticlesClient:
         author_user_id : str
             The ID of the user attributed as the author of the article.
 
-        body_html : str
-            The HTML body of the article.
-
         title : str
             The title of the article.
+
+        body_html : typing.Optional[str]
+            The HTML body of the article. Required unless body_markdown is set.
+
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html.
 
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
@@ -562,6 +586,9 @@ class AsyncArticlesClient:
 
         is_unlisted : typing.Optional[bool]
             Whether the article is accessible only via a direct link. Defaults to false.
+
+        position : typing.Optional[int]
+            The zero-based position among the parent's articles and subcollections. Defaults to the end. Positions beyond the end append the article.
 
         slug : typing.Optional[str]
             The slug of the article. Defaults to a slug based on the title.
@@ -594,7 +621,6 @@ class AsyncArticlesClient:
             await client.knowledge_bases.articles.create(
                 knowledge_base_id="id",
                 author_user_id="author_user_id",
-                body_html="body_html",
                 title="title",
             )
 
@@ -604,11 +630,13 @@ class AsyncArticlesClient:
         _response = await self._raw_client.create(
             knowledge_base_id,
             author_user_id=author_user_id,
-            body_html=body_html,
             title=title,
+            body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
+            position=position,
             slug=slug,
             translations=translations,
             visibility_config=visibility_config,
@@ -727,10 +755,12 @@ class AsyncArticlesClient:
         *,
         author_user_id: typing.Optional[str] = OMIT,
         body_html: typing.Optional[str] = OMIT,
+        body_markdown: typing.Optional[str] = OMIT,
         collection_id: typing.Optional[str] = OMIT,
         is_published: typing.Optional[bool] = OMIT,
         is_unlisted: typing.Optional[bool] = OMIT,
         language: typing.Optional[str] = OMIT,
+        position: typing.Optional[int] = OMIT,
         publish_updated_body_html: typing.Optional[bool] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         title: typing.Optional[str] = OMIT,
@@ -756,6 +786,9 @@ class AsyncArticlesClient:
         body_html : typing.Optional[str]
             The HTML body of the article. Saved as a new draft; the published article changes only if publish_updated_body_html or is_published is true.
 
+        body_markdown : typing.Optional[str]
+            The body of the article in markdown, instead of body_html. Saved and published the same way.
+
         collection_id : typing.Optional[str]
             The ID of the collection containing the article.
 
@@ -767,6 +800,9 @@ class AsyncArticlesClient:
 
         language : typing.Optional[str]
             The language code of the translation to update. If not provided, the default language (original article) will be updated.
+
+        position : typing.Optional[int]
+            The zero-based position among the parent's articles and subcollections. Omit to keep the current position, or append when moving to another collection. Positions beyond the end append the article. When collection_id is provided, applies within the destination collection.
 
         publish_updated_body_html : typing.Optional[bool]
             Whether to publish the updated body_html. Defaults to false, which leaves the change as a draft.
@@ -812,10 +848,12 @@ class AsyncArticlesClient:
             article_id,
             author_user_id=author_user_id,
             body_html=body_html,
+            body_markdown=body_markdown,
             collection_id=collection_id,
             is_published=is_published,
             is_unlisted=is_unlisted,
             language=language,
+            position=position,
             publish_updated_body_html=publish_updated_body_html,
             tag_ids=tag_ids,
             title=title,
