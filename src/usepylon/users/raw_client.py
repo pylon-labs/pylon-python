@@ -413,7 +413,9 @@ class RawUsersClient:
         id: str,
         *,
         avatar_url: typing.Optional[str] = OMIT,
+        is_deactivated: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
+        reassign_open_issues_to_user_id: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
         status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -431,8 +433,16 @@ class RawUsersClient:
         avatar_url : typing.Optional[str]
             The avatar URL of the user. Must be a square .png, .jpg or .jpeg.
 
+        is_deactivated : typing.Optional[bool]
+            Whether the user is deactivated. Changing it requires admin permissions. Deactivating revokes the user's API tokens, removes their team
+            schedules and skills, disconnects their calendars, and reassigns their open issues in the background. Reactivating does not
+            restore any of these. Users provisioned through SCIM must be deactivated and reactivated in the identity provider.
+
         name : typing.Optional[str]
             The name of the user.
+
+        reassign_open_issues_to_user_id : typing.Optional[str]
+            The ID of the user to reassign the deactivated user's open issues to. Only valid with `is_deactivated: true`. If omitted, the issues are unassigned.
 
         role_id : typing.Optional[str]
             The role_id of the user.
@@ -453,7 +463,9 @@ class RawUsersClient:
             method="PATCH",
             json={
                 "avatar_url": avatar_url,
+                "is_deactivated": is_deactivated,
                 "name": name,
+                "reassign_open_issues_to_user_id": reassign_open_issues_to_user_id,
                 "role_id": role_id,
                 "status": status,
             },
@@ -935,7 +947,9 @@ class AsyncRawUsersClient:
         id: str,
         *,
         avatar_url: typing.Optional[str] = OMIT,
+        is_deactivated: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
+        reassign_open_issues_to_user_id: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
         status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -953,8 +967,16 @@ class AsyncRawUsersClient:
         avatar_url : typing.Optional[str]
             The avatar URL of the user. Must be a square .png, .jpg or .jpeg.
 
+        is_deactivated : typing.Optional[bool]
+            Whether the user is deactivated. Changing it requires admin permissions. Deactivating revokes the user's API tokens, removes their team
+            schedules and skills, disconnects their calendars, and reassigns their open issues in the background. Reactivating does not
+            restore any of these. Users provisioned through SCIM must be deactivated and reactivated in the identity provider.
+
         name : typing.Optional[str]
             The name of the user.
+
+        reassign_open_issues_to_user_id : typing.Optional[str]
+            The ID of the user to reassign the deactivated user's open issues to. Only valid with `is_deactivated: true`. If omitted, the issues are unassigned.
 
         role_id : typing.Optional[str]
             The role_id of the user.
@@ -975,7 +997,9 @@ class AsyncRawUsersClient:
             method="PATCH",
             json={
                 "avatar_url": avatar_url,
+                "is_deactivated": is_deactivated,
                 "name": name,
+                "reassign_open_issues_to_user_id": reassign_open_issues_to_user_id,
                 "role_id": role_id,
                 "status": status,
             },

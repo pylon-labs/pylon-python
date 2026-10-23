@@ -11533,7 +11533,27 @@ client.users.update(
 <dl>
 <dd>
 
+**is_deactivated:** `typing.Optional[bool]` 
+
+Whether the user is deactivated. Changing it requires admin permissions. Deactivating revokes the user's API tokens, removes their team
+schedules and skills, disconnects their calendars, and reassigns their open issues in the background. Reactivating does not
+restore any of these. Users provisioned through SCIM must be deactivated and reactivated in the identity provider.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — The name of the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reassign_open_issues_to_user_id:** `typing.Optional[str]` — The ID of the user to reassign the deactivated user's open issues to. Only valid with `is_deactivated: true`. If omitted, the issues are unassigned.
     
 </dd>
 </dl>
