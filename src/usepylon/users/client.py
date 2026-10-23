@@ -156,7 +156,9 @@ class UsersClient:
         id: str,
         *,
         avatar_url: typing.Optional[str] = OMIT,
+        is_deactivated: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
+        reassign_open_issues_to_user_id: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
         status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -174,8 +176,16 @@ class UsersClient:
         avatar_url : typing.Optional[str]
             The avatar URL of the user. Must be a square .png, .jpg or .jpeg.
 
+        is_deactivated : typing.Optional[bool]
+            Whether the user is deactivated. Changing it requires admin permissions. Deactivating revokes the user's API tokens, removes their team
+            schedules and skills, disconnects their calendars, and reassigns their open issues in the background. Reactivating does not
+            restore any of these. Users provisioned through SCIM must be deactivated and reactivated in the identity provider.
+
         name : typing.Optional[str]
             The name of the user.
+
+        reassign_open_issues_to_user_id : typing.Optional[str]
+            The ID of the user to reassign the deactivated user's open issues to. Only valid with `is_deactivated: true`. If omitted, the issues are unassigned.
 
         role_id : typing.Optional[str]
             The role_id of the user.
@@ -203,7 +213,14 @@ class UsersClient:
         )
         """
         _response = self._raw_client.update(
-            id, avatar_url=avatar_url, name=name, role_id=role_id, status=status, request_options=request_options
+            id,
+            avatar_url=avatar_url,
+            is_deactivated=is_deactivated,
+            name=name,
+            reassign_open_issues_to_user_id=reassign_open_issues_to_user_id,
+            role_id=role_id,
+            status=status,
+            request_options=request_options,
         )
         return _response.data
 
@@ -375,7 +392,9 @@ class AsyncUsersClient:
         id: str,
         *,
         avatar_url: typing.Optional[str] = OMIT,
+        is_deactivated: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
+        reassign_open_issues_to_user_id: typing.Optional[str] = OMIT,
         role_id: typing.Optional[str] = OMIT,
         status: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -393,8 +412,16 @@ class AsyncUsersClient:
         avatar_url : typing.Optional[str]
             The avatar URL of the user. Must be a square .png, .jpg or .jpeg.
 
+        is_deactivated : typing.Optional[bool]
+            Whether the user is deactivated. Changing it requires admin permissions. Deactivating revokes the user's API tokens, removes their team
+            schedules and skills, disconnects their calendars, and reassigns their open issues in the background. Reactivating does not
+            restore any of these. Users provisioned through SCIM must be deactivated and reactivated in the identity provider.
+
         name : typing.Optional[str]
             The name of the user.
+
+        reassign_open_issues_to_user_id : typing.Optional[str]
+            The ID of the user to reassign the deactivated user's open issues to. Only valid with `is_deactivated: true`. If omitted, the issues are unassigned.
 
         role_id : typing.Optional[str]
             The role_id of the user.
@@ -430,6 +457,13 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            id, avatar_url=avatar_url, name=name, role_id=role_id, status=status, request_options=request_options
+            id,
+            avatar_url=avatar_url,
+            is_deactivated=is_deactivated,
+            name=name,
+            reassign_open_issues_to_user_id=reassign_open_issues_to_user_id,
+            role_id=role_id,
+            status=status,
+            request_options=request_options,
         )
         return _response.data
