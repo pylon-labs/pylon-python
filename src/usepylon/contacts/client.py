@@ -13,6 +13,7 @@ from ..types.external_id import ExternalId
 from ..types.filter import Filter
 from ..types.get_contact_response_body import GetContactResponseBody
 from ..types.get_contacts_response_body import GetContactsResponseBody
+from ..types.merge_contacts_response_body import MergeContactsResponseBody
 from ..types.search_contacts_response_body import SearchContactsResponseBody
 from ..types.update_contact_email import UpdateContactEmail
 from ..types.update_contact_response_body import UpdateContactResponseBody
@@ -170,6 +171,53 @@ class ContactsClient:
             portal_role=portal_role,
             portal_role_id=portal_role_id,
             primary_phone_number=primary_phone_number,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def merge(
+        self,
+        *,
+        merge_contact_id: str,
+        merge_into_contact_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MergeContactsResponseBody:
+        """
+        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        merge_contact_id : str
+            The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
+
+        merge_into_contact_id : str
+            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergeContactsResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.contacts.merge(
+            merge_contact_id="merge_contact_id",
+            merge_into_contact_id="merge_into_contact_id",
+        )
+        """
+        _response = self._raw_client.merge(
+            merge_contact_id=merge_contact_id,
+            merge_into_contact_id=merge_into_contact_id,
             request_options=request_options,
         )
         return _response.data
@@ -574,6 +622,61 @@ class AsyncContactsClient:
             portal_role=portal_role,
             portal_role_id=portal_role_id,
             primary_phone_number=primary_phone_number,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def merge(
+        self,
+        *,
+        merge_contact_id: str,
+        merge_into_contact_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MergeContactsResponseBody:
+        """
+        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        merge_contact_id : str
+            The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
+
+        merge_into_contact_id : str
+            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MergeContactsResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.contacts.merge(
+                merge_contact_id="merge_contact_id",
+                merge_into_contact_id="merge_into_contact_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.merge(
+            merge_contact_id=merge_contact_id,
+            merge_into_contact_id=merge_into_contact_id,
             request_options=request_options,
         )
         return _response.data

@@ -12,6 +12,11 @@ from .mini_project_template import MiniProjectTemplate
 
 class Project(UniversalBaseModel):
     account: typing.Optional[MiniAccount] = None
+    ai_instructions: str = pydantic.Field()
+    """
+    Instructions the AI follows when keeping this smart project up to date.
+    """
+
     archived_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     The archived at time of the project in RFC3339 format.

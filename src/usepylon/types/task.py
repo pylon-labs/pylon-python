@@ -17,7 +17,22 @@ from .task_status import TaskStatus
 
 class Task(UniversalBaseModel):
     account: typing.Optional[MiniAccount] = None
+    ai_instructions: str = pydantic.Field()
+    """
+    Instructions the AI follows when evaluating this task in a smart project.
+    """
+
     assignee: typing.Optional[Actor] = None
+    blocked_by_task_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The IDs of tasks that block this task.
+    """
+
+    blocks_task_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    The IDs of tasks that this task blocks.
+    """
+
     body_html: str = pydantic.Field()
     """
     The body of the task in HTML format.

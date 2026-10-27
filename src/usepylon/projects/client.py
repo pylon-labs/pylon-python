@@ -39,6 +39,7 @@ class ProjectsClient:
         self,
         *,
         account_id: str,
+        ai_instructions: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
         end_date: typing.Optional[dt.datetime] = OMIT,
@@ -49,7 +50,7 @@ class ProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateProjectResponseBody:
         """
-        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         **Rate limit:** 300 requests per minute
 
@@ -57,6 +58,9 @@ class ProjectsClient:
         ----------
         account_id : str
             Account ID for this project
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Overrides the template's instructions when provided.
 
         customer_portal_visible : typing.Optional[bool]
             Customer portal visible for this project
@@ -74,7 +78,7 @@ class ProjectsClient:
             Owner ID for this project
 
         project_template_id : typing.Optional[str]
-            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         start_date : typing.Optional[dt.datetime]
             Start date for this project, in RFC 3339 format
@@ -100,6 +104,7 @@ class ProjectsClient:
         """
         _response = self._raw_client.create(
             account_id=account_id,
+            ai_instructions=ai_instructions,
             customer_portal_visible=customer_portal_visible,
             description_html=description_html,
             end_date=end_date,
@@ -239,6 +244,7 @@ class ProjectsClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
@@ -258,6 +264,9 @@ class ProjectsClient:
         ----------
         id : str
             The ID of the project to update.
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Set to an empty string to clear them.
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this project. Only passed in fields will be modified.
@@ -304,6 +313,7 @@ class ProjectsClient:
         """
         _response = self._raw_client.update(
             id,
+            ai_instructions=ai_instructions,
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             description_html=description_html,
@@ -336,6 +346,7 @@ class AsyncProjectsClient:
         self,
         *,
         account_id: str,
+        ai_instructions: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
         end_date: typing.Optional[dt.datetime] = OMIT,
@@ -346,7 +357,7 @@ class AsyncProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateProjectResponseBody:
         """
-        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         **Rate limit:** 300 requests per minute
 
@@ -354,6 +365,9 @@ class AsyncProjectsClient:
         ----------
         account_id : str
             Account ID for this project
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Overrides the template's instructions when provided.
 
         customer_portal_visible : typing.Optional[bool]
             Customer portal visible for this project
@@ -371,7 +385,7 @@ class AsyncProjectsClient:
             Owner ID for this project
 
         project_template_id : typing.Optional[str]
-            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         start_date : typing.Optional[dt.datetime]
             Start date for this project, in RFC 3339 format
@@ -405,6 +419,7 @@ class AsyncProjectsClient:
         """
         _response = await self._raw_client.create(
             account_id=account_id,
+            ai_instructions=ai_instructions,
             customer_portal_visible=customer_portal_visible,
             description_html=description_html,
             end_date=end_date,
@@ -571,6 +586,7 @@ class AsyncProjectsClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
@@ -590,6 +606,9 @@ class AsyncProjectsClient:
         ----------
         id : str
             The ID of the project to update.
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Set to an empty string to clear them.
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this project. Only passed in fields will be modified.
@@ -644,6 +663,7 @@ class AsyncProjectsClient:
         """
         _response = await self._raw_client.update(
             id,
+            ai_instructions=ai_instructions,
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             description_html=description_html,
