@@ -42,6 +42,7 @@ class RawProjectsClient:
         self,
         *,
         account_id: str,
+        ai_instructions: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
         end_date: typing.Optional[dt.datetime] = OMIT,
@@ -52,7 +53,7 @@ class RawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateProjectResponseBody]:
         """
-        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         **Rate limit:** 300 requests per minute
 
@@ -60,6 +61,9 @@ class RawProjectsClient:
         ----------
         account_id : str
             Account ID for this project
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Overrides the template's instructions when provided.
 
         customer_portal_visible : typing.Optional[bool]
             Customer portal visible for this project
@@ -77,7 +81,7 @@ class RawProjectsClient:
             Owner ID for this project
 
         project_template_id : typing.Optional[str]
-            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         start_date : typing.Optional[dt.datetime]
             Start date for this project, in RFC 3339 format
@@ -98,6 +102,7 @@ class RawProjectsClient:
             method="POST",
             json={
                 "account_id": account_id,
+                "ai_instructions": ai_instructions,
                 "customer_portal_visible": customer_portal_visible,
                 "description_html": description_html,
                 "end_date": end_date,
@@ -565,6 +570,7 @@ class RawProjectsClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
@@ -584,6 +590,9 @@ class RawProjectsClient:
         ----------
         id : str
             The ID of the project to update.
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Set to an empty string to clear them.
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this project. Only passed in fields will be modified.
@@ -621,6 +630,7 @@ class RawProjectsClient:
             f"projects/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "ai_instructions": ai_instructions,
                 "custom_fields": convert_and_respect_annotation_metadata(
                     object_=custom_fields, annotation=typing.Sequence[CustomFieldValue], direction="write"
                 ),
@@ -732,6 +742,7 @@ class AsyncRawProjectsClient:
         self,
         *,
         account_id: str,
+        ai_instructions: typing.Optional[str] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
         end_date: typing.Optional[dt.datetime] = OMIT,
@@ -742,7 +753,7 @@ class AsyncRawProjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateProjectResponseBody]:
         """
-        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+        Creates a new project for an account. Provide a name or project_template_id. A template supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         **Rate limit:** 300 requests per minute
 
@@ -750,6 +761,9 @@ class AsyncRawProjectsClient:
         ----------
         account_id : str
             Account ID for this project
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Overrides the template's instructions when provided.
 
         customer_portal_visible : typing.Optional[bool]
             Customer portal visible for this project
@@ -767,7 +781,7 @@ class AsyncRawProjectsClient:
             Owner ID for this project
 
         project_template_id : typing.Optional[str]
-            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied customer_portal_visible and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
+            Project template ID for this project. When provided, it supplies defaults; non-empty name and description_html values and supplied ai_instructions, customer_portal_visible, and owner_id values override them. Supplying either start_date or end_date replaces both template dates.
 
         start_date : typing.Optional[dt.datetime]
             Start date for this project, in RFC 3339 format
@@ -788,6 +802,7 @@ class AsyncRawProjectsClient:
             method="POST",
             json={
                 "account_id": account_id,
+                "ai_instructions": ai_instructions,
                 "customer_portal_visible": customer_portal_visible,
                 "description_html": description_html,
                 "end_date": end_date,
@@ -1258,6 +1273,7 @@ class AsyncRawProjectsClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         description_html: typing.Optional[str] = OMIT,
@@ -1277,6 +1293,9 @@ class AsyncRawProjectsClient:
         ----------
         id : str
             The ID of the project to update.
+
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when keeping this smart project up to date. Set to an empty string to clear them.
 
         custom_fields : typing.Optional[typing.Sequence[CustomFieldValue]]
             An array of custom fields to be used on this project. Only passed in fields will be modified.
@@ -1314,6 +1333,7 @@ class AsyncRawProjectsClient:
             f"projects/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "ai_instructions": ai_instructions,
                 "custom_fields": convert_and_respect_annotation_metadata(
                     object_=custom_fields, annotation=typing.Sequence[CustomFieldValue], direction="write"
                 ),

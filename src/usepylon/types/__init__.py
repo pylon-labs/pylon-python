@@ -102,6 +102,8 @@ if typing.TYPE_CHECKING:
     from .delete_training_data_documents_response_body import DeleteTrainingDataDocumentsResponseBody
     from .destination_metadata import DestinationMetadata
     from .destination_metadata_destination import DestinationMetadataDestination
+    from .email_activity import EmailActivity
+    from .email_activity_message import EmailActivityMessage
     from .email_event import EmailEvent
     from .email_message_info import EmailMessageInfo
     from .email_suppression import EmailSuppression
@@ -134,6 +136,7 @@ if typing.TYPE_CHECKING:
     from .get_custom_fields_response_body import GetCustomFieldsResponseBody
     from .get_custom_object_response_body import GetCustomObjectResponseBody
     from .get_custom_objects_response_body import GetCustomObjectsResponseBody
+    from .get_email_activities_response_body import GetEmailActivitiesResponseBody
     from .get_email_suppressions_response_body import GetEmailSuppressionsResponseBody
     from .get_feature_request_response_body import GetFeatureRequestResponseBody
     from .get_issue_followers_response_body import GetIssueFollowersResponseBody
@@ -208,10 +211,12 @@ if typing.TYPE_CHECKING:
     from .me import Me
     from .me_user import MeUser
     from .merge_accounts_response_body import MergeAccountsResponseBody
+    from .merge_contacts_response_body import MergeContactsResponseBody
     from .merge_feature_requests_response_body import MergeFeatureRequestsResponseBody
     from .merge_issues_response_body import MergeIssuesResponseBody
     from .message import Message
     from .message_author import MessageAuthor
+    from .message_reaction import MessageReaction
     from .milestone import Milestone
     from .mini_account import MiniAccount
     from .mini_contact import MiniContact
@@ -307,6 +312,8 @@ if typing.TYPE_CHECKING:
     from .upload_account_file_response_body import UploadAccountFileResponseBody
     from .user import User
     from .user_role import UserRole
+    from .user_skill import UserSkill
+    from .user_skill_value import UserSkillValue
     from .user_status import UserStatus
     from .visibility import Visibility
     from .visibility_input import VisibilityInput
@@ -411,6 +418,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteTrainingDataDocumentsResponseBody": ".delete_training_data_documents_response_body",
     "DestinationMetadata": ".destination_metadata",
     "DestinationMetadataDestination": ".destination_metadata_destination",
+    "EmailActivity": ".email_activity",
+    "EmailActivityMessage": ".email_activity_message",
     "EmailEvent": ".email_event",
     "EmailMessageInfo": ".email_message_info",
     "EmailSuppression": ".email_suppression",
@@ -443,6 +452,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetCustomFieldsResponseBody": ".get_custom_fields_response_body",
     "GetCustomObjectResponseBody": ".get_custom_object_response_body",
     "GetCustomObjectsResponseBody": ".get_custom_objects_response_body",
+    "GetEmailActivitiesResponseBody": ".get_email_activities_response_body",
     "GetEmailSuppressionsResponseBody": ".get_email_suppressions_response_body",
     "GetFeatureRequestResponseBody": ".get_feature_request_response_body",
     "GetIssueFollowersResponseBody": ".get_issue_followers_response_body",
@@ -517,10 +527,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Me": ".me",
     "MeUser": ".me_user",
     "MergeAccountsResponseBody": ".merge_accounts_response_body",
+    "MergeContactsResponseBody": ".merge_contacts_response_body",
     "MergeFeatureRequestsResponseBody": ".merge_feature_requests_response_body",
     "MergeIssuesResponseBody": ".merge_issues_response_body",
     "Message": ".message",
     "MessageAuthor": ".message_author",
+    "MessageReaction": ".message_reaction",
     "Milestone": ".milestone",
     "MiniAccount": ".mini_account",
     "MiniContact": ".mini_contact",
@@ -616,6 +628,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UploadAccountFileResponseBody": ".upload_account_file_response_body",
     "User": ".user",
     "UserRole": ".user_role",
+    "UserSkill": ".user_skill",
+    "UserSkillValue": ".user_skill_value",
     "UserStatus": ".user_status",
     "Visibility": ".visibility",
     "VisibilityInput": ".visibility_input",
@@ -744,6 +758,8 @@ __all__ = [
     "DeleteTrainingDataDocumentsResponseBody",
     "DestinationMetadata",
     "DestinationMetadataDestination",
+    "EmailActivity",
+    "EmailActivityMessage",
     "EmailEvent",
     "EmailMessageInfo",
     "EmailSuppression",
@@ -776,6 +792,7 @@ __all__ = [
     "GetCustomFieldsResponseBody",
     "GetCustomObjectResponseBody",
     "GetCustomObjectsResponseBody",
+    "GetEmailActivitiesResponseBody",
     "GetEmailSuppressionsResponseBody",
     "GetFeatureRequestResponseBody",
     "GetIssueFollowersResponseBody",
@@ -850,10 +867,12 @@ __all__ = [
     "Me",
     "MeUser",
     "MergeAccountsResponseBody",
+    "MergeContactsResponseBody",
     "MergeFeatureRequestsResponseBody",
     "MergeIssuesResponseBody",
     "Message",
     "MessageAuthor",
+    "MessageReaction",
     "Milestone",
     "MiniAccount",
     "MiniContact",
@@ -949,6 +968,8 @@ __all__ = [
     "UploadAccountFileResponseBody",
     "User",
     "UserRole",
+    "UserSkill",
+    "UserSkillValue",
     "UserStatus",
     "Visibility",
     "VisibilityInput",

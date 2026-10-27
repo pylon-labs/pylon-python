@@ -12,13 +12,14 @@ if typing.TYPE_CHECKING:
         UpdateAccountsRequestAccountType,
         UpdateAccountsRequestTagsApplyMode,
     )
-    from . import activities, highlights, notebook_blocks, relationships
+    from . import activities, email_activities, highlights, notebook_blocks, relationships
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateAccountRequestAccountType": ".types",
     "UpdateAccountRequestBodyAccountType": ".types",
     "UpdateAccountsRequestAccountType": ".types",
     "UpdateAccountsRequestTagsApplyMode": ".types",
     "activities": ".activities",
+    "email_activities": ".email_activities",
     "highlights": ".highlights",
     "notebook_blocks": ".notebook_blocks",
     "relationships": ".relationships",
@@ -52,6 +53,7 @@ __all__ = [
     "UpdateAccountsRequestAccountType",
     "UpdateAccountsRequestTagsApplyMode",
     "activities",
+    "email_activities",
     "highlights",
     "notebook_blocks",
     "relationships",

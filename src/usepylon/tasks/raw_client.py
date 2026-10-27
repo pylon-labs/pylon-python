@@ -169,7 +169,9 @@ class RawTasksClient:
         *,
         title: str,
         account_id: typing.Optional[str] = OMIT,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
@@ -193,8 +195,14 @@ class RawTasksClient:
         account_id : typing.Optional[str]
             Account ID for this task
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of existing tasks that block this task
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -235,7 +243,9 @@ class RawTasksClient:
             method="POST",
             json={
                 "account_id": account_id,
+                "ai_instructions": ai_instructions,
                 "assignee_id": assignee_id,
+                "blocked_by_task_ids": blocked_by_task_ids,
                 "body_html": body_html,
                 "custom_fields": convert_and_respect_annotation_metadata(
                     object_=custom_fields, annotation=typing.Sequence[CustomFieldValue], direction="write"
@@ -709,7 +719,9 @@ class RawTasksClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
@@ -731,8 +743,14 @@ class RawTasksClient:
         id : str
             The ID of the task to update.
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project. Set to an empty string to clear them.
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of the tasks that block this task. If provided, replaces the task's current blocking tasks; pass an empty array to remove them all.
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -772,7 +790,9 @@ class RawTasksClient:
             f"tasks/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "ai_instructions": ai_instructions,
                 "assignee_id": assignee_id,
+                "blocked_by_task_ids": blocked_by_task_ids,
                 "body_html": body_html,
                 "completed_at": completed_at,
                 "custom_fields": convert_and_respect_annotation_metadata(
@@ -1282,7 +1302,9 @@ class AsyncRawTasksClient:
         *,
         title: str,
         account_id: typing.Optional[str] = OMIT,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
@@ -1306,8 +1328,14 @@ class AsyncRawTasksClient:
         account_id : typing.Optional[str]
             Account ID for this task
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of existing tasks that block this task
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -1348,7 +1376,9 @@ class AsyncRawTasksClient:
             method="POST",
             json={
                 "account_id": account_id,
+                "ai_instructions": ai_instructions,
                 "assignee_id": assignee_id,
+                "blocked_by_task_ids": blocked_by_task_ids,
                 "body_html": body_html,
                 "custom_fields": convert_and_respect_annotation_metadata(
                     object_=custom_fields, annotation=typing.Sequence[CustomFieldValue], direction="write"
@@ -1825,7 +1855,9 @@ class AsyncRawTasksClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
@@ -1847,8 +1879,14 @@ class AsyncRawTasksClient:
         id : str
             The ID of the task to update.
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project. Set to an empty string to clear them.
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of the tasks that block this task. If provided, replaces the task's current blocking tasks; pass an empty array to remove them all.
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -1888,7 +1926,9 @@ class AsyncRawTasksClient:
             f"tasks/{encode_path_param(id)}",
             method="PATCH",
             json={
+                "ai_instructions": ai_instructions,
                 "assignee_id": assignee_id,
+                "blocked_by_task_ids": blocked_by_task_ids,
                 "body_html": body_html,
                 "completed_at": completed_at,
                 "custom_fields": convert_and_respect_annotation_metadata(

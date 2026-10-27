@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .mini_role import MiniRole
+from .user_skill import UserSkill
 
 
 class User(UniversalBaseModel):
@@ -56,6 +57,11 @@ class User(UniversalBaseModel):
     roles: typing.Optional[typing.List[MiniRole]] = pydantic.Field(default=None)
     """
     All assigned roles, including SCIM-derived roles, sorted by ID. Empty when no roles are assigned.
+    """
+
+    skills: typing.Optional[typing.List[UserSkill]] = pydantic.Field(default=None)
+    """
+    The user's routing skills. Null when the caller lacks permission to read team settings.
     """
 
     status: str = pydantic.Field()

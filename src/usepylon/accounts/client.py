@@ -30,6 +30,7 @@ from .types.update_accounts_request_tags_apply_mode import UpdateAccountsRequest
 
 if typing.TYPE_CHECKING:
     from .activities.client import ActivitiesClient, AsyncActivitiesClient
+    from .email_activities.client import AsyncEmailActivitiesClient, EmailActivitiesClient
     from .highlights.client import AsyncHighlightsClient, HighlightsClient
     from .notebook_blocks.client import AsyncNotebookBlocksClient, NotebookBlocksClient
     from .relationships.client import AsyncRelationshipsClient, RelationshipsClient
@@ -44,6 +45,7 @@ class AccountsClient:
         self._highlights: typing.Optional[HighlightsClient] = None
         self._relationships: typing.Optional[RelationshipsClient] = None
         self._activities: typing.Optional[ActivitiesClient] = None
+        self._email_activities: typing.Optional[EmailActivitiesClient] = None
         self._notebook_blocks: typing.Optional[NotebookBlocksClient] = None
 
     @property
@@ -621,6 +623,14 @@ class AccountsClient:
         return self._activities
 
     @property
+    def email_activities(self):
+        if self._email_activities is None:
+            from .email_activities.client import EmailActivitiesClient  # noqa: E402
+
+            self._email_activities = EmailActivitiesClient(client_wrapper=self._client_wrapper)
+        return self._email_activities
+
+    @property
     def notebook_blocks(self):
         if self._notebook_blocks is None:
             from .notebook_blocks.client import NotebookBlocksClient  # noqa: E402
@@ -636,6 +646,7 @@ class AsyncAccountsClient:
         self._highlights: typing.Optional[AsyncHighlightsClient] = None
         self._relationships: typing.Optional[AsyncRelationshipsClient] = None
         self._activities: typing.Optional[AsyncActivitiesClient] = None
+        self._email_activities: typing.Optional[AsyncEmailActivitiesClient] = None
         self._notebook_blocks: typing.Optional[AsyncNotebookBlocksClient] = None
 
     @property
@@ -1287,6 +1298,14 @@ class AsyncAccountsClient:
 
             self._activities = AsyncActivitiesClient(client_wrapper=self._client_wrapper)
         return self._activities
+
+    @property
+    def email_activities(self):
+        if self._email_activities is None:
+            from .email_activities.client import AsyncEmailActivitiesClient  # noqa: E402
+
+            self._email_activities = AsyncEmailActivitiesClient(client_wrapper=self._client_wrapper)
+        return self._email_activities
 
     @property
     def notebook_blocks(self):

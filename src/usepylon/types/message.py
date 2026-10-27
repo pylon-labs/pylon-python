@@ -7,6 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .email_message_info import EmailMessageInfo
 from .message_author import MessageAuthor
+from .message_reaction import MessageReaction
 from .slack_message_info import SlackMessageInfo
 
 
@@ -36,6 +37,11 @@ class Message(UniversalBaseModel):
     message_html: str = pydantic.Field()
     """
     The HTML body of the message.
+    """
+
+    reactions: typing.Optional[typing.List[MessageReaction]] = pydantic.Field(default=None)
+    """
+    The emoji reactions currently on the message, grouped by emoji.
     """
 
     slack_info: typing.Optional[SlackMessageInfo] = None

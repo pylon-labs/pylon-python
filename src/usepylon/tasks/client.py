@@ -94,7 +94,9 @@ class TasksClient:
         *,
         title: str,
         account_id: typing.Optional[str] = OMIT,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
@@ -118,8 +120,14 @@ class TasksClient:
         account_id : typing.Optional[str]
             Account ID for this task
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of existing tasks that block this task
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -166,7 +174,9 @@ class TasksClient:
         _response = self._raw_client.create(
             title=title,
             account_id=account_id,
+            ai_instructions=ai_instructions,
             assignee_id=assignee_id,
+            blocked_by_task_ids=blocked_by_task_ids,
             body_html=body_html,
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
@@ -309,7 +319,9 @@ class TasksClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
@@ -331,8 +343,14 @@ class TasksClient:
         id : str
             The ID of the task to update.
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project. Set to an empty string to clear them.
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of the tasks that block this task. If provided, replaces the task's current blocking tasks; pass an empty array to remove them all.
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -381,7 +399,9 @@ class TasksClient:
         """
         _response = self._raw_client.update(
             id,
+            ai_instructions=ai_instructions,
             assignee_id=assignee_id,
+            blocked_by_task_ids=blocked_by_task_ids,
             body_html=body_html,
             completed_at=completed_at,
             custom_fields=custom_fields,
@@ -586,7 +606,9 @@ class AsyncTasksClient:
         *,
         title: str,
         account_id: typing.Optional[str] = OMIT,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
@@ -610,8 +632,14 @@ class AsyncTasksClient:
         account_id : typing.Optional[str]
             Account ID for this task
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of existing tasks that block this task
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -666,7 +694,9 @@ class AsyncTasksClient:
         _response = await self._raw_client.create(
             title=title,
             account_id=account_id,
+            ai_instructions=ai_instructions,
             assignee_id=assignee_id,
+            blocked_by_task_ids=blocked_by_task_ids,
             body_html=body_html,
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
@@ -836,7 +866,9 @@ class AsyncTasksClient:
         self,
         id: str,
         *,
+        ai_instructions: typing.Optional[str] = OMIT,
         assignee_id: typing.Optional[str] = OMIT,
+        blocked_by_task_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         body_html: typing.Optional[str] = OMIT,
         completed_at: typing.Optional[dt.datetime] = OMIT,
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
@@ -858,8 +890,14 @@ class AsyncTasksClient:
         id : str
             The ID of the task to update.
 
+        ai_instructions : typing.Optional[str]
+            Instructions the AI follows when evaluating this task in a smart project. Set to an empty string to clear them.
+
         assignee_id : typing.Optional[str]
             Assignee ID for this task
+
+        blocked_by_task_ids : typing.Optional[typing.Sequence[str]]
+            IDs of the tasks that block this task. If provided, replaces the task's current blocking tasks; pass an empty array to remove them all.
 
         body_html : typing.Optional[str]
             Body HTML for this task
@@ -916,7 +954,9 @@ class AsyncTasksClient:
         """
         _response = await self._raw_client.update(
             id,
+            ai_instructions=ai_instructions,
             assignee_id=assignee_id,
+            blocked_by_task_ids=blocked_by_task_ids,
             body_html=body_html,
             completed_at=completed_at,
             custom_fields=custom_fields,

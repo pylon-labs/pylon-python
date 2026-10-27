@@ -27,6 +27,7 @@ from ..types.external_id import ExternalId
 from ..types.filter import Filter
 from ..types.get_contact_response_body import GetContactResponseBody
 from ..types.get_contacts_response_body import GetContactsResponseBody
+from ..types.merge_contacts_response_body import MergeContactsResponseBody
 from ..types.search_contacts_response_body import SearchContactsResponseBody
 from ..types.update_contact_email import UpdateContactEmail
 from ..types.update_contact_response_body import UpdateContactResponseBody
@@ -274,6 +275,135 @@ class RawContactsClient:
                     CreateContactResponseBody,
                     parse_obj_as(
                         type_=CreateContactResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def merge(
+        self,
+        *,
+        merge_contact_id: str,
+        merge_into_contact_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[MergeContactsResponseBody]:
+        """
+        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        merge_contact_id : str
+            The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
+
+        merge_into_contact_id : str
+            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[MergeContactsResponseBody]
+
+        """
+        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
+            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
+        )
+        _response = self._client_wrapper.httpx_client.request(
+            "contacts/merge",
+            method="POST",
+            json={
+                "merge_contact_id": merge_contact_id,
+                "merge_into_contact_id": merge_into_contact_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=_request_options_with_retries_disabled,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergeContactsResponseBody,
+                    parse_obj_as(
+                        type_=MergeContactsResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1143,6 +1273,135 @@ class AsyncRawContactsClient:
                     CreateContactResponseBody,
                     parse_obj_as(
                         type_=CreateContactResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def merge(
+        self,
+        *,
+        merge_contact_id: str,
+        merge_into_contact_id: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[MergeContactsResponseBody]:
+        """
+        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        merge_contact_id : str
+            The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
+
+        merge_into_contact_id : str
+            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[MergeContactsResponseBody]
+
+        """
+        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
+            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
+        )
+        _response = await self._client_wrapper.httpx_client.request(
+            "contacts/merge",
+            method="POST",
+            json={
+                "merge_contact_id": merge_contact_id,
+                "merge_into_contact_id": merge_into_contact_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=_request_options_with_retries_disabled,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    MergeContactsResponseBody,
+                    parse_obj_as(
+                        type_=MergeContactsResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
