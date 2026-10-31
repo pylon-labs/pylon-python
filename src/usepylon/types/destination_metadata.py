@@ -56,6 +56,11 @@ class DestinationMetadata(UniversalBaseModel):
     The configured WhatsApp phone number to send messages from. Required if destination is "whatsapp" unless whatsapp_app_id is provided. The number is normalized and used to resolve the WhatsApp app within the organization.
     """
 
+    slack_channel_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the Slack channel to start the conversation in, as returned in the account's `channels[].channel_id`. Only valid when destination is "slack". Must be a non-internal Slack channel connected to the issue's account. Defaults to the account's primary Slack channel.
+    """
+
     whatsapp_app_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the WhatsApp app to send messages from. Required if destination is "whatsapp" unless from_whatsapp_phone_number is provided. Deprecated: Use from_whatsapp_phone_number instead.

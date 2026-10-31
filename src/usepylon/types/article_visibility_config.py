@@ -22,6 +22,12 @@ class ArticleVisibilityConfig(UniversalBaseModel):
     """
 
     customer_visibility_condition: typing.Optional["Filter"] = None
+    customer_visibility_condition_unsupported: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Read-only. True when the article's customer visibility condition cannot be expressed in the
+    API filter format. The condition still applies, but customer_visibility_condition is omitted.
+    """
+
     visibility: typing.Optional[ArticleVisibilityConfigVisibility] = pydantic.Field(default=None)
     """
     The visibility setting.

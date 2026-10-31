@@ -183,7 +183,7 @@ class ContactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergeContactsResponseBody:
         """
-        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+        Merges a contact into a surviving contact. Both contacts must belong to the same account, unless the merged contact has no account, in which case it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
 
         **Rate limit:** 30 requests per minute
 
@@ -193,7 +193,7 @@ class ContactsClient:
             The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
 
         merge_into_contact_id : str
-            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+            The ID of the contact that will survive the merge and receive the merged data. If the merged contact belongs to an account, this contact must belong to the same account.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -634,7 +634,7 @@ class AsyncContactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergeContactsResponseBody:
         """
-        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+        Merges a contact into a surviving contact. Both contacts must belong to the same account, unless the merged contact has no account, in which case it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
 
         **Rate limit:** 30 requests per minute
 
@@ -644,7 +644,7 @@ class AsyncContactsClient:
             The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
 
         merge_into_contact_id : str
-            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+            The ID of the contact that will survive the merge and receive the merged data. If the merged contact belongs to an account, this contact must belong to the same account.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
