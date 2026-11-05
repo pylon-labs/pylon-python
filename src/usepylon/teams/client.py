@@ -5,6 +5,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.create_team_response_body import CreateTeamResponseBody
+from ..types.delete_team_response_body import DeleteTeamResponseBody
 from ..types.get_team_response_body import GetTeamResponseBody
 from ..types.get_teams_response_body import GetTeamsResponseBody
 from ..types.team_assignment_configuration_input import TeamAssignmentConfigurationInput
@@ -147,6 +148,41 @@ class TeamsClient:
         )
         """
         _response = self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    def delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteTeamResponseBody:
+        """
+        Delete an existing team
+        Deletes a team and its memberships and schedules. Subteams are detached and remain available.
+        Teams referenced by other configuration or owning internal accounts cannot be deleted until those references are removed.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        id : str
+            The ID of the team to delete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteTeamResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.teams.delete(
+            id="id",
+        )
+        """
+        _response = self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     def update(
@@ -366,6 +402,51 @@ class AsyncTeamsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteTeamResponseBody:
+        """
+        Delete an existing team
+        Deletes a team and its memberships and schedules. Subteams are detached and remain available.
+        Teams referenced by other configuration or owning internal accounts cannot be deleted until those references are removed.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        id : str
+            The ID of the team to delete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteTeamResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.teams.delete(
+                id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(id, request_options=request_options)
         return _response.data
 
     async def update(

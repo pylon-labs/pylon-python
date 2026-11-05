@@ -12,6 +12,7 @@ FilterOperator = typing.Union[
         "not_in",
         "and",
         "or",
+        "not",
         "time_is_after",
         "time_is_before",
         "time_range",
@@ -26,6 +27,10 @@ FilterOperator = typing.Union[
         "includes_all_of",
         "starts_with",
         "ends_with",
+        "time_is_in_last",
+        "time_is_not_in_last",
+        "time_is_in_next",
+        "time_is_not_in_next",
     ],
     typing.Any,
 ]

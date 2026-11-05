@@ -31,6 +31,7 @@ from ..types.get_account_response_body import GetAccountResponseBody
 from ..types.get_accounts_response_body import GetAccountsResponseBody
 from ..types.merge_accounts_response_body import MergeAccountsResponseBody
 from ..types.search_accounts_response_body import SearchAccountsResponseBody
+from ..types.search_accounts_sort import SearchAccountsSort
 from ..types.update_account_response_body import UpdateAccountResponseBody
 from ..types.update_accounts_response_body import UpdateAccountsResponseBody
 from ..types.upload_account_file_response_body import UploadAccountFileResponseBody
@@ -644,6 +645,7 @@ class RawAccountsClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchAccountsSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Account, SearchAccountsResponseBody]:
         """
@@ -677,6 +679,9 @@ class RawAccountsClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchAccountsSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -693,6 +698,9 @@ class RawAccountsClient:
                 "filter": convert_and_respect_annotation_metadata(object_=filter, annotation=Filter, direction="write"),
                 "limit": limit,
                 "search_text": search_text,
+                "sort": convert_and_respect_annotation_metadata(
+                    object_=sort, annotation=typing.Sequence[SearchAccountsSort], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -720,6 +728,7 @@ class RawAccountsClient:
                         filter=filter,
                         limit=limit,
                         search_text=search_text,
+                        sort=sort,
                         request_options=request_options,
                     )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -1932,6 +1941,7 @@ class AsyncRawAccountsClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchAccountsSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Account, SearchAccountsResponseBody]:
         """
@@ -1965,6 +1975,9 @@ class AsyncRawAccountsClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchAccountsSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1981,6 +1994,9 @@ class AsyncRawAccountsClient:
                 "filter": convert_and_respect_annotation_metadata(object_=filter, annotation=Filter, direction="write"),
                 "limit": limit,
                 "search_text": search_text,
+                "sort": convert_and_respect_annotation_metadata(
+                    object_=sort, annotation=typing.Sequence[SearchAccountsSort], direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -2010,6 +2026,7 @@ class AsyncRawAccountsClient:
                             filter=filter,
                             limit=limit,
                             search_text=search_text,
+                            sort=sort,
                             request_options=request_options,
                         )
 

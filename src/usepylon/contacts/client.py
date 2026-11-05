@@ -15,6 +15,7 @@ from ..types.get_contact_response_body import GetContactResponseBody
 from ..types.get_contacts_response_body import GetContactsResponseBody
 from ..types.merge_contacts_response_body import MergeContactsResponseBody
 from ..types.search_contacts_response_body import SearchContactsResponseBody
+from ..types.send_customer_portal_invitation_response_body import SendCustomerPortalInvitationResponseBody
 from ..types.update_contact_email import UpdateContactEmail
 from ..types.update_contact_response_body import UpdateContactResponseBody
 from .raw_client import AsyncRawContactsClient, RawContactsClient
@@ -183,7 +184,7 @@ class ContactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergeContactsResponseBody:
         """
-        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+        Merges a contact into a surviving contact. Both contacts must belong to the same account, unless the merged contact has no account, in which case it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
 
         **Rate limit:** 30 requests per minute
 
@@ -193,7 +194,7 @@ class ContactsClient:
             The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
 
         merge_into_contact_id : str
-            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+            The ID of the contact that will survive the merge and receive the merged data. If the merged contact belongs to an account, this contact must belong to the same account.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -456,6 +457,41 @@ class ContactsClient:
         )
         return _response.data
 
+    def portal_invitation(
+        self, contact_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SendCustomerPortalInvitationResponseBody:
+        """
+        Sends or resends a portal invitation to the contact's primary email. The portal must be enabled and the contact must already have portal access. Does not change the contact's role. Requires customer portal settings write permission and write access to the contact's primary account, if any. Each successful call requests another invitation; success does not guarantee email delivery.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        contact_id : str
+            The ID of the contact to invite.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendCustomerPortalInvitationResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.contacts.portal_invitation(
+            contact_id="id",
+        )
+        """
+        _response = self._raw_client.portal_invitation(contact_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncContactsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -634,7 +670,7 @@ class AsyncContactsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> MergeContactsResponseBody:
         """
-        Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+        Merges a contact into a surviving contact. Both contacts must belong to the same account, unless the merged contact has no account, in which case it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
 
         **Rate limit:** 30 requests per minute
 
@@ -644,7 +680,7 @@ class AsyncContactsClient:
             The ID of the contact to merge into the surviving contact. This contact is permanently deleted after its data is transferred.
 
         merge_into_contact_id : str
-            The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+            The ID of the contact that will survive the merge and receive the merged data. If the merged contact belongs to an account, this contact must belong to the same account.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -948,4 +984,47 @@ class AsyncContactsClient:
             primary_phone_number=primary_phone_number,
             request_options=request_options,
         )
+        return _response.data
+
+    async def portal_invitation(
+        self, contact_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SendCustomerPortalInvitationResponseBody:
+        """
+        Sends or resends a portal invitation to the contact's primary email. The portal must be enabled and the contact must already have portal access. Does not change the contact's role. Requires customer portal settings write permission and write access to the contact's primary account, if any. Each successful call requests another invitation; success does not guarantee email delivery.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        contact_id : str
+            The ID of the contact to invite.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendCustomerPortalInvitationResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.contacts.portal_invitation(
+                contact_id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.portal_invitation(contact_id, request_options=request_options)
         return _response.data

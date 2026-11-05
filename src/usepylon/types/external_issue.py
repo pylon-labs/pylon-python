@@ -16,6 +16,11 @@ class ExternalIssue(UniversalBaseModel):
     Asana: ID of the task (Long number).
     """
 
+    key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The human-readable key of the external issue, such as ENG-123 for Linear or Jira.
+    """
+
     link: str = pydantic.Field()
     """
     Link to the product issue.
@@ -24,6 +29,13 @@ class ExternalIssue(UniversalBaseModel):
     source: str = pydantic.Field()
     """
     The source of the external issue.
+    """
+
+    state: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Whether the external issue is open, closed (done), or canceled, as last synced from the source.
+    
+    Known values: `open`, `closed`, `canceled`. This list is not exhaustive.
     """
 
     if IS_PYDANTIC_V2:

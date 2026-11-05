@@ -78,6 +78,7 @@ if typing.TYPE_CHECKING:
     from .custom_field_definition_select_option import CustomFieldDefinitionSelectOption
     from .custom_field_value import CustomFieldValue
     from .custom_source_info import CustomSourceInfo
+    from .customer_portal_invitation_result import CustomerPortalInvitationResult
     from .delete_account_highlight_response_body import DeleteAccountHighlightResponseBody
     from .delete_account_highlight_response_data import DeleteAccountHighlightResponseData
     from .delete_account_relationship_response_body import DeleteAccountRelationshipResponseBody
@@ -99,6 +100,7 @@ if typing.TYPE_CHECKING:
     from .delete_tag_response_body import DeleteTagResponseBody
     from .delete_task_comment_response_body import DeleteTaskCommentResponseBody
     from .delete_task_response_body import DeleteTaskResponseBody
+    from .delete_team_response_body import DeleteTeamResponseBody
     from .delete_training_data_documents_response_body import DeleteTrainingDataDocumentsResponseBody
     from .destination_metadata import DestinationMetadata
     from .destination_metadata_destination import DestinationMetadataDestination
@@ -237,11 +239,17 @@ if typing.TYPE_CHECKING:
     from .request_article_review_response_body import RequestArticleReviewResponseBody
     from .route_redirect import RouteRedirect
     from .search_accounts_response_body import SearchAccountsResponseBody
+    from .search_accounts_sort import SearchAccountsSort
+    from .search_accounts_sort_field import SearchAccountsSortField
+    from .search_accounts_sort_order import SearchAccountsSortOrder
     from .search_call_recordings_response_body import SearchCallRecordingsResponseBody
     from .search_contacts_response_body import SearchContactsResponseBody
     from .search_custom_objects_response_body import SearchCustomObjectsResponseBody
     from .search_feature_requests_response_body import SearchFeatureRequestsResponseBody
     from .search_issues_response_body import SearchIssuesResponseBody
+    from .search_issues_sort import SearchIssuesSort
+    from .search_issues_sort_field import SearchIssuesSortField
+    from .search_issues_sort_order import SearchIssuesSortOrder
     from .search_milestones_response_body import SearchMilestonesResponseBody
     from .search_projects_response_body import SearchProjectsResponseBody
     from .search_surveys_response_body import SearchSurveysResponseBody
@@ -249,6 +257,7 @@ if typing.TYPE_CHECKING:
     from .search_tasks_response_body import SearchTasksResponseBody
     from .search_users_response_body import SearchUsersResponseBody
     from .select_metadata import SelectMetadata
+    from .send_customer_portal_invitation_response_body import SendCustomerPortalInvitationResponseBody
     from .set_feature_request_portal_visibility_response_body import SetFeatureRequestPortalVisibilityResponseBody
     from .skipped_issue import SkippedIssue
     from .sla_times import SlaTimes
@@ -319,6 +328,7 @@ if typing.TYPE_CHECKING:
     from .visibility_input import VisibilityInput
     from .visibility_input_type import VisibilityInputType
     from .voice_call import VoiceCall
+    from .voice_call_participant import VoiceCallParticipant
     from .voice_call_recording import VoiceCallRecording
     from .voice_call_transcript_segment import VoiceCallTranscriptSegment
 _dynamic_imports: typing.Dict[str, str] = {
@@ -394,6 +404,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomFieldDefinitionSelectOption": ".custom_field_definition_select_option",
     "CustomFieldValue": ".custom_field_value",
     "CustomSourceInfo": ".custom_source_info",
+    "CustomerPortalInvitationResult": ".customer_portal_invitation_result",
     "DeleteAccountHighlightResponseBody": ".delete_account_highlight_response_body",
     "DeleteAccountHighlightResponseData": ".delete_account_highlight_response_data",
     "DeleteAccountRelationshipResponseBody": ".delete_account_relationship_response_body",
@@ -415,6 +426,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteTagResponseBody": ".delete_tag_response_body",
     "DeleteTaskCommentResponseBody": ".delete_task_comment_response_body",
     "DeleteTaskResponseBody": ".delete_task_response_body",
+    "DeleteTeamResponseBody": ".delete_team_response_body",
     "DeleteTrainingDataDocumentsResponseBody": ".delete_training_data_documents_response_body",
     "DestinationMetadata": ".destination_metadata",
     "DestinationMetadataDestination": ".destination_metadata_destination",
@@ -553,11 +565,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RequestArticleReviewResponseBody": ".request_article_review_response_body",
     "RouteRedirect": ".route_redirect",
     "SearchAccountsResponseBody": ".search_accounts_response_body",
+    "SearchAccountsSort": ".search_accounts_sort",
+    "SearchAccountsSortField": ".search_accounts_sort_field",
+    "SearchAccountsSortOrder": ".search_accounts_sort_order",
     "SearchCallRecordingsResponseBody": ".search_call_recordings_response_body",
     "SearchContactsResponseBody": ".search_contacts_response_body",
     "SearchCustomObjectsResponseBody": ".search_custom_objects_response_body",
     "SearchFeatureRequestsResponseBody": ".search_feature_requests_response_body",
     "SearchIssuesResponseBody": ".search_issues_response_body",
+    "SearchIssuesSort": ".search_issues_sort",
+    "SearchIssuesSortField": ".search_issues_sort_field",
+    "SearchIssuesSortOrder": ".search_issues_sort_order",
     "SearchMilestonesResponseBody": ".search_milestones_response_body",
     "SearchProjectsResponseBody": ".search_projects_response_body",
     "SearchSurveysResponseBody": ".search_surveys_response_body",
@@ -565,6 +583,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SearchTasksResponseBody": ".search_tasks_response_body",
     "SearchUsersResponseBody": ".search_users_response_body",
     "SelectMetadata": ".select_metadata",
+    "SendCustomerPortalInvitationResponseBody": ".send_customer_portal_invitation_response_body",
     "SetFeatureRequestPortalVisibilityResponseBody": ".set_feature_request_portal_visibility_response_body",
     "SkippedIssue": ".skipped_issue",
     "SlaTimes": ".sla_times",
@@ -635,6 +654,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VisibilityInput": ".visibility_input",
     "VisibilityInputType": ".visibility_input_type",
     "VoiceCall": ".voice_call",
+    "VoiceCallParticipant": ".voice_call_participant",
     "VoiceCallRecording": ".voice_call_recording",
     "VoiceCallTranscriptSegment": ".voice_call_transcript_segment",
 }
@@ -734,6 +754,7 @@ __all__ = [
     "CustomFieldDefinitionSelectOption",
     "CustomFieldValue",
     "CustomSourceInfo",
+    "CustomerPortalInvitationResult",
     "DeleteAccountHighlightResponseBody",
     "DeleteAccountHighlightResponseData",
     "DeleteAccountRelationshipResponseBody",
@@ -755,6 +776,7 @@ __all__ = [
     "DeleteTagResponseBody",
     "DeleteTaskCommentResponseBody",
     "DeleteTaskResponseBody",
+    "DeleteTeamResponseBody",
     "DeleteTrainingDataDocumentsResponseBody",
     "DestinationMetadata",
     "DestinationMetadataDestination",
@@ -893,11 +915,17 @@ __all__ = [
     "RequestArticleReviewResponseBody",
     "RouteRedirect",
     "SearchAccountsResponseBody",
+    "SearchAccountsSort",
+    "SearchAccountsSortField",
+    "SearchAccountsSortOrder",
     "SearchCallRecordingsResponseBody",
     "SearchContactsResponseBody",
     "SearchCustomObjectsResponseBody",
     "SearchFeatureRequestsResponseBody",
     "SearchIssuesResponseBody",
+    "SearchIssuesSort",
+    "SearchIssuesSortField",
+    "SearchIssuesSortOrder",
     "SearchMilestonesResponseBody",
     "SearchProjectsResponseBody",
     "SearchSurveysResponseBody",
@@ -905,6 +933,7 @@ __all__ = [
     "SearchTasksResponseBody",
     "SearchUsersResponseBody",
     "SelectMetadata",
+    "SendCustomerPortalInvitationResponseBody",
     "SetFeatureRequestPortalVisibilityResponseBody",
     "SkippedIssue",
     "SlaTimes",
@@ -975,6 +1004,7 @@ __all__ = [
     "VisibilityInput",
     "VisibilityInputType",
     "VoiceCall",
+    "VoiceCallParticipant",
     "VoiceCallRecording",
     "VoiceCallTranscriptSegment",
 ]

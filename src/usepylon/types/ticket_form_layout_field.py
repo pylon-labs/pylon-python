@@ -10,6 +10,11 @@ from .ticket_form_visibility_condition import TicketFormVisibilityCondition
 
 
 class TicketFormLayoutField(UniversalBaseModel):
+    custom_field_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The ID of the custom field definition. Set only when type is custom_field.
+    """
+
     description_html: str = pydantic.Field()
     """
     The description of the ticket form layout field in HTML.

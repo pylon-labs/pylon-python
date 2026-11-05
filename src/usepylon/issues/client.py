@@ -27,6 +27,7 @@ from ..types.link_external_issue_response_body import LinkExternalIssueResponseB
 from ..types.mark_issues_as_spam_response_body import MarkIssuesAsSpamResponseBody
 from ..types.merge_issues_response_body import MergeIssuesResponseBody
 from ..types.search_issues_response_body import SearchIssuesResponseBody
+from ..types.search_issues_sort import SearchIssuesSort
 from ..types.snooze_issue_response_body import SnoozeIssueResponseBody
 from ..types.update_issue_response_body import UpdateIssueResponseBody
 from ..types.update_issues_response_body import UpdateIssuesResponseBody
@@ -448,6 +449,7 @@ class IssuesClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchIssuesSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Issue, SearchIssuesResponseBody]:
         """
@@ -496,6 +498,9 @@ class IssuesClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchIssuesSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -525,7 +530,12 @@ class IssuesClient:
             yield page
         """
         return self._raw_client.search(
-            cursor=cursor, filter=filter, limit=limit, search_text=search_text, request_options=request_options
+            cursor=cursor,
+            filter=filter,
+            limit=limit,
+            search_text=search_text,
+            sort=sort,
+            request_options=request_options,
         )
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetIssueResponseBody:
@@ -1609,6 +1619,7 @@ class AsyncIssuesClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchIssuesSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Issue, SearchIssuesResponseBody]:
         """
@@ -1657,6 +1668,9 @@ class AsyncIssuesClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchIssuesSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1695,7 +1709,12 @@ class AsyncIssuesClient:
         asyncio.run(main())
         """
         return await self._raw_client.search(
-            cursor=cursor, filter=filter, limit=limit, search_text=search_text, request_options=request_options
+            cursor=cursor,
+            filter=filter,
+            limit=limit,
+            search_text=search_text,
+            sort=sort,
+            request_options=request_options,
         )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetIssueResponseBody:

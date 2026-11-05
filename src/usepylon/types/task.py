@@ -73,6 +73,11 @@ class Task(UniversalBaseModel):
     The ID of the task.
     """
 
+    link: str = pydantic.Field()
+    """
+    The link to the task in the Pylon app. Requires Pylon app access.
+    """
+
     linked_issues: typing.Optional[typing.List[MiniIssue]] = pydantic.Field(default=None)
     """
     The Pylon issues linked to the task that the current user can access, if any.

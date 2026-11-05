@@ -27,7 +27,7 @@ class VoiceCallsClient:
         self, issue_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetIssueVoiceCallsResponseBody:
         """
-        Returns voice call records for the specified phone issue. Each call includes its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
+        Returns voice call records for the specified phone issue. Each call includes its participants and its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
 
         **Rate limit:** 120 requests per minute
 
@@ -78,7 +78,7 @@ class AsyncVoiceCallsClient:
         self, issue_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> GetIssueVoiceCallsResponseBody:
         """
-        Returns voice call records for the specified phone issue. Each call includes its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
+        Returns voice call records for the specified phone issue. Each call includes its participants and its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
 
         **Rate limit:** 120 requests per minute
 
