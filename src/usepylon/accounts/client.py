@@ -19,6 +19,7 @@ from ..types.get_account_response_body import GetAccountResponseBody
 from ..types.get_accounts_response_body import GetAccountsResponseBody
 from ..types.merge_accounts_response_body import MergeAccountsResponseBody
 from ..types.search_accounts_response_body import SearchAccountsResponseBody
+from ..types.search_accounts_sort import SearchAccountsSort
 from ..types.update_account_response_body import UpdateAccountResponseBody
 from ..types.update_accounts_response_body import UpdateAccountsResponseBody
 from ..types.upload_account_file_response_body import UploadAccountFileResponseBody
@@ -324,6 +325,7 @@ class AccountsClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchAccountsSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Account, SearchAccountsResponseBody]:
         """
@@ -357,6 +359,9 @@ class AccountsClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchAccountsSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -380,7 +385,12 @@ class AccountsClient:
             yield page
         """
         return self._raw_client.search(
-            cursor=cursor, filter=filter, limit=limit, search_text=search_text, request_options=request_options
+            cursor=cursor,
+            filter=filter,
+            limit=limit,
+            search_text=search_text,
+            sort=sort,
+            request_options=request_options,
         )
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAccountResponseBody:
@@ -958,6 +968,7 @@ class AsyncAccountsClient:
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         search_text: typing.Optional[str] = OMIT,
+        sort: typing.Optional[typing.Sequence[SearchAccountsSort]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Account, SearchAccountsResponseBody]:
         """
@@ -991,6 +1002,9 @@ class AsyncAccountsClient:
         search_text : typing.Optional[str]
             Fuzzy text search. Results are intersected with any provided filter.
 
+        sort : typing.Optional[typing.Sequence[SearchAccountsSort]]
+            The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1023,7 +1037,12 @@ class AsyncAccountsClient:
         asyncio.run(main())
         """
         return await self._raw_client.search(
-            cursor=cursor, filter=filter, limit=limit, search_text=search_text, request_options=request_options
+            cursor=cursor,
+            filter=filter,
+            limit=limit,
+            search_text=search_text,
+            sort=sort,
+            request_options=request_options,
         )
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetAccountResponseBody:

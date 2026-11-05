@@ -18,6 +18,7 @@ from ..errors.not_found_error import NotFoundError
 from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.create_team_response_body import CreateTeamResponseBody
+from ..types.delete_team_response_body import DeleteTeamResponseBody
 from ..types.error_api_response_body import ErrorApiResponseBody
 from ..types.get_team_response_body import GetTeamResponseBody
 from ..types.get_teams_response_body import GetTeamsResponseBody
@@ -316,6 +317,119 @@ class RawTeamsClient:
                     GetTeamResponseBody,
                     parse_obj_as(
                         type_=GetTeamResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DeleteTeamResponseBody]:
+        """
+        Delete an existing team
+        Deletes a team and its memberships and schedules. Subteams are detached and remain available.
+        Teams referenced by other configuration or owning internal accounts cannot be deleted until those references are removed.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        id : str
+            The ID of the team to delete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeleteTeamResponseBody]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"teams/{encode_path_param(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteTeamResponseBody,
+                    parse_obj_as(
+                        type_=DeleteTeamResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -828,6 +942,119 @@ class AsyncRawTeamsClient:
                     GetTeamResponseBody,
                     parse_obj_as(
                         type_=GetTeamResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DeleteTeamResponseBody]:
+        """
+        Delete an existing team
+        Deletes a team and its memberships and schedules. Subteams are detached and remain available.
+        Teams referenced by other configuration or owning internal accounts cannot be deleted until those references are removed.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        id : str
+            The ID of the team to delete.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeleteTeamResponseBody]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"teams/{encode_path_param(id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteTeamResponseBody,
+                    parse_obj_as(
+                        type_=DeleteTeamResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

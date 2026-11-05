@@ -5,6 +5,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .voice_call_participant import VoiceCallParticipant
 from .voice_call_recording import VoiceCallRecording
 
 
@@ -27,6 +28,11 @@ class VoiceCall(UniversalBaseModel):
     id: str = pydantic.Field()
     """
     The ID of the voice call.
+    """
+
+    participants: typing.Optional[typing.List[VoiceCallParticipant]] = pydantic.Field(default=None)
+    """
+    Everyone who was dialed into the call, one entry per call leg, so a person who is redialed appears again. Empty when the call has no participant records.
     """
 
     recordings: typing.Optional[typing.List[VoiceCallRecording]] = pydantic.Field(default=None)

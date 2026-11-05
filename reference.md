@@ -553,6 +553,14 @@ client.accounts.search()
 <dl>
 <dd>
 
+**sort:** `typing.Optional[typing.List[SearchAccountsSort]]` — The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2171,7 +2179,7 @@ Known values: `no_access`, `member`, `admin`. This list is not exhaustive.
 <dl>
 <dd>
 
-Merges a contact into a surviving contact. If the merged contact belongs to a different account, it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
+Merges a contact into a surviving contact. Both contacts must belong to the same account, unless the merged contact has no account, in which case it is first moved to the surviving contact's account. Issues, emails, phone numbers, survey responses, and other associated data are then transferred to the surviving contact, and the merged contact is permanently deleted. This cannot be undone.
 
 **Rate limit:** 30 requests per minute
 </dd>
@@ -2223,7 +2231,7 @@ client.contacts.merge(
 <dl>
 <dd>
 
-**merge_into_contact_id:** `str` — The ID of the contact that will survive the merge and receive the merged data. The contact must belong to an account.
+**merge_into_contact_id:** `str` — The ID of the contact that will survive the merge and receive the merged data. If the merged contact belongs to an account, this contact must belong to the same account.
     
 </dd>
 </dl>
@@ -2662,6 +2670,81 @@ Known values: `no_access`, `member`, `admin`. This list is not exhaustive.
 <dd>
 
 **primary_phone_number:** `typing.Optional[str]` — The primary phone number. Must be in the list of phone_numbers. If there are any phone_numbers and this is not specified, the first phone number will be primary.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contacts.<a href="src/usepylon/contacts/client.py">portal_invitation</a>(...) -> SendCustomerPortalInvitationResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Sends or resends a portal invitation to the contact's primary email. The portal must be enabled and the contact must already have portal access. Does not change the contact's role. Requires customer portal settings write permission and write access to the contact's primary account, if any. Each successful call requests another invitation; success does not guarantee email delivery.
+
+**Rate limit:** 30 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.contacts.portal_invitation(
+    contact_id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**contact_id:** `str` — The ID of the contact to invite.
     
 </dd>
 </dl>
@@ -5643,6 +5726,14 @@ client.issues.search(
 <dd>
 
 **search_text:** `typing.Optional[str]` — Fuzzy text search. Results are intersected with any provided filter.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `typing.Optional[typing.List[SearchIssuesSort]]` — The order of results, as a list of sort keys. Only one sort key is supported right now. Omit for the default order. Send the same sort with every page of a cursor.
     
 </dd>
 </dl>
@@ -10381,6 +10472,83 @@ client.teams.get(
 </dl>
 </details>
 
+<details><summary><code>client.teams.<a href="src/usepylon/teams/client.py">delete</a>(...) -> DeleteTeamResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete an existing team
+Deletes a team and its memberships and schedules. Subteams are detached and remain available.
+Teams referenced by other configuration or owning internal accounts cannot be deleted until those references are removed.
+
+**Rate limit:** 30 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.teams.delete(
+    id="id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` — The ID of the team to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.teams.<a href="src/usepylon/teams/client.py">update</a>(...) -> UpdateTeamResponseBody</code></summary>
 <dl>
 <dd>
@@ -14146,7 +14314,7 @@ Linking an existing Slack thread imports its message history and enables ongoing
 <dl>
 <dd>
 
-Returns voice call records for the specified phone issue. Each call includes its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
+Returns voice call records for the specified phone issue. Each call includes its participants and its recordings, with parsed transcript segments and a presigned download URL for the audio file. Recordings whose transcript has not yet completed are omitted; refetch later to see them.
 
 **Rate limit:** 120 requests per minute
 </dd>
