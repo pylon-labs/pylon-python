@@ -18,11 +18,12 @@ class Filter(UniversalBaseModel):
     field must be set, along with either value or values, depending on the operator.
     """
 
-    operator: FilterOperator = pydantic.Field()
+    operator: typing.Optional[FilterOperator] = pydantic.Field(default=None)
     """
-    The operator for this filter.
+    The operator for this filter. Required unless related_object is set.
     """
 
+    related_object: typing.Optional["FilterRelatedObject"] = None
     subfilters: typing.Optional[typing.List["Filter"]] = pydantic.Field(default=None)
     """
     Sub-filters for this filter.  Valid only when operator is "and", "or", or "not"; "not"
@@ -37,6 +38,8 @@ class Filter(UniversalBaseModel):
     "starts_with", "ends_with", "time_is_after", "time_is_before", "time_is_in_last",
     "time_is_not_in_last", "time_is_in_next", "time_is_not_in_next", "greater_than",
     "less_than", "greater_than_or_equals", and "less_than_or_equals".
+    On fields that hold user IDs, "current_user" means the API token's user; on fields that
+    hold team IDs, "my_teams" means that user's teams. The same applies to values.
     """
 
     values: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -55,4 +58,6 @@ class Filter(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-update_forward_refs(Filter)
+from .filter_related_object import FilterRelatedObject  # noqa: E402, I001
+
+update_forward_refs(Filter, FilterRelatedObject=FilterRelatedObject)

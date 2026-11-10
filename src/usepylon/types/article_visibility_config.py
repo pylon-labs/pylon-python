@@ -44,5 +44,6 @@ class ArticleVisibilityConfig(UniversalBaseModel):
 
 
 from .filter import Filter  # noqa: E402, I001
+from .filter_related_object import FilterRelatedObject  # noqa: E402, I001
 
-update_forward_refs(ArticleVisibilityConfig, Filter=Filter)
+update_forward_refs(ArticleVisibilityConfig, Filter=Filter, FilterRelatedObject=FilterRelatedObject)

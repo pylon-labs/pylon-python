@@ -78,7 +78,16 @@ if typing.TYPE_CHECKING:
     from .custom_field_definition_select_option import CustomFieldDefinitionSelectOption
     from .custom_field_value import CustomFieldValue
     from .custom_source_info import CustomSourceInfo
+    from .customer_portal_access_settings import CustomerPortalAccessSettings
+    from .customer_portal_branding import CustomerPortalBranding
+    from .customer_portal_display_settings import CustomerPortalDisplaySettings
+    from .customer_portal_footer_category import CustomerPortalFooterCategory
     from .customer_portal_invitation_result import CustomerPortalInvitationResult
+    from .customer_portal_link import CustomerPortalLink
+    from .customer_portal_navigation import CustomerPortalNavigation
+    from .customer_portal_settings import CustomerPortalSettings
+    from .customer_portal_tabs import CustomerPortalTabs
+    from .customer_portal_user_permissions import CustomerPortalUserPermissions
     from .delete_account_highlight_response_body import DeleteAccountHighlightResponseBody
     from .delete_account_highlight_response_data import DeleteAccountHighlightResponseData
     from .delete_account_relationship_response_body import DeleteAccountRelationshipResponseBody
@@ -117,7 +126,9 @@ if typing.TYPE_CHECKING:
     from .feature_request_evidence import FeatureRequestEvidence
     from .feature_request_search_result import FeatureRequestSearchResult
     from .filter import Filter
+    from .filter_error import FilterError
     from .filter_operator import FilterOperator
+    from .filter_related_object import FilterRelatedObject
     from .follower import Follower
     from .get_account_notebook_notes_response_body import GetAccountNotebookNotesResponseBody
     from .get_account_relationships_response_body import GetAccountRelationshipsResponseBody
@@ -138,6 +149,7 @@ if typing.TYPE_CHECKING:
     from .get_custom_fields_response_body import GetCustomFieldsResponseBody
     from .get_custom_object_response_body import GetCustomObjectResponseBody
     from .get_custom_objects_response_body import GetCustomObjectsResponseBody
+    from .get_customer_portal_settings_response_body import GetCustomerPortalSettingsResponseBody
     from .get_email_activities_response_body import GetEmailActivitiesResponseBody
     from .get_email_suppressions_response_body import GetEmailSuppressionsResponseBody
     from .get_feature_request_response_body import GetFeatureRequestResponseBody
@@ -304,6 +316,12 @@ if typing.TYPE_CHECKING:
     from .update_custom_field_select_option_response_body import UpdateCustomFieldSelectOptionResponseBody
     from .update_custom_object_response_body import UpdateCustomObjectResponseBody
     from .update_custom_objects_response_body import UpdateCustomObjectsResponseBody
+    from .update_customer_portal_access_settings import UpdateCustomerPortalAccessSettings
+    from .update_customer_portal_branding import UpdateCustomerPortalBranding
+    from .update_customer_portal_display_settings import UpdateCustomerPortalDisplaySettings
+    from .update_customer_portal_navigation import UpdateCustomerPortalNavigation
+    from .update_customer_portal_tabs import UpdateCustomerPortalTabs
+    from .update_customer_portal_user_permissions import UpdateCustomerPortalUserPermissions
     from .update_feature_request_response_body import UpdateFeatureRequestResponseBody
     from .update_issue_response_body import UpdateIssueResponseBody
     from .update_issues_response_body import UpdateIssuesResponseBody
@@ -404,7 +422,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CustomFieldDefinitionSelectOption": ".custom_field_definition_select_option",
     "CustomFieldValue": ".custom_field_value",
     "CustomSourceInfo": ".custom_source_info",
+    "CustomerPortalAccessSettings": ".customer_portal_access_settings",
+    "CustomerPortalBranding": ".customer_portal_branding",
+    "CustomerPortalDisplaySettings": ".customer_portal_display_settings",
+    "CustomerPortalFooterCategory": ".customer_portal_footer_category",
     "CustomerPortalInvitationResult": ".customer_portal_invitation_result",
+    "CustomerPortalLink": ".customer_portal_link",
+    "CustomerPortalNavigation": ".customer_portal_navigation",
+    "CustomerPortalSettings": ".customer_portal_settings",
+    "CustomerPortalTabs": ".customer_portal_tabs",
+    "CustomerPortalUserPermissions": ".customer_portal_user_permissions",
     "DeleteAccountHighlightResponseBody": ".delete_account_highlight_response_body",
     "DeleteAccountHighlightResponseData": ".delete_account_highlight_response_data",
     "DeleteAccountRelationshipResponseBody": ".delete_account_relationship_response_body",
@@ -443,7 +470,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FeatureRequestEvidence": ".feature_request_evidence",
     "FeatureRequestSearchResult": ".feature_request_search_result",
     "Filter": ".filter",
+    "FilterError": ".filter_error",
     "FilterOperator": ".filter_operator",
+    "FilterRelatedObject": ".filter_related_object",
     "Follower": ".follower",
     "GetAccountNotebookNotesResponseBody": ".get_account_notebook_notes_response_body",
     "GetAccountRelationshipsResponseBody": ".get_account_relationships_response_body",
@@ -464,6 +493,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetCustomFieldsResponseBody": ".get_custom_fields_response_body",
     "GetCustomObjectResponseBody": ".get_custom_object_response_body",
     "GetCustomObjectsResponseBody": ".get_custom_objects_response_body",
+    "GetCustomerPortalSettingsResponseBody": ".get_customer_portal_settings_response_body",
     "GetEmailActivitiesResponseBody": ".get_email_activities_response_body",
     "GetEmailSuppressionsResponseBody": ".get_email_suppressions_response_body",
     "GetFeatureRequestResponseBody": ".get_feature_request_response_body",
@@ -630,6 +660,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateCustomFieldSelectOptionResponseBody": ".update_custom_field_select_option_response_body",
     "UpdateCustomObjectResponseBody": ".update_custom_object_response_body",
     "UpdateCustomObjectsResponseBody": ".update_custom_objects_response_body",
+    "UpdateCustomerPortalAccessSettings": ".update_customer_portal_access_settings",
+    "UpdateCustomerPortalBranding": ".update_customer_portal_branding",
+    "UpdateCustomerPortalDisplaySettings": ".update_customer_portal_display_settings",
+    "UpdateCustomerPortalNavigation": ".update_customer_portal_navigation",
+    "UpdateCustomerPortalTabs": ".update_customer_portal_tabs",
+    "UpdateCustomerPortalUserPermissions": ".update_customer_portal_user_permissions",
     "UpdateFeatureRequestResponseBody": ".update_feature_request_response_body",
     "UpdateIssueResponseBody": ".update_issue_response_body",
     "UpdateIssuesResponseBody": ".update_issues_response_body",
@@ -754,7 +790,16 @@ __all__ = [
     "CustomFieldDefinitionSelectOption",
     "CustomFieldValue",
     "CustomSourceInfo",
+    "CustomerPortalAccessSettings",
+    "CustomerPortalBranding",
+    "CustomerPortalDisplaySettings",
+    "CustomerPortalFooterCategory",
     "CustomerPortalInvitationResult",
+    "CustomerPortalLink",
+    "CustomerPortalNavigation",
+    "CustomerPortalSettings",
+    "CustomerPortalTabs",
+    "CustomerPortalUserPermissions",
     "DeleteAccountHighlightResponseBody",
     "DeleteAccountHighlightResponseData",
     "DeleteAccountRelationshipResponseBody",
@@ -793,7 +838,9 @@ __all__ = [
     "FeatureRequestEvidence",
     "FeatureRequestSearchResult",
     "Filter",
+    "FilterError",
     "FilterOperator",
+    "FilterRelatedObject",
     "Follower",
     "GetAccountNotebookNotesResponseBody",
     "GetAccountRelationshipsResponseBody",
@@ -814,6 +861,7 @@ __all__ = [
     "GetCustomFieldsResponseBody",
     "GetCustomObjectResponseBody",
     "GetCustomObjectsResponseBody",
+    "GetCustomerPortalSettingsResponseBody",
     "GetEmailActivitiesResponseBody",
     "GetEmailSuppressionsResponseBody",
     "GetFeatureRequestResponseBody",
@@ -980,6 +1028,12 @@ __all__ = [
     "UpdateCustomFieldSelectOptionResponseBody",
     "UpdateCustomObjectResponseBody",
     "UpdateCustomObjectsResponseBody",
+    "UpdateCustomerPortalAccessSettings",
+    "UpdateCustomerPortalBranding",
+    "UpdateCustomerPortalDisplaySettings",
+    "UpdateCustomerPortalNavigation",
+    "UpdateCustomerPortalTabs",
+    "UpdateCustomerPortalUserPermissions",
     "UpdateFeatureRequestResponseBody",
     "UpdateIssueResponseBody",
     "UpdateIssuesResponseBody",

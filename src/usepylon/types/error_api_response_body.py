@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .filter_error import FilterError
 
 
 class ErrorApiResponseBody(UniversalBaseModel):
@@ -12,7 +13,7 @@ class ErrorApiResponseBody(UniversalBaseModel):
     A stable machine-readable identifier for this failure, safe to branch on
     instead of the message text. Omitted when the failure has no assigned code.
     
-    Known values: `recipients_suppressed`, `email_bounced`, `internal_issue_reply_not_allowed`, `duplicate_object`, `invalid_authorization_header`, `invalid_api_token`, `invalid_oauth_token`, `wrong_region_token`, `organization_deactivated`, `organization_suspended`, `permission_denied`, `oauth_not_permitted`, `rate_limited`, `not_found`, `method_not_allowed`, `payload_too_large`, `invalid_request_body`, `internal_error`, `invalid_webhook_credentials`, `organization_inactive`. This list is not exhaustive.
+    Known values: `recipients_suppressed`, `email_bounced`, `internal_issue_reply_not_allowed`, `duplicate_object`, `invalid_authorization_header`, `invalid_api_token`, `invalid_oauth_token`, `wrong_region_token`, `organization_deactivated`, `organization_suspended`, `permission_denied`, `oauth_not_permitted`, `rate_limited`, `not_found`, `method_not_allowed`, `payload_too_large`, `invalid_request_body`, `internal_error`, `invalid_webhook_credentials`, `organization_inactive`, `invalid_filter`. This list is not exhaustive.
     """
 
     errors: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
@@ -23,6 +24,12 @@ class ErrorApiResponseBody(UniversalBaseModel):
     exists_id: typing.Optional[str] = pydantic.Field(default=None)
     """
     The ID of the object that already exists if this is a duplicate object error.
+    """
+
+    filter_errors: typing.Optional[typing.List[FilterError]] = pydantic.Field(default=None)
+    """
+    One entry per problem found in the request's filter. Present only when code is
+    "invalid_filter"; errors carries the same messages as plain text.
     """
 
     request_id: str = pydantic.Field()

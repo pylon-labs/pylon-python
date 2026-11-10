@@ -31,6 +31,12 @@ class TicketFormLayoutField(UniversalBaseModel):
     The name of the ticket form layout field.
     """
 
+    prefill_key: str = pydantic.Field()
+    """
+    The URL query parameter used to prefill this field on the public form.
+    Derived from the form's display label and changes when that label is renamed.
+    """
+
     required: bool = pydantic.Field()
     """
     Indicates whether the field is required when submitting the ticket form.
@@ -38,7 +44,8 @@ class TicketFormLayoutField(UniversalBaseModel):
 
     slug: str = pydantic.Field()
     """
-    The slug of the ticket form layout field.
+    The field identifier used for API submissions and visibility conditions.
+    For custom fields, this is the underlying custom-field slug.
     """
 
     type: str = pydantic.Field()
