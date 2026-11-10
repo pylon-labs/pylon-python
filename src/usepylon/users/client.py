@@ -67,6 +67,54 @@ class UsersClient:
         _response = self._raw_client.list(include_deactivated=include_deactivated, request_options=request_options)
         return _response.data
 
+    def invite(
+        self,
+        *,
+        email: str,
+        name: str,
+        role_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetUserResponseBody:
+        """
+        Creates a user and emails them an invitation to join the organization. If a user with this email already exists,
+        they are reactivated if needed and sent a new invitation, and any pending invitation is canceled. Requires admin permissions.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        email : str
+            The email address to send the invitation to.
+
+        name : str
+            The name of the user to invite.
+
+        role_id : typing.Optional[str]
+            The ID of the role to give the user. See GET /user-roles. Defaults to the organization's default role.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.users.invite(
+            email="jane@example.com",
+            name="name",
+        )
+        """
+        _response = self._raw_client.invite(email=email, name=name, role_id=role_id, request_options=request_options)
+        return _response.data
+
     def search(
         self,
         *,
@@ -283,6 +331,64 @@ class AsyncUsersClient:
         """
         _response = await self._raw_client.list(
             include_deactivated=include_deactivated, request_options=request_options
+        )
+        return _response.data
+
+    async def invite(
+        self,
+        *,
+        email: str,
+        name: str,
+        role_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> GetUserResponseBody:
+        """
+        Creates a user and emails them an invitation to join the organization. If a user with this email already exists,
+        they are reactivated if needed and sent a new invitation, and any pending invitation is canceled. Requires admin permissions.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        email : str
+            The email address to send the invitation to.
+
+        name : str
+            The name of the user to invite.
+
+        role_id : typing.Optional[str]
+            The ID of the role to give the user. See GET /user-roles. Defaults to the organization's default role.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetUserResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.users.invite(
+                email="jane@example.com",
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.invite(
+            email=email, name=name, role_id=role_id, request_options=request_options
         )
         return _response.data
 

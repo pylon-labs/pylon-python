@@ -151,6 +151,130 @@ class RawUsersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def invite(
+        self,
+        *,
+        email: str,
+        name: str,
+        role_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[GetUserResponseBody]:
+        """
+        Creates a user and emails them an invitation to join the organization. If a user with this email already exists,
+        they are reactivated if needed and sent a new invitation, and any pending invitation is canceled. Requires admin permissions.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        email : str
+            The email address to send the invitation to.
+
+        name : str
+            The name of the user to invite.
+
+        role_id : typing.Optional[str]
+            The ID of the role to give the user. See GET /user-roles. Defaults to the organization's default role.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetUserResponseBody]
+
+        """
+        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
+            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
+        )
+        _response = self._client_wrapper.httpx_client.request(
+            "users/invite",
+            method="POST",
+            json={
+                "email": email,
+                "name": name,
+                "role_id": role_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=_request_options_with_retries_disabled,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserResponseBody,
+                    parse_obj_as(
+                        type_=GetUserResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def search(
         self,
         *,
@@ -642,6 +766,130 @@ class AsyncRawUsersClient:
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def invite(
+        self,
+        *,
+        email: str,
+        name: str,
+        role_id: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[GetUserResponseBody]:
+        """
+        Creates a user and emails them an invitation to join the organization. If a user with this email already exists,
+        they are reactivated if needed and sent a new invitation, and any pending invitation is canceled. Requires admin permissions.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        email : str
+            The email address to send the invitation to.
+
+        name : str
+            The name of the user to invite.
+
+        role_id : typing.Optional[str]
+            The ID of the role to give the user. See GET /user-roles. Defaults to the organization's default role.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetUserResponseBody]
+
+        """
+        _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
+            {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
+        )
+        _response = await self._client_wrapper.httpx_client.request(
+            "users/invite",
+            method="POST",
+            json={
+                "email": email,
+                "name": name,
+                "role_id": role_id,
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=_request_options_with_retries_disabled,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetUserResponseBody,
+                    parse_obj_as(
+                        type_=GetUserResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorApiResponseBody,

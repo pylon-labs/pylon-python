@@ -3835,6 +3835,193 @@ client.custom_objects.update(
 </dl>
 </details>
 
+## CustomerPortal
+<details><summary><code>client.customer_portal.<a href="src/usepylon/customer_portal/client.py">get_settings</a>() -> GetCustomerPortalSettingsResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the organization's customer portal settings.
+
+**Rate limit:** 120 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.customer_portal.get_settings()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.customer_portal.<a href="src/usepylon/customer_portal/client.py">update_settings</a>(...) -> GetCustomerPortalSettingsResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the organization's customer portal settings. Only provided fields are modified.
+
+**Rate limit:** 30 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.customer_portal.update_settings()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**access:** `typing.Optional[UpdateCustomerPortalAccessSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**branding:** `typing.Optional[UpdateCustomerPortalBranding]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display:** `typing.Optional[UpdateCustomerPortalDisplaySettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**enabled:** `typing.Optional[bool]` — Whether the customer portal is enabled. Enabling it requires a plan that includes the customer portal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**navigation:** `typing.Optional[UpdateCustomerPortalNavigation]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**portal_user_permissions:** `typing.Optional[UpdateCustomerPortalUserPermissions]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tabs:** `typing.Optional[UpdateCustomerPortalTabs]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## EmailSuppressions
 <details><summary><code>client.email_suppressions.<a href="src/usepylon/email_suppressions/client.py">list</a>(...) -> GetEmailSuppressionsResponseBody</code></summary>
 <dl>
@@ -11575,6 +11762,99 @@ client.users.list()
 <dd>
 
 **include_deactivated:** `typing.Optional[bool]` — Whether to include deactivated users. Defaults to false.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/usepylon/users/client.py">invite</a>(...) -> GetUserResponseBody</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a user and emails them an invitation to join the organization. If a user with this email already exists,
+they are reactivated if needed and sent a new invitation, and any pending invitation is canceled. Requires admin permissions.
+
+**Rate limit:** 30 requests per minute
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from usepylon import Pylon
+from usepylon.environment import PylonEnvironment
+
+client = Pylon(
+    token="<token>",
+    environment=PylonEnvironment.US,
+)
+
+client.users.invite(
+    email="jane@example.com",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**email:** `str` — The email address to send the invitation to.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `str` — The name of the user to invite.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**role_id:** `typing.Optional[str]` — The ID of the role to give the user. See GET /user-roles. Defaults to the organization's default role.
     
 </dd>
 </dl>

@@ -18,6 +18,13 @@ class IssueThread(UniversalBaseModel):
     The ID of the channel that the thread belongs to, if the thread is being synced with a chat platform.
     """
 
+    delivery_mode: str = pydantic.Field()
+    """
+    The destination for messages in this thread, such as slack, email, or linear. None for Pylon-only threads.
+    
+    Known values: `email`, `slack`, `chat_widget`, `customer_portal`, `none`, `microsoft_teams`, `microsoft_teams_chat`, `discord`, `google_chat`, `whatsapp`, `telegram`, `sms`, `linear`, `jira`, `github`, `asana`, `shortcut`, `zendesk`, `salesforce_service`, `intercom`, `freshdesk`, `jira_service_management`, `hubspot_service`. This list is not exhaustive.
+    """
+
     id: str = pydantic.Field()
     """
     The ID of the thread.
