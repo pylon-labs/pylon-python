@@ -18,7 +18,9 @@ from ...errors.not_found_error import NotFoundError
 from ...errors.too_many_requests_error import TooManyRequestsError
 from ...errors.unauthorized_error import UnauthorizedError
 from ...types.create_route_redirect_response_body import CreateRouteRedirectResponseBody
+from ...types.delete_route_redirect_response_body import DeleteRouteRedirectResponseBody
 from ...types.error_api_response_body import ErrorApiResponseBody
+from ...types.get_route_redirects_response_body import GetRouteRedirectsResponseBody
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -29,14 +31,114 @@ class RawRouteRedirectsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(
+        self, knowledge_base_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetRouteRedirectsResponseBody]:
+        """
+        Returns every path redirect in a knowledge base.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetRouteRedirectsResponseBody]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"knowledge-bases/{encode_path_param(knowledge_base_id)}/route-redirects",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetRouteRedirectsResponseBody,
+                    parse_obj_as(
+                        type_=GetRouteRedirectsResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create(
         self,
         knowledge_base_id: str,
         *,
         from_path: str,
-        object_id: str,
         object_type: str,
         language: typing.Optional[str] = OMIT,
+        object_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateRouteRedirectResponseBody]:
         """
@@ -52,14 +154,14 @@ class RawRouteRedirectsClient:
         from_path : str
             The path to redirect from.
 
-        object_id : str
-            The ID of the object to redirect to.
-
         object_type : str
-            The type of the object to redirect to. Must be "article" or "collection".
+            The type of the object to redirect to: "article", "collection", or "knowledgebase" for the knowledge base homepage.
 
         language : typing.Optional[str]
             Language of the object to redirect to. If not specified, the default language of the knowledge base will be used.
+
+        object_id : typing.Optional[str]
+            The ID of the article or collection to redirect to. Omit when object_type is "knowledgebase".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -183,19 +285,222 @@ class RawRouteRedirectsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def delete(
+        self, knowledge_base_id: str, redirect_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[DeleteRouteRedirectResponseBody]:
+        """
+        Deletes a path redirect from a knowledge base. Requires knowledge base admin permission.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        redirect_id : str
+            The ID of the route redirect.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[DeleteRouteRedirectResponseBody]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"knowledge-bases/{encode_path_param(knowledge_base_id)}/route-redirects/{encode_path_param(redirect_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteRouteRedirectResponseBody,
+                    parse_obj_as(
+                        type_=DeleteRouteRedirectResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawRouteRedirectsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self, knowledge_base_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetRouteRedirectsResponseBody]:
+        """
+        Returns every path redirect in a knowledge base.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetRouteRedirectsResponseBody]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"knowledge-bases/{encode_path_param(knowledge_base_id)}/route-redirects",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetRouteRedirectsResponseBody,
+                    parse_obj_as(
+                        type_=GetRouteRedirectsResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
         self,
         knowledge_base_id: str,
         *,
         from_path: str,
-        object_id: str,
         object_type: str,
         language: typing.Optional[str] = OMIT,
+        object_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateRouteRedirectResponseBody]:
         """
@@ -211,14 +516,14 @@ class AsyncRawRouteRedirectsClient:
         from_path : str
             The path to redirect from.
 
-        object_id : str
-            The ID of the object to redirect to.
-
         object_type : str
-            The type of the object to redirect to. Must be "article" or "collection".
+            The type of the object to redirect to: "article", "collection", or "knowledgebase" for the knowledge base homepage.
 
         language : typing.Optional[str]
             Language of the object to redirect to. If not specified, the default language of the knowledge base will be used.
+
+        object_id : typing.Optional[str]
+            The ID of the article or collection to redirect to. Omit when object_type is "knowledgebase".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -302,6 +607,109 @@ class AsyncRawRouteRedirectsClient:
                 )
             if _response.status_code == 409:
                 raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self, knowledge_base_id: str, redirect_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[DeleteRouteRedirectResponseBody]:
+        """
+        Deletes a path redirect from a knowledge base. Requires knowledge base admin permission.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        redirect_id : str
+            The ID of the route redirect.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[DeleteRouteRedirectResponseBody]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"knowledge-bases/{encode_path_param(knowledge_base_id)}/route-redirects/{encode_path_param(redirect_id)}",
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    DeleteRouteRedirectResponseBody,
+                    parse_obj_as(
+                        type_=DeleteRouteRedirectResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorApiResponseBody,

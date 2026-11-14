@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         CreateIssueRequestPriority,
         LinkExternalIncidentRequestBodySource,
+        UpdateIssueRequestBodyTagsApplyMode,
         UpdateIssueRequestBodyType,
         UpdateIssuesRequestTagsApplyMode,
     )
@@ -16,6 +17,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateIssueRequestPriority": ".types",
     "LinkExternalIncidentRequestBodySource": ".types",
+    "UpdateIssueRequestBodyTagsApplyMode": ".types",
     "UpdateIssueRequestBodyType": ".types",
     "UpdateIssuesRequestTagsApplyMode": ".types",
     "followers": ".followers",
@@ -50,6 +52,7 @@ def __dir__():
 __all__ = [
     "CreateIssueRequestPriority",
     "LinkExternalIncidentRequestBodySource",
+    "UpdateIssueRequestBodyTagsApplyMode",
     "UpdateIssueRequestBodyType",
     "UpdateIssuesRequestTagsApplyMode",
     "followers",

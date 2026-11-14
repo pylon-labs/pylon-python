@@ -7,7 +7,11 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .list_articles_request_media import ListArticlesRequestMedia
-_dynamic_imports: typing.Dict[str, str] = {"ListArticlesRequestMedia": ".list_articles_request_media"}
+    from .update_article_request_body_tags_apply_mode import UpdateArticleRequestBodyTagsApplyMode
+_dynamic_imports: typing.Dict[str, str] = {
+    "ListArticlesRequestMedia": ".list_articles_request_media",
+    "UpdateArticleRequestBodyTagsApplyMode": ".update_article_request_body_tags_apply_mode",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ListArticlesRequestMedia"]
+__all__ = ["ListArticlesRequestMedia", "UpdateArticleRequestBodyTagsApplyMode"]

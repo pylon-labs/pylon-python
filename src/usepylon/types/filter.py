@@ -44,8 +44,8 @@ class Filter(UniversalBaseModel):
 
     values: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    The values for this filter. Used by multi-valued operators: "in", "not_in", and
-    "includes_all_of". For "time_range", set to [start, end].
+    The values for this filter. Used by multi-valued operators: "in", "not_in", "includes_all_of",
+    "includes_exactly", "belongs_to", and "not_belongs_to". For "time_range", set to [start, end].
     """
 
     if IS_PYDANTIC_V2:

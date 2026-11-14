@@ -27,6 +27,7 @@ from ..types.delete_account_response_body import DeleteAccountResponseBody
 from ..types.error_api_response_body import ErrorApiResponseBody
 from ..types.external_id import ExternalId
 from ..types.filter import Filter
+from ..types.get_account_files_response_body import GetAccountFilesResponseBody
 from ..types.get_account_response_body import GetAccountResponseBody
 from ..types.get_accounts_response_body import GetAccountsResponseBody
 from ..types.merge_accounts_response_body import MergeAccountsResponseBody
@@ -37,6 +38,7 @@ from ..types.update_accounts_response_body import UpdateAccountsResponseBody
 from ..types.upload_account_file_response_body import UploadAccountFileResponseBody
 from .types.create_account_request_account_type import CreateAccountRequestAccountType
 from .types.update_account_request_body_account_type import UpdateAccountRequestBodyAccountType
+from .types.update_account_request_body_tags_apply_mode import UpdateAccountRequestBodyTagsApplyMode
 from .types.update_accounts_request_account_type import UpdateAccountsRequestAccountType
 from .types.update_accounts_request_tags_apply_mode import UpdateAccountsRequestTagsApplyMode
 from pydantic import ValidationError
@@ -655,14 +657,58 @@ class RawAccountsClient:
 
          Field | Allowed operators |
          --- | --- |
-         `id` | `equals`, `in`, `not_in` |
-         `domains` | `contains`, `does_not_contain`, `in`, `not_in` |
-         `tags` | `contains`, `does_not_contain`, `in`, `not_in` |
-         `name` | `equals`, `in`, `not_in`, `string_contains` |
-         `external_ids` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+         `account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `created_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `domains` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+         `external_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `external_channel_type` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `external_ids` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `internal_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `internal_slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `internal_slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `issue_count_last_90_days` | `equals` |
+         `last_broadcast_sent_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `last_customer_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `last_vendor_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `name` | `equals`, `in`, `not_in`, `string_contains`, `contains`, `does_not_contain` |
+         `number_of_users_in_channel` | `equals` |
+         `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to`, `does_not_contain` |
+         `parent_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `partner_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `primary_channel_id` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `primary_domain` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
+         `slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `source` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `state` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `tags` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `type` | `equals`, `in`, `not_in`, `does_not_contain` |
 
-        For custom fields, pass the field slug as `field`.
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
+
+        ### Filter values
+
+        Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
+
+         Field | Values and behavior |
+         --- | --- |
+         `state` | `enabled` or `disabled`. |
+         `name` | `contains` is an alias for `string_contains`. |
+         `account_id` | `id` is also accepted as a field name. |
+         `tags` | A tag name or ID. |
+
+        ### Custom fields
+
+        Set `field` to the custom field's slug. If a custom field has the same slug as a built-in field, the custom field is matched instead, except for these fields:
+
+        `account_id`
+        `domains`
+        `tags`
+        `name`
+        `external_ids`
+        `owner_id`
 
         **Rate limit:** 120 requests per minute
 
@@ -1034,6 +1080,7 @@ class RawAccountsClient:
         primary_domain: typing.Optional[str] = OMIT,
         subaccount_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        tags_apply_mode: typing.Optional[UpdateAccountRequestBodyTagsApplyMode] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateAccountResponseBody]:
         """
@@ -1080,7 +1127,10 @@ class RawAccountsClient:
             An array of account IDs to set as this account's subaccounts. If provided, the account's subaccounts become exactly this list; accounts you leave out are detached.
 
         tags : typing.Optional[typing.Sequence[str]]
-            An array of strings to use as tags on this account. If provided, the accounts tags will be updated to the given tags.
+            An array of strings to use as tags on this account, applied according to tags_apply_mode. By default the account's tags will be updated to the given tags.
+
+        tags_apply_mode : typing.Optional[UpdateAccountRequestBodyTagsApplyMode]
+            The mode for applying tags. Valid values: "append_only", "remove_only", "replace". Defaults to "replace".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1112,6 +1162,7 @@ class RawAccountsClient:
                 "primary_domain": primary_domain,
                 "subaccount_ids": subaccount_ids,
                 "tags": tags,
+                "tags_apply_mode": tags_apply_mode,
             },
             headers={
                 "content-type": "application/json",
@@ -1140,6 +1191,106 @@ class RawAccountsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_files(
+        self, account_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[GetAccountFilesResponseBody]:
+        """
+        Returns the files uploaded to an account, newest first, by account ID or external ID.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        account_id : str
+            The ID or external ID of the account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[GetAccountFilesResponseBody]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"accounts/{encode_path_param(account_id)}/files",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAccountFilesResponseBody,
+                    parse_obj_as(
+                        type_=GetAccountFilesResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
@@ -1951,14 +2102,58 @@ class AsyncRawAccountsClient:
 
          Field | Allowed operators |
          --- | --- |
-         `id` | `equals`, `in`, `not_in` |
-         `domains` | `contains`, `does_not_contain`, `in`, `not_in` |
-         `tags` | `contains`, `does_not_contain`, `in`, `not_in` |
-         `name` | `equals`, `in`, `not_in`, `string_contains` |
-         `external_ids` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+         `account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `created_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `domains` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+         `external_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `external_channel_type` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `external_ids` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `internal_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `internal_slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `internal_slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `issue_count_last_90_days` | `equals` |
+         `last_broadcast_sent_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `last_customer_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `last_vendor_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+         `name` | `equals`, `in`, `not_in`, `string_contains`, `contains`, `does_not_contain` |
+         `number_of_users_in_channel` | `equals` |
+         `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to`, `does_not_contain` |
+         `parent_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `partner_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+         `primary_channel_id` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `primary_domain` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
+         `slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+         `source` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `state` | `equals`, `in`, `not_in`, `does_not_contain` |
+         `tags` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+         `type` | `equals`, `in`, `not_in`, `does_not_contain` |
 
-        For custom fields, pass the field slug as `field`.
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
+
+        ### Filter values
+
+        Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
+
+         Field | Values and behavior |
+         --- | --- |
+         `state` | `enabled` or `disabled`. |
+         `name` | `contains` is an alias for `string_contains`. |
+         `account_id` | `id` is also accepted as a field name. |
+         `tags` | A tag name or ID. |
+
+        ### Custom fields
+
+        Set `field` to the custom field's slug. If a custom field has the same slug as a built-in field, the custom field is matched instead, except for these fields:
+
+        `account_id`
+        `domains`
+        `tags`
+        `name`
+        `external_ids`
+        `owner_id`
 
         **Rate limit:** 120 requests per minute
 
@@ -2333,6 +2528,7 @@ class AsyncRawAccountsClient:
         primary_domain: typing.Optional[str] = OMIT,
         subaccount_ids: typing.Optional[typing.Sequence[str]] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
+        tags_apply_mode: typing.Optional[UpdateAccountRequestBodyTagsApplyMode] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateAccountResponseBody]:
         """
@@ -2379,7 +2575,10 @@ class AsyncRawAccountsClient:
             An array of account IDs to set as this account's subaccounts. If provided, the account's subaccounts become exactly this list; accounts you leave out are detached.
 
         tags : typing.Optional[typing.Sequence[str]]
-            An array of strings to use as tags on this account. If provided, the accounts tags will be updated to the given tags.
+            An array of strings to use as tags on this account, applied according to tags_apply_mode. By default the account's tags will be updated to the given tags.
+
+        tags_apply_mode : typing.Optional[UpdateAccountRequestBodyTagsApplyMode]
+            The mode for applying tags. Valid values: "append_only", "remove_only", "replace". Defaults to "replace".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -2411,6 +2610,7 @@ class AsyncRawAccountsClient:
                 "primary_domain": primary_domain,
                 "subaccount_ids": subaccount_ids,
                 "tags": tags,
+                "tags_apply_mode": tags_apply_mode,
             },
             headers={
                 "content-type": "application/json",
@@ -2439,6 +2639,106 @@ class AsyncRawAccountsClient:
                         ),
                     ),
                 )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 429:
+                raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorApiResponseBody,
+                        parse_obj_as(
+                            type_=ErrorApiResponseBody,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_files(
+        self, account_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[GetAccountFilesResponseBody]:
+        """
+        Returns the files uploaded to an account, newest first, by account ID or external ID.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        account_id : str
+            The ID or external ID of the account.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[GetAccountFilesResponseBody]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"accounts/{encode_path_param(account_id)}/files",
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    GetAccountFilesResponseBody,
+                    parse_obj_as(
+                        type_=GetAccountFilesResponseBody,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 401:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),

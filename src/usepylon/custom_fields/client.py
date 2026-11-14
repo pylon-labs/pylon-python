@@ -10,6 +10,7 @@ from ..types.create_custom_field_response_body import CreateCustomFieldResponseB
 from ..types.custom_field_definition_select_option import CustomFieldDefinitionSelectOption
 from ..types.get_custom_field_response_body import GetCustomFieldResponseBody
 from ..types.get_custom_fields_response_body import GetCustomFieldsResponseBody
+from ..types.update_custom_field_requirement import UpdateCustomFieldRequirement
 from ..types.update_custom_field_response_body import UpdateCustomFieldResponseBody
 from .raw_client import AsyncRawCustomFieldsClient, RawCustomFieldsClient
 from .types.create_custom_field_request_body_object_type import CreateCustomFieldRequestBodyObjectType
@@ -49,7 +50,7 @@ class CustomFieldsClient:
         Parameters
         ----------
         object_type : ListCustomFieldsRequestObjectType
-            The object type of the custom fields. Can be "account", "issue", "contact", "task", "project", "meeting", or "opportunity".
+            The object type of the custom fields. Can be "account", "issue", "contact", "task", "project", "meeting", "opportunity", or "feature_request".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -82,6 +83,9 @@ class CustomFieldsClient:
         default_value: typing.Optional[str] = OMIT,
         default_values: typing.Optional[typing.Sequence[str]] = OMIT,
         description: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        is_ai_enabled: typing.Optional[bool] = OMIT,
+        json_schema: typing.Optional[str] = OMIT,
         select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         slug: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -97,10 +101,10 @@ class CustomFieldsClient:
             The label of the custom field.
 
         object_type : CreateCustomFieldRequestBodyObjectType
-            The object type of the custom field. Can be "account", "issue", "contact", "task", "project", "meeting", or "opportunity".
+            The object type of the custom field. Can be "account", "issue", "contact", "task", "project", "meeting", "opportunity", or "feature_request".
 
         type : str
-            The type of the custom field. Can be one of `text`, `number`, `decimal`, `boolean`, `date`, `datetime`, `user`, `url`, `select`, or `multiselect`.
+            The type of the custom field. Can be one of `text`, `number`, `boolean`, `date`, `datetime`, `user`, `url`, `select`, `multiselect`, or `web_research`. Number fields accept integers and fractional values, such as 7.4; decimal is not a separate field type. Web research is supported for accounts and for contacts when enabled for the organization.
 
         default_value : typing.Optional[str]
             The default value for single-valued custom fields.
@@ -110,6 +114,15 @@ class CustomFieldsClient:
 
         description : typing.Optional[str]
             The description of the custom field.
+
+        instructions : typing.Optional[str]
+            Field-wide instructions for how AI should populate the field. For AI-enabled fields, an empty value falls back to description.
+
+        is_ai_enabled : typing.Optional[bool]
+            Whether AI should populate the field. Web research fields are always AI-enabled.
+
+        json_schema : typing.Optional[str]
+            JSON schema for structured web research results. Required for contact web research fields.
 
         select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
             The list options of the select custom field. This is only present for select and multiselect custom fields.
@@ -145,6 +158,9 @@ class CustomFieldsClient:
             default_value=default_value,
             default_values=default_values,
             description=description,
+            instructions=instructions,
+            is_ai_enabled=is_ai_enabled,
+            json_schema=json_schema,
             select_options=select_options,
             slug=slug,
             request_options=request_options,
@@ -188,12 +204,18 @@ class CustomFieldsClient:
         self,
         id: str,
         *,
+        add_select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         default_value: typing.Optional[str] = OMIT,
         default_values: typing.Optional[typing.Sequence[str]] = OMIT,
         description: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        is_ai_enabled: typing.Optional[bool] = OMIT,
         label: typing.Optional[str] = OMIT,
+        option_descriptions: typing.Optional[typing.Dict[str, str]] = OMIT,
+        requirement: typing.Optional[UpdateCustomFieldRequirement] = OMIT,
         select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         slug: typing.Optional[str] = OMIT,
+        visible_by_default: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateCustomFieldResponseBody:
         """
@@ -206,6 +228,9 @@ class CustomFieldsClient:
         id : str
             The ID of the custom field.
 
+        add_select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
+            Options to add without replacing existing options or changing existing labels and AI criteria. Cannot be combined with select_options.
+
         default_value : typing.Optional[str]
             The default value for single-valued custom fields.
 
@@ -215,14 +240,28 @@ class CustomFieldsClient:
         description : typing.Optional[str]
             The description of the custom field.
 
+        instructions : typing.Optional[str]
+            Field-wide instructions for how AI should populate the field. An empty string clears saved instructions when AI is disabled.
+
+        is_ai_enabled : typing.Optional[bool]
+            Whether AI should populate the field. Omit to preserve the current setting.
+
         label : typing.Optional[str]
             The label of the custom field.
+
+        option_descriptions : typing.Optional[typing.Dict[str, str]]
+            AI selection criteria keyed by exact option slug. Omitted options are preserved; an empty string clears an option's criteria.
+
+        requirement : typing.Optional[UpdateCustomFieldRequirement]
 
         select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
             The complete list of options for a select or multiselect custom field. Options missing from the list are deleted and their stored values are cleared asynchronously. Prefer the dedicated select option endpoints, which can rename an option without losing stored values.
 
         slug : typing.Optional[str]
             The slug of the custom field.
+
+        visible_by_default : typing.Optional[bool]
+            Whether the custom field shows on records in Pylon by default. When false, it shows only where a field visibility condition makes it visible. Omit to keep the current setting.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -245,12 +284,18 @@ class CustomFieldsClient:
         """
         _response = self._raw_client.update(
             id,
+            add_select_options=add_select_options,
             default_value=default_value,
             default_values=default_values,
             description=description,
+            instructions=instructions,
+            is_ai_enabled=is_ai_enabled,
             label=label,
+            option_descriptions=option_descriptions,
+            requirement=requirement,
             select_options=select_options,
             slug=slug,
+            visible_by_default=visible_by_default,
             request_options=request_options,
         )
         return _response.data
@@ -292,7 +337,7 @@ class AsyncCustomFieldsClient:
         Parameters
         ----------
         object_type : ListCustomFieldsRequestObjectType
-            The object type of the custom fields. Can be "account", "issue", "contact", "task", "project", "meeting", or "opportunity".
+            The object type of the custom fields. Can be "account", "issue", "contact", "task", "project", "meeting", "opportunity", or "feature_request".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -333,6 +378,9 @@ class AsyncCustomFieldsClient:
         default_value: typing.Optional[str] = OMIT,
         default_values: typing.Optional[typing.Sequence[str]] = OMIT,
         description: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        is_ai_enabled: typing.Optional[bool] = OMIT,
+        json_schema: typing.Optional[str] = OMIT,
         select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         slug: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -348,10 +396,10 @@ class AsyncCustomFieldsClient:
             The label of the custom field.
 
         object_type : CreateCustomFieldRequestBodyObjectType
-            The object type of the custom field. Can be "account", "issue", "contact", "task", "project", "meeting", or "opportunity".
+            The object type of the custom field. Can be "account", "issue", "contact", "task", "project", "meeting", "opportunity", or "feature_request".
 
         type : str
-            The type of the custom field. Can be one of `text`, `number`, `decimal`, `boolean`, `date`, `datetime`, `user`, `url`, `select`, or `multiselect`.
+            The type of the custom field. Can be one of `text`, `number`, `boolean`, `date`, `datetime`, `user`, `url`, `select`, `multiselect`, or `web_research`. Number fields accept integers and fractional values, such as 7.4; decimal is not a separate field type. Web research is supported for accounts and for contacts when enabled for the organization.
 
         default_value : typing.Optional[str]
             The default value for single-valued custom fields.
@@ -361,6 +409,15 @@ class AsyncCustomFieldsClient:
 
         description : typing.Optional[str]
             The description of the custom field.
+
+        instructions : typing.Optional[str]
+            Field-wide instructions for how AI should populate the field. For AI-enabled fields, an empty value falls back to description.
+
+        is_ai_enabled : typing.Optional[bool]
+            Whether AI should populate the field. Web research fields are always AI-enabled.
+
+        json_schema : typing.Optional[str]
+            JSON schema for structured web research results. Required for contact web research fields.
 
         select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
             The list options of the select custom field. This is only present for select and multiselect custom fields.
@@ -404,6 +461,9 @@ class AsyncCustomFieldsClient:
             default_value=default_value,
             default_values=default_values,
             description=description,
+            instructions=instructions,
+            is_ai_enabled=is_ai_enabled,
+            json_schema=json_schema,
             select_options=select_options,
             slug=slug,
             request_options=request_options,
@@ -457,12 +517,18 @@ class AsyncCustomFieldsClient:
         self,
         id: str,
         *,
+        add_select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         default_value: typing.Optional[str] = OMIT,
         default_values: typing.Optional[typing.Sequence[str]] = OMIT,
         description: typing.Optional[str] = OMIT,
+        instructions: typing.Optional[str] = OMIT,
+        is_ai_enabled: typing.Optional[bool] = OMIT,
         label: typing.Optional[str] = OMIT,
+        option_descriptions: typing.Optional[typing.Dict[str, str]] = OMIT,
+        requirement: typing.Optional[UpdateCustomFieldRequirement] = OMIT,
         select_options: typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]] = OMIT,
         slug: typing.Optional[str] = OMIT,
+        visible_by_default: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateCustomFieldResponseBody:
         """
@@ -475,6 +541,9 @@ class AsyncCustomFieldsClient:
         id : str
             The ID of the custom field.
 
+        add_select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
+            Options to add without replacing existing options or changing existing labels and AI criteria. Cannot be combined with select_options.
+
         default_value : typing.Optional[str]
             The default value for single-valued custom fields.
 
@@ -484,14 +553,28 @@ class AsyncCustomFieldsClient:
         description : typing.Optional[str]
             The description of the custom field.
 
+        instructions : typing.Optional[str]
+            Field-wide instructions for how AI should populate the field. An empty string clears saved instructions when AI is disabled.
+
+        is_ai_enabled : typing.Optional[bool]
+            Whether AI should populate the field. Omit to preserve the current setting.
+
         label : typing.Optional[str]
             The label of the custom field.
+
+        option_descriptions : typing.Optional[typing.Dict[str, str]]
+            AI selection criteria keyed by exact option slug. Omitted options are preserved; an empty string clears an option's criteria.
+
+        requirement : typing.Optional[UpdateCustomFieldRequirement]
 
         select_options : typing.Optional[typing.Sequence[CustomFieldDefinitionSelectOption]]
             The complete list of options for a select or multiselect custom field. Options missing from the list are deleted and their stored values are cleared asynchronously. Prefer the dedicated select option endpoints, which can rename an option without losing stored values.
 
         slug : typing.Optional[str]
             The slug of the custom field.
+
+        visible_by_default : typing.Optional[bool]
+            Whether the custom field shows on records in Pylon by default. When false, it shows only where a field visibility condition makes it visible. Omit to keep the current setting.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -522,12 +605,18 @@ class AsyncCustomFieldsClient:
         """
         _response = await self._raw_client.update(
             id,
+            add_select_options=add_select_options,
             default_value=default_value,
             default_values=default_values,
             description=description,
+            instructions=instructions,
+            is_ai_enabled=is_ai_enabled,
             label=label,
+            option_descriptions=option_descriptions,
+            requirement=requirement,
             select_options=select_options,
             slug=slug,
+            visible_by_default=visible_by_default,
             request_options=request_options,
         )
         return _response.data

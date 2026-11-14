@@ -8,11 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .create_account_request_account_type import CreateAccountRequestAccountType
     from .update_account_request_body_account_type import UpdateAccountRequestBodyAccountType
+    from .update_account_request_body_tags_apply_mode import UpdateAccountRequestBodyTagsApplyMode
     from .update_accounts_request_account_type import UpdateAccountsRequestAccountType
     from .update_accounts_request_tags_apply_mode import UpdateAccountsRequestTagsApplyMode
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateAccountRequestAccountType": ".create_account_request_account_type",
     "UpdateAccountRequestBodyAccountType": ".update_account_request_body_account_type",
+    "UpdateAccountRequestBodyTagsApplyMode": ".update_account_request_body_tags_apply_mode",
     "UpdateAccountsRequestAccountType": ".update_accounts_request_account_type",
     "UpdateAccountsRequestTagsApplyMode": ".update_accounts_request_tags_apply_mode",
 }
@@ -42,6 +44,7 @@ def __dir__():
 __all__ = [
     "CreateAccountRequestAccountType",
     "UpdateAccountRequestBodyAccountType",
+    "UpdateAccountRequestBodyTagsApplyMode",
     "UpdateAccountsRequestAccountType",
     "UpdateAccountsRequestTagsApplyMode",
 ]
