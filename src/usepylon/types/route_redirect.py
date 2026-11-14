@@ -30,12 +30,12 @@ class RouteRedirect(UniversalBaseModel):
 
     object_id: str = pydantic.Field()
     """
-    The ID of the object to redirect to.
+    The ID of the object to redirect to. Empty when object_type is knowledgebase.
     """
 
     object_type: str = pydantic.Field()
     """
-    The type of the object to redirect to.
+    The type of the object to redirect to: article, collection, or knowledgebase for the knowledge base homepage.
     """
 
     if IS_PYDANTIC_V2:

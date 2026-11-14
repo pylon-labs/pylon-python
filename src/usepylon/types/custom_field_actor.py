@@ -4,19 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .customer_portal_link import CustomerPortalLink
+from .mini_user import MiniUser
 
 
-class CustomerPortalFooterCategory(UniversalBaseModel):
-    links: typing.List[CustomerPortalLink] = pydantic.Field()
+class CustomFieldActor(UniversalBaseModel):
+    type: str = pydantic.Field()
     """
-    The links in the group, in order.
+    "user" for a change made by a user, "system" for an automated change, such as AI-generated option descriptions, and "unknown" for a change made before authors were recorded.
+    
+    Known values: `user`, `system`, `unknown`. This list is not exhaustive.
     """
 
-    title: str = pydantic.Field()
-    """
-    The heading of the link group.
-    """
+    user: typing.Optional[MiniUser] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

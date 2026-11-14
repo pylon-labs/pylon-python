@@ -6,20 +6,10 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class CustomerPortalUserPermissions(UniversalBaseModel):
-    edit_profile: bool = pydantic.Field()
+class DeleteRouteRedirectResponseBody(UniversalBaseModel):
+    request_id: str = pydantic.Field()
     """
-    Whether portal users can edit their own profile.
-    """
-
-    edit_reply_ccs: bool = pydantic.Field()
-    """
-    Whether portal users can edit the CC list on their replies.
-    """
-
-    export_issues_csv: bool = pydantic.Field()
-    """
-    Whether portal users can export their issues as CSV.
+    The request ID for tracking.
     """
 
     if IS_PYDANTIC_V2:

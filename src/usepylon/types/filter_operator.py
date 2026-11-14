@@ -31,6 +31,9 @@ FilterOperator = typing.Union[
         "time_is_not_in_last",
         "time_is_in_next",
         "time_is_not_in_next",
+        "includes_exactly",
+        "belongs_to",
+        "not_belongs_to",
     ],
     typing.Any,
 ]

@@ -16,6 +16,7 @@ from ...types.request_article_review_response_body import RequestArticleReviewRe
 from ...types.update_article_response_body import UpdateArticleResponseBody
 from .raw_client import AsyncRawArticlesClient, RawArticlesClient
 from .types.list_articles_request_media import ListArticlesRequestMedia
+from .types.update_article_request_body_tags_apply_mode import UpdateArticleRequestBodyTagsApplyMode
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -301,6 +302,7 @@ class ArticlesClient:
         position: typing.Optional[int] = OMIT,
         publish_updated_body_html: typing.Optional[bool] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        tags_apply_mode: typing.Optional[UpdateArticleRequestBodyTagsApplyMode] = OMIT,
         title: typing.Optional[str] = OMIT,
         visibility_config: typing.Optional[ArticleVisibilityConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -346,7 +348,10 @@ class ArticlesClient:
             Whether to publish the updated body_html. Defaults to false, which leaves the change as a draft.
 
         tag_ids : typing.Optional[typing.Sequence[str]]
-            IDs of article tags to assign. If provided, replaces all tags currently assigned to the article.
+            IDs of article tags to assign, applied according to tags_apply_mode. By default replaces all tags currently assigned to the article.
+
+        tags_apply_mode : typing.Optional[UpdateArticleRequestBodyTagsApplyMode]
+            The mode for applying tag_ids. Valid values: "append_only", "remove_only", "replace". Defaults to "replace".
 
         title : typing.Optional[str]
             The title of the article. For the default language, applies to the live article immediately.
@@ -386,6 +391,7 @@ class ArticlesClient:
             position=position,
             publish_updated_body_html=publish_updated_body_html,
             tag_ids=tag_ids,
+            tags_apply_mode=tags_apply_mode,
             title=title,
             visibility_config=visibility_config,
             request_options=request_options,
@@ -763,6 +769,7 @@ class AsyncArticlesClient:
         position: typing.Optional[int] = OMIT,
         publish_updated_body_html: typing.Optional[bool] = OMIT,
         tag_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        tags_apply_mode: typing.Optional[UpdateArticleRequestBodyTagsApplyMode] = OMIT,
         title: typing.Optional[str] = OMIT,
         visibility_config: typing.Optional[ArticleVisibilityConfig] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -808,7 +815,10 @@ class AsyncArticlesClient:
             Whether to publish the updated body_html. Defaults to false, which leaves the change as a draft.
 
         tag_ids : typing.Optional[typing.Sequence[str]]
-            IDs of article tags to assign. If provided, replaces all tags currently assigned to the article.
+            IDs of article tags to assign, applied according to tags_apply_mode. By default replaces all tags currently assigned to the article.
+
+        tags_apply_mode : typing.Optional[UpdateArticleRequestBodyTagsApplyMode]
+            The mode for applying tag_ids. Valid values: "append_only", "remove_only", "replace". Defaults to "replace".
 
         title : typing.Optional[str]
             The title of the article. For the default language, applies to the live article immediately.
@@ -856,6 +866,7 @@ class AsyncArticlesClient:
             position=position,
             publish_updated_body_html=publish_updated_body_html,
             tag_ids=tag_ids,
+            tags_apply_mode=tags_apply_mode,
             title=title,
             visibility_config=visibility_config,
             request_options=request_options,

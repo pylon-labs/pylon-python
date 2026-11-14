@@ -4,17 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .route_redirect import RouteRedirect
 
 
-class CustomerPortalLink(UniversalBaseModel):
-    text: str = pydantic.Field()
+class GetRouteRedirectsResponseBody(UniversalBaseModel):
+    data: typing.List[RouteRedirect] = pydantic.Field()
     """
-    The link text.
+    The data payload of the response.
     """
 
-    url: str = pydantic.Field()
+    request_id: str = pydantic.Field()
     """
-    The link URL. Must be an http or https URL.
+    The request ID for tracking.
     """
 
     if IS_PYDANTIC_V2:

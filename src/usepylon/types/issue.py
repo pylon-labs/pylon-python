@@ -90,6 +90,11 @@ class Issue(UniversalBaseModel):
     Custom field values associated with the issue.
     """
 
+    customer_portal_title: str = pydantic.Field()
+    """
+    The customer-facing title displayed in the customer portal, separate from the internal issue title.
+    """
+
     customer_portal_visible: bool = pydantic.Field()
     """
     Whether the issue is visible in the customer portal.

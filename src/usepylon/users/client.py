@@ -130,6 +130,10 @@ class UsersClient:
          --- | --- |
          `email` | `equals`, `in`, `not_in` |
 
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
+
         **Rate limit:** 120 requests per minute
 
         Parameters
@@ -406,6 +410,10 @@ class AsyncUsersClient:
          Field | Allowed operators |
          --- | --- |
          `email` | `equals`, `in`, `not_in` |
+
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
 
         **Rate limit:** 120 requests per minute
 

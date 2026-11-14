@@ -39,10 +39,13 @@ class RawMessagesClient:
         *,
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
+        public_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[Message, GetIssueMessagesResponseBody]:
         """
         Returns messages for the specified issue, including replies and internal notes, ordered from oldest to newest.
+
+        Set public_only=true to exclude internal notes and hidden messages and remove internal metadata. This option does not authenticate a customer or apply customer-portal access rules.
 
         To post a reply, use the message's top-level id—not thread_id or email_info.message_id. To post an internal note, use an internal thread's thread_id or an internal note's top-level id. Omit both limit and cursor to return all messages; when cursor is provided without limit, the page size defaults to 100.
 
@@ -59,6 +62,9 @@ class RawMessagesClient:
         limit : typing.Optional[int]
             The number of messages to fetch. Must be greater than 0 and at most 1000. If omitted, all messages are returned for backward compatibility.
 
+        public_only : typing.Optional[bool]
+            Return only customer-visible messages, excluding internal notes and hidden messages. Clears BCC recipients, email-open tracking, Slack metadata, internal thread IDs, and the author's internal user email. Defaults to false. This does not enforce a portal visitor's ticket access or portal identity settings; callers must authorize their customers separately.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -73,6 +79,7 @@ class RawMessagesClient:
             params={
                 "cursor": cursor,
                 "limit": limit,
+                "public_only": public_only,
             },
             request_options=request_options,
         )
@@ -95,6 +102,7 @@ class RawMessagesClient:
                         issue_id,
                         cursor=_parsed_next,
                         limit=limit,
+                        public_only=public_only,
                         request_options=request_options,
                     )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -562,10 +570,13 @@ class AsyncRawMessagesClient:
         *,
         cursor: typing.Optional[str] = None,
         limit: typing.Optional[int] = None,
+        public_only: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[Message, GetIssueMessagesResponseBody]:
         """
         Returns messages for the specified issue, including replies and internal notes, ordered from oldest to newest.
+
+        Set public_only=true to exclude internal notes and hidden messages and remove internal metadata. This option does not authenticate a customer or apply customer-portal access rules.
 
         To post a reply, use the message's top-level id—not thread_id or email_info.message_id. To post an internal note, use an internal thread's thread_id or an internal note's top-level id. Omit both limit and cursor to return all messages; when cursor is provided without limit, the page size defaults to 100.
 
@@ -582,6 +593,9 @@ class AsyncRawMessagesClient:
         limit : typing.Optional[int]
             The number of messages to fetch. Must be greater than 0 and at most 1000. If omitted, all messages are returned for backward compatibility.
 
+        public_only : typing.Optional[bool]
+            Return only customer-visible messages, excluding internal notes and hidden messages. Clears BCC recipients, email-open tracking, Slack metadata, internal thread IDs, and the author's internal user email. Defaults to false. This does not enforce a portal visitor's ticket access or portal identity settings; callers must authorize their customers separately.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -596,6 +610,7 @@ class AsyncRawMessagesClient:
             params={
                 "cursor": cursor,
                 "limit": limit,
+                "public_only": public_only,
             },
             request_options=request_options,
         )
@@ -620,6 +635,7 @@ class AsyncRawMessagesClient:
                             issue_id,
                             cursor=_parsed_next,
                             limit=limit,
+                            public_only=public_only,
                             request_options=request_options,
                         )
 

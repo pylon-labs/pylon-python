@@ -7,9 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import articles, collections, route_redirects, themes
-    from .articles import ListArticlesRequestMedia
+    from .articles import ListArticlesRequestMedia, UpdateArticleRequestBodyTagsApplyMode
 _dynamic_imports: typing.Dict[str, str] = {
     "ListArticlesRequestMedia": ".articles",
+    "UpdateArticleRequestBodyTagsApplyMode": ".articles",
     "articles": ".articles",
     "collections": ".collections",
     "route_redirects": ".route_redirects",
@@ -38,4 +39,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ListArticlesRequestMedia", "articles", "collections", "route_redirects", "themes"]
+__all__ = [
+    "ListArticlesRequestMedia",
+    "UpdateArticleRequestBodyTagsApplyMode",
+    "articles",
+    "collections",
+    "route_redirects",
+    "themes",
+]

@@ -19,7 +19,6 @@ if typing.TYPE_CHECKING:
     from .contacts.client import AsyncContactsClient, ContactsClient
     from .custom_fields.client import AsyncCustomFieldsClient, CustomFieldsClient
     from .custom_objects.client import AsyncCustomObjectsClient, CustomObjectsClient
-    from .customer_portal.client import AsyncCustomerPortalClient, CustomerPortalClient
     from .email_suppressions.client import AsyncEmailSuppressionsClient, EmailSuppressionsClient
     from .feature_requests.client import AsyncFeatureRequestsClient, FeatureRequestsClient
     from .issue_groups.client import AsyncIssueGroupsClient, IssueGroupsClient
@@ -136,7 +135,6 @@ class Pylon:
         self._contacts: typing.Optional[ContactsClient] = None
         self._custom_fields: typing.Optional[CustomFieldsClient] = None
         self._custom_objects: typing.Optional[CustomObjectsClient] = None
-        self._customer_portal: typing.Optional[CustomerPortalClient] = None
         self._email_suppressions: typing.Optional[EmailSuppressionsClient] = None
         self._feature_requests: typing.Optional[FeatureRequestsClient] = None
         self._issue_groups: typing.Optional[IssueGroupsClient] = None
@@ -230,14 +228,6 @@ class Pylon:
 
             self._custom_objects = CustomObjectsClient(client_wrapper=self._client_wrapper)
         return self._custom_objects
-
-    @property
-    def customer_portal(self):
-        if self._customer_portal is None:
-            from .customer_portal.client import CustomerPortalClient  # noqa: E402
-
-            self._customer_portal = CustomerPortalClient(client_wrapper=self._client_wrapper)
-        return self._customer_portal
 
     @property
     def email_suppressions(self):
@@ -522,7 +512,6 @@ class AsyncPylon:
         self._contacts: typing.Optional[AsyncContactsClient] = None
         self._custom_fields: typing.Optional[AsyncCustomFieldsClient] = None
         self._custom_objects: typing.Optional[AsyncCustomObjectsClient] = None
-        self._customer_portal: typing.Optional[AsyncCustomerPortalClient] = None
         self._email_suppressions: typing.Optional[AsyncEmailSuppressionsClient] = None
         self._feature_requests: typing.Optional[AsyncFeatureRequestsClient] = None
         self._issue_groups: typing.Optional[AsyncIssueGroupsClient] = None
@@ -616,14 +605,6 @@ class AsyncPylon:
 
             self._custom_objects = AsyncCustomObjectsClient(client_wrapper=self._client_wrapper)
         return self._custom_objects
-
-    @property
-    def customer_portal(self):
-        if self._customer_portal is None:
-            from .customer_portal.client import AsyncCustomerPortalClient  # noqa: E402
-
-            self._customer_portal = AsyncCustomerPortalClient(client_wrapper=self._client_wrapper)
-        return self._customer_portal
 
     @property
     def email_suppressions(self):

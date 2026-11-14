@@ -4,22 +4,18 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .account_file import AccountFile
 
 
-class UpdateCustomerPortalDisplaySettings(UniversalBaseModel):
-    feature_request_descriptions: typing.Optional[bool] = pydantic.Field(default=None)
+class GetAccountFilesResponseBody(UniversalBaseModel):
+    data: typing.List[AccountFile] = pydantic.Field()
     """
-    Whether the portal shows feature request descriptions.
-    """
-
-    task_linked_issues: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether portal tasks show their linked issues.
+    The data payload of the response.
     """
 
-    task_linked_tasks: typing.Optional[bool] = pydantic.Field(default=None)
+    request_id: str = pydantic.Field()
     """
-    Whether portal tasks show their linked tasks.
+    The request ID for tracking.
     """
 
     if IS_PYDANTIC_V2:

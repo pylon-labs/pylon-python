@@ -10,6 +10,11 @@ from .ticket_form_layout_field import TicketFormLayoutField
 
 
 class TicketForm(UniversalBaseModel):
+    ai_search_enabled: bool = pydantic.Field()
+    """
+    Whether the form offers AI search before submission.
+    """
+
     description_html: str = pydantic.Field()
     """
     The description of the ticket form in HTML.
