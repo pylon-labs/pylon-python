@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         CreateAccountRequestAccountType,
         UpdateAccountRequestBodyAccountType,
+        UpdateAccountRequestBodyTagsApplyMode,
         UpdateAccountsRequestAccountType,
         UpdateAccountsRequestTagsApplyMode,
     )
@@ -16,6 +17,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateAccountRequestAccountType": ".types",
     "UpdateAccountRequestBodyAccountType": ".types",
+    "UpdateAccountRequestBodyTagsApplyMode": ".types",
     "UpdateAccountsRequestAccountType": ".types",
     "UpdateAccountsRequestTagsApplyMode": ".types",
     "activities": ".activities",
@@ -50,6 +52,7 @@ def __dir__():
 __all__ = [
     "CreateAccountRequestAccountType",
     "UpdateAccountRequestBodyAccountType",
+    "UpdateAccountRequestBodyTagsApplyMode",
     "UpdateAccountsRequestAccountType",
     "UpdateAccountsRequestTagsApplyMode",
     "activities",

@@ -5,6 +5,8 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...types.create_route_redirect_response_body import CreateRouteRedirectResponseBody
+from ...types.delete_route_redirect_response_body import DeleteRouteRedirectResponseBody
+from ...types.get_route_redirects_response_body import GetRouteRedirectsResponseBody
 from .raw_client import AsyncRawRouteRedirectsClient, RawRouteRedirectsClient
 
 # this is used as the default value for optional parameters
@@ -26,14 +28,49 @@ class RouteRedirectsClient:
         """
         return self._raw_client
 
+    def list(
+        self, knowledge_base_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetRouteRedirectsResponseBody:
+        """
+        Returns every path redirect in a knowledge base.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetRouteRedirectsResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.route_redirects.list(
+            knowledge_base_id="id",
+        )
+        """
+        _response = self._raw_client.list(knowledge_base_id, request_options=request_options)
+        return _response.data
+
     def create(
         self,
         knowledge_base_id: str,
         *,
         from_path: str,
-        object_id: str,
         object_type: str,
         language: typing.Optional[str] = OMIT,
+        object_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateRouteRedirectResponseBody:
         """
@@ -49,14 +86,14 @@ class RouteRedirectsClient:
         from_path : str
             The path to redirect from.
 
-        object_id : str
-            The ID of the object to redirect to.
-
         object_type : str
-            The type of the object to redirect to. Must be "article" or "collection".
+            The type of the object to redirect to: "article", "collection", or "knowledgebase" for the knowledge base homepage.
 
         language : typing.Optional[str]
             Language of the object to redirect to. If not specified, the default language of the knowledge base will be used.
+
+        object_id : typing.Optional[str]
+            The ID of the article or collection to redirect to. Omit when object_type is "knowledgebase".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -76,18 +113,56 @@ class RouteRedirectsClient:
         client.knowledge_bases.route_redirects.create(
             knowledge_base_id="id",
             from_path="from_path",
-            object_id="object_id",
             object_type="object_type",
         )
         """
         _response = self._raw_client.create(
             knowledge_base_id,
             from_path=from_path,
-            object_id=object_id,
             object_type=object_type,
             language=language,
+            object_id=object_id,
             request_options=request_options,
         )
+        return _response.data
+
+    def delete(
+        self, knowledge_base_id: str, redirect_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteRouteRedirectResponseBody:
+        """
+        Deletes a path redirect from a knowledge base. Requires knowledge base admin permission.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        redirect_id : str
+            The ID of the route redirect.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteRouteRedirectResponseBody
+
+
+        Examples
+        --------
+        from usepylon import Pylon
+
+        client = Pylon(
+            token="YOUR_TOKEN",
+        )
+        client.knowledge_bases.route_redirects.delete(
+            knowledge_base_id="id",
+            redirect_id="redirect_id",
+        )
+        """
+        _response = self._raw_client.delete(knowledge_base_id, redirect_id, request_options=request_options)
         return _response.data
 
 
@@ -106,14 +181,57 @@ class AsyncRouteRedirectsClient:
         """
         return self._raw_client
 
+    async def list(
+        self, knowledge_base_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetRouteRedirectsResponseBody:
+        """
+        Returns every path redirect in a knowledge base.
+
+        **Rate limit:** 300 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetRouteRedirectsResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.knowledge_bases.route_redirects.list(
+                knowledge_base_id="id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(knowledge_base_id, request_options=request_options)
+        return _response.data
+
     async def create(
         self,
         knowledge_base_id: str,
         *,
         from_path: str,
-        object_id: str,
         object_type: str,
         language: typing.Optional[str] = OMIT,
+        object_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateRouteRedirectResponseBody:
         """
@@ -129,14 +247,14 @@ class AsyncRouteRedirectsClient:
         from_path : str
             The path to redirect from.
 
-        object_id : str
-            The ID of the object to redirect to.
-
         object_type : str
-            The type of the object to redirect to. Must be "article" or "collection".
+            The type of the object to redirect to: "article", "collection", or "knowledgebase" for the knowledge base homepage.
 
         language : typing.Optional[str]
             Language of the object to redirect to. If not specified, the default language of the knowledge base will be used.
+
+        object_id : typing.Optional[str]
+            The ID of the article or collection to redirect to. Omit when object_type is "knowledgebase".
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -161,7 +279,6 @@ class AsyncRouteRedirectsClient:
             await client.knowledge_bases.route_redirects.create(
                 knowledge_base_id="id",
                 from_path="from_path",
-                object_id="object_id",
                 object_type="object_type",
             )
 
@@ -171,9 +288,56 @@ class AsyncRouteRedirectsClient:
         _response = await self._raw_client.create(
             knowledge_base_id,
             from_path=from_path,
-            object_id=object_id,
             object_type=object_type,
             language=language,
+            object_id=object_id,
             request_options=request_options,
         )
+        return _response.data
+
+    async def delete(
+        self, knowledge_base_id: str, redirect_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> DeleteRouteRedirectResponseBody:
+        """
+        Deletes a path redirect from a knowledge base. Requires knowledge base admin permission.
+
+        **Rate limit:** 30 requests per minute
+
+        Parameters
+        ----------
+        knowledge_base_id : str
+            The ID of the knowledge base.
+
+        redirect_id : str
+            The ID of the route redirect.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        DeleteRouteRedirectResponseBody
+
+
+        Examples
+        --------
+        import asyncio
+
+        from usepylon import AsyncPylon
+
+        client = AsyncPylon(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.knowledge_bases.route_redirects.delete(
+                knowledge_base_id="id",
+                redirect_id="redirect_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(knowledge_base_id, redirect_id, request_options=request_options)
         return _response.data

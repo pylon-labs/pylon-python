@@ -169,8 +169,17 @@ class RawAuditLogsClient:
          `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
          `object_id` | `equals`, `in`, `not_in` |
 
-        Timestamp values use RFC3339 format. `object_id` is the ID of the object the entry is
-        for, matching the `object_id` field of the returned entries.
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
+
+        ### Filter values
+
+        Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
+
+         Field | Values and behavior |
+         --- | --- |
+         `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
 
         **Rate limit:** 30 requests per minute
 
@@ -440,8 +449,17 @@ class AsyncRawAuditLogsClient:
          `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
          `object_id` | `equals`, `in`, `not_in` |
 
-        Timestamp values use RFC3339 format. `object_id` is the ID of the object the entry is
-        for, matching the `object_id` field of the returned entries.
+        ### Filter syntax and operators
+
+        See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventions#search-filters) for filter structure and operator definitions. The table above lists the operators supported by each field.
+
+        ### Filter values
+
+        Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
+
+         Field | Values and behavior |
+         --- | --- |
+         `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
 
         **Rate limit:** 30 requests per minute
 

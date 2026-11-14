@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .account import Account
+    from .account_file import AccountFile
     from .account_highlight import AccountHighlight
     from .account_notebook_note import AccountNotebookNote
     from .account_relationship import AccountRelationship
@@ -74,20 +75,13 @@ if typing.TYPE_CHECKING:
     from .crm_settings import CrmSettings
     from .csat_response import CsatResponse
     from .custom_activity import CustomActivity
+    from .custom_field_actor import CustomFieldActor
     from .custom_field_definition import CustomFieldDefinition
     from .custom_field_definition_select_option import CustomFieldDefinitionSelectOption
+    from .custom_field_requirement import CustomFieldRequirement
     from .custom_field_value import CustomFieldValue
     from .custom_source_info import CustomSourceInfo
-    from .customer_portal_access_settings import CustomerPortalAccessSettings
-    from .customer_portal_branding import CustomerPortalBranding
-    from .customer_portal_display_settings import CustomerPortalDisplaySettings
-    from .customer_portal_footer_category import CustomerPortalFooterCategory
     from .customer_portal_invitation_result import CustomerPortalInvitationResult
-    from .customer_portal_link import CustomerPortalLink
-    from .customer_portal_navigation import CustomerPortalNavigation
-    from .customer_portal_settings import CustomerPortalSettings
-    from .customer_portal_tabs import CustomerPortalTabs
-    from .customer_portal_user_permissions import CustomerPortalUserPermissions
     from .delete_account_highlight_response_body import DeleteAccountHighlightResponseBody
     from .delete_account_highlight_response_data import DeleteAccountHighlightResponseData
     from .delete_account_relationship_response_body import DeleteAccountRelationshipResponseBody
@@ -106,6 +100,7 @@ if typing.TYPE_CHECKING:
     from .delete_message_response_body import DeleteMessageResponseBody
     from .delete_milestone_response_body import DeleteMilestoneResponseBody
     from .delete_project_response_body import DeleteProjectResponseBody
+    from .delete_route_redirect_response_body import DeleteRouteRedirectResponseBody
     from .delete_tag_response_body import DeleteTagResponseBody
     from .delete_task_comment_response_body import DeleteTaskCommentResponseBody
     from .delete_task_response_body import DeleteTaskResponseBody
@@ -130,6 +125,7 @@ if typing.TYPE_CHECKING:
     from .filter_operator import FilterOperator
     from .filter_related_object import FilterRelatedObject
     from .follower import Follower
+    from .get_account_files_response_body import GetAccountFilesResponseBody
     from .get_account_notebook_notes_response_body import GetAccountNotebookNotesResponseBody
     from .get_account_relationships_response_body import GetAccountRelationshipsResponseBody
     from .get_account_response_body import GetAccountResponseBody
@@ -149,7 +145,6 @@ if typing.TYPE_CHECKING:
     from .get_custom_fields_response_body import GetCustomFieldsResponseBody
     from .get_custom_object_response_body import GetCustomObjectResponseBody
     from .get_custom_objects_response_body import GetCustomObjectsResponseBody
-    from .get_customer_portal_settings_response_body import GetCustomerPortalSettingsResponseBody
     from .get_email_activities_response_body import GetEmailActivitiesResponseBody
     from .get_email_suppressions_response_body import GetEmailSuppressionsResponseBody
     from .get_feature_request_response_body import GetFeatureRequestResponseBody
@@ -170,6 +165,7 @@ if typing.TYPE_CHECKING:
     from .get_me_response_body import GetMeResponseBody
     from .get_milestone_response_body import GetMilestoneResponseBody
     from .get_project_response_body import GetProjectResponseBody
+    from .get_route_redirects_response_body import GetRouteRedirectsResponseBody
     from .get_survey_response_body import GetSurveyResponseBody
     from .get_survey_responses_response_body import GetSurveyResponsesResponseBody
     from .get_surveys_response_body import GetSurveysResponseBody
@@ -312,16 +308,12 @@ if typing.TYPE_CHECKING:
     from .update_collection_response_body import UpdateCollectionResponseBody
     from .update_contact_email import UpdateContactEmail
     from .update_contact_response_body import UpdateContactResponseBody
+    from .update_custom_field_requirement import UpdateCustomFieldRequirement
+    from .update_custom_field_requirement_setting import UpdateCustomFieldRequirementSetting
     from .update_custom_field_response_body import UpdateCustomFieldResponseBody
     from .update_custom_field_select_option_response_body import UpdateCustomFieldSelectOptionResponseBody
     from .update_custom_object_response_body import UpdateCustomObjectResponseBody
     from .update_custom_objects_response_body import UpdateCustomObjectsResponseBody
-    from .update_customer_portal_access_settings import UpdateCustomerPortalAccessSettings
-    from .update_customer_portal_branding import UpdateCustomerPortalBranding
-    from .update_customer_portal_display_settings import UpdateCustomerPortalDisplaySettings
-    from .update_customer_portal_navigation import UpdateCustomerPortalNavigation
-    from .update_customer_portal_tabs import UpdateCustomerPortalTabs
-    from .update_customer_portal_user_permissions import UpdateCustomerPortalUserPermissions
     from .update_feature_request_response_body import UpdateFeatureRequestResponseBody
     from .update_issue_response_body import UpdateIssueResponseBody
     from .update_issues_response_body import UpdateIssuesResponseBody
@@ -339,6 +331,9 @@ if typing.TYPE_CHECKING:
     from .upload_account_file_response_body import UploadAccountFileResponseBody
     from .user import User
     from .user_role import UserRole
+    from .user_role_issue_access_policy import UserRoleIssueAccessPolicy
+    from .user_role_issue_access_rule import UserRoleIssueAccessRule
+    from .user_role_permission import UserRolePermission
     from .user_skill import UserSkill
     from .user_skill_value import UserSkillValue
     from .user_status import UserStatus
@@ -351,6 +346,7 @@ if typing.TYPE_CHECKING:
     from .voice_call_transcript_segment import VoiceCallTranscriptSegment
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".account",
+    "AccountFile": ".account_file",
     "AccountHighlight": ".account_highlight",
     "AccountNotebookNote": ".account_notebook_note",
     "AccountRelationship": ".account_relationship",
@@ -418,20 +414,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CrmSettings": ".crm_settings",
     "CsatResponse": ".csat_response",
     "CustomActivity": ".custom_activity",
+    "CustomFieldActor": ".custom_field_actor",
     "CustomFieldDefinition": ".custom_field_definition",
     "CustomFieldDefinitionSelectOption": ".custom_field_definition_select_option",
+    "CustomFieldRequirement": ".custom_field_requirement",
     "CustomFieldValue": ".custom_field_value",
     "CustomSourceInfo": ".custom_source_info",
-    "CustomerPortalAccessSettings": ".customer_portal_access_settings",
-    "CustomerPortalBranding": ".customer_portal_branding",
-    "CustomerPortalDisplaySettings": ".customer_portal_display_settings",
-    "CustomerPortalFooterCategory": ".customer_portal_footer_category",
     "CustomerPortalInvitationResult": ".customer_portal_invitation_result",
-    "CustomerPortalLink": ".customer_portal_link",
-    "CustomerPortalNavigation": ".customer_portal_navigation",
-    "CustomerPortalSettings": ".customer_portal_settings",
-    "CustomerPortalTabs": ".customer_portal_tabs",
-    "CustomerPortalUserPermissions": ".customer_portal_user_permissions",
     "DeleteAccountHighlightResponseBody": ".delete_account_highlight_response_body",
     "DeleteAccountHighlightResponseData": ".delete_account_highlight_response_data",
     "DeleteAccountRelationshipResponseBody": ".delete_account_relationship_response_body",
@@ -450,6 +439,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DeleteMessageResponseBody": ".delete_message_response_body",
     "DeleteMilestoneResponseBody": ".delete_milestone_response_body",
     "DeleteProjectResponseBody": ".delete_project_response_body",
+    "DeleteRouteRedirectResponseBody": ".delete_route_redirect_response_body",
     "DeleteTagResponseBody": ".delete_tag_response_body",
     "DeleteTaskCommentResponseBody": ".delete_task_comment_response_body",
     "DeleteTaskResponseBody": ".delete_task_response_body",
@@ -474,6 +464,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "FilterOperator": ".filter_operator",
     "FilterRelatedObject": ".filter_related_object",
     "Follower": ".follower",
+    "GetAccountFilesResponseBody": ".get_account_files_response_body",
     "GetAccountNotebookNotesResponseBody": ".get_account_notebook_notes_response_body",
     "GetAccountRelationshipsResponseBody": ".get_account_relationships_response_body",
     "GetAccountResponseBody": ".get_account_response_body",
@@ -493,7 +484,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetCustomFieldsResponseBody": ".get_custom_fields_response_body",
     "GetCustomObjectResponseBody": ".get_custom_object_response_body",
     "GetCustomObjectsResponseBody": ".get_custom_objects_response_body",
-    "GetCustomerPortalSettingsResponseBody": ".get_customer_portal_settings_response_body",
     "GetEmailActivitiesResponseBody": ".get_email_activities_response_body",
     "GetEmailSuppressionsResponseBody": ".get_email_suppressions_response_body",
     "GetFeatureRequestResponseBody": ".get_feature_request_response_body",
@@ -514,6 +504,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GetMeResponseBody": ".get_me_response_body",
     "GetMilestoneResponseBody": ".get_milestone_response_body",
     "GetProjectResponseBody": ".get_project_response_body",
+    "GetRouteRedirectsResponseBody": ".get_route_redirects_response_body",
     "GetSurveyResponseBody": ".get_survey_response_body",
     "GetSurveyResponsesResponseBody": ".get_survey_responses_response_body",
     "GetSurveysResponseBody": ".get_surveys_response_body",
@@ -656,16 +647,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateCollectionResponseBody": ".update_collection_response_body",
     "UpdateContactEmail": ".update_contact_email",
     "UpdateContactResponseBody": ".update_contact_response_body",
+    "UpdateCustomFieldRequirement": ".update_custom_field_requirement",
+    "UpdateCustomFieldRequirementSetting": ".update_custom_field_requirement_setting",
     "UpdateCustomFieldResponseBody": ".update_custom_field_response_body",
     "UpdateCustomFieldSelectOptionResponseBody": ".update_custom_field_select_option_response_body",
     "UpdateCustomObjectResponseBody": ".update_custom_object_response_body",
     "UpdateCustomObjectsResponseBody": ".update_custom_objects_response_body",
-    "UpdateCustomerPortalAccessSettings": ".update_customer_portal_access_settings",
-    "UpdateCustomerPortalBranding": ".update_customer_portal_branding",
-    "UpdateCustomerPortalDisplaySettings": ".update_customer_portal_display_settings",
-    "UpdateCustomerPortalNavigation": ".update_customer_portal_navigation",
-    "UpdateCustomerPortalTabs": ".update_customer_portal_tabs",
-    "UpdateCustomerPortalUserPermissions": ".update_customer_portal_user_permissions",
     "UpdateFeatureRequestResponseBody": ".update_feature_request_response_body",
     "UpdateIssueResponseBody": ".update_issue_response_body",
     "UpdateIssuesResponseBody": ".update_issues_response_body",
@@ -683,6 +670,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UploadAccountFileResponseBody": ".upload_account_file_response_body",
     "User": ".user",
     "UserRole": ".user_role",
+    "UserRoleIssueAccessPolicy": ".user_role_issue_access_policy",
+    "UserRoleIssueAccessRule": ".user_role_issue_access_rule",
+    "UserRolePermission": ".user_role_permission",
     "UserSkill": ".user_skill",
     "UserSkillValue": ".user_skill_value",
     "UserStatus": ".user_status",
@@ -719,6 +709,7 @@ def __dir__():
 
 __all__ = [
     "Account",
+    "AccountFile",
     "AccountHighlight",
     "AccountNotebookNote",
     "AccountRelationship",
@@ -786,20 +777,13 @@ __all__ = [
     "CrmSettings",
     "CsatResponse",
     "CustomActivity",
+    "CustomFieldActor",
     "CustomFieldDefinition",
     "CustomFieldDefinitionSelectOption",
+    "CustomFieldRequirement",
     "CustomFieldValue",
     "CustomSourceInfo",
-    "CustomerPortalAccessSettings",
-    "CustomerPortalBranding",
-    "CustomerPortalDisplaySettings",
-    "CustomerPortalFooterCategory",
     "CustomerPortalInvitationResult",
-    "CustomerPortalLink",
-    "CustomerPortalNavigation",
-    "CustomerPortalSettings",
-    "CustomerPortalTabs",
-    "CustomerPortalUserPermissions",
     "DeleteAccountHighlightResponseBody",
     "DeleteAccountHighlightResponseData",
     "DeleteAccountRelationshipResponseBody",
@@ -818,6 +802,7 @@ __all__ = [
     "DeleteMessageResponseBody",
     "DeleteMilestoneResponseBody",
     "DeleteProjectResponseBody",
+    "DeleteRouteRedirectResponseBody",
     "DeleteTagResponseBody",
     "DeleteTaskCommentResponseBody",
     "DeleteTaskResponseBody",
@@ -842,6 +827,7 @@ __all__ = [
     "FilterOperator",
     "FilterRelatedObject",
     "Follower",
+    "GetAccountFilesResponseBody",
     "GetAccountNotebookNotesResponseBody",
     "GetAccountRelationshipsResponseBody",
     "GetAccountResponseBody",
@@ -861,7 +847,6 @@ __all__ = [
     "GetCustomFieldsResponseBody",
     "GetCustomObjectResponseBody",
     "GetCustomObjectsResponseBody",
-    "GetCustomerPortalSettingsResponseBody",
     "GetEmailActivitiesResponseBody",
     "GetEmailSuppressionsResponseBody",
     "GetFeatureRequestResponseBody",
@@ -882,6 +867,7 @@ __all__ = [
     "GetMeResponseBody",
     "GetMilestoneResponseBody",
     "GetProjectResponseBody",
+    "GetRouteRedirectsResponseBody",
     "GetSurveyResponseBody",
     "GetSurveyResponsesResponseBody",
     "GetSurveysResponseBody",
@@ -1024,16 +1010,12 @@ __all__ = [
     "UpdateCollectionResponseBody",
     "UpdateContactEmail",
     "UpdateContactResponseBody",
+    "UpdateCustomFieldRequirement",
+    "UpdateCustomFieldRequirementSetting",
     "UpdateCustomFieldResponseBody",
     "UpdateCustomFieldSelectOptionResponseBody",
     "UpdateCustomObjectResponseBody",
     "UpdateCustomObjectsResponseBody",
-    "UpdateCustomerPortalAccessSettings",
-    "UpdateCustomerPortalBranding",
-    "UpdateCustomerPortalDisplaySettings",
-    "UpdateCustomerPortalNavigation",
-    "UpdateCustomerPortalTabs",
-    "UpdateCustomerPortalUserPermissions",
     "UpdateFeatureRequestResponseBody",
     "UpdateIssueResponseBody",
     "UpdateIssuesResponseBody",
@@ -1051,6 +1033,9 @@ __all__ = [
     "UploadAccountFileResponseBody",
     "User",
     "UserRole",
+    "UserRoleIssueAccessPolicy",
+    "UserRoleIssueAccessRule",
+    "UserRolePermission",
     "UserSkill",
     "UserSkillValue",
     "UserStatus",

@@ -8,11 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .create_issue_request_priority import CreateIssueRequestPriority
     from .link_external_incident_request_body_source import LinkExternalIncidentRequestBodySource
+    from .update_issue_request_body_tags_apply_mode import UpdateIssueRequestBodyTagsApplyMode
     from .update_issue_request_body_type import UpdateIssueRequestBodyType
     from .update_issues_request_tags_apply_mode import UpdateIssuesRequestTagsApplyMode
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateIssueRequestPriority": ".create_issue_request_priority",
     "LinkExternalIncidentRequestBodySource": ".link_external_incident_request_body_source",
+    "UpdateIssueRequestBodyTagsApplyMode": ".update_issue_request_body_tags_apply_mode",
     "UpdateIssueRequestBodyType": ".update_issue_request_body_type",
     "UpdateIssuesRequestTagsApplyMode": ".update_issues_request_tags_apply_mode",
 }
@@ -42,6 +44,7 @@ def __dir__():
 __all__ = [
     "CreateIssueRequestPriority",
     "LinkExternalIncidentRequestBodySource",
+    "UpdateIssueRequestBodyTagsApplyMode",
     "UpdateIssueRequestBodyType",
     "UpdateIssuesRequestTagsApplyMode",
 ]

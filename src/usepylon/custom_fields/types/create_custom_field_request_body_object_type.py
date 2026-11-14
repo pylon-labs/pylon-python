@@ -3,5 +3,6 @@
 import typing
 
 CreateCustomFieldRequestBodyObjectType = typing.Union[
-    typing.Literal["account", "issue", "contact", "task", "project", "meeting", "opportunity"], typing.Any
+    typing.Literal["account", "issue", "contact", "task", "project", "meeting", "opportunity", "feature_request"],
+    typing.Any,
 ]
