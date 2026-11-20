@@ -4,11 +4,13 @@ import typing
 
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .pagination import Pagination
 from .survey import Survey
 
 
 class SearchSurveysResponseBody(UniversalBaseModel):
     data: typing.List[Survey]
+    pagination: typing.Optional[Pagination] = None
     request_id: str
 
     if IS_PYDANTIC_V2:

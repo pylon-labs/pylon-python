@@ -5,10 +5,12 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .feature_request_search_result import FeatureRequestSearchResult
+from .pagination import Pagination
 
 
 class SearchFeatureRequestsResponseBody(UniversalBaseModel):
     data: typing.List[FeatureRequestSearchResult]
+    pagination: typing.Optional[Pagination] = None
     request_id: str
 
     if IS_PYDANTIC_V2:

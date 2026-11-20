@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import encode_path_param
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -22,6 +23,7 @@ from ..types.filter import Filter
 from ..types.get_survey_response_body import GetSurveyResponseBody
 from ..types.get_surveys_response_body import GetSurveysResponseBody
 from ..types.search_surveys_response_body import SearchSurveysResponseBody
+from ..types.survey import Survey
 from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
@@ -130,10 +132,11 @@ class RawSurveysClient:
     def search(
         self,
         *,
+        cursor: typing.Optional[str] = OMIT,
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SearchSurveysResponseBody]:
+    ) -> SyncPager[Survey, SearchSurveysResponseBody]:
         """
         Filterable fields and their allowed operators:
 
@@ -153,6 +156,9 @@ class RawSurveysClient:
 
         Parameters
         ----------
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same filter.
+
         filter : typing.Optional[Filter]
 
         limit : typing.Optional[int]
@@ -163,13 +169,14 @@ class RawSurveysClient:
 
         Returns
         -------
-        HttpResponse[SearchSurveysResponseBody]
+        SyncPager[Survey, SearchSurveysResponseBody]
 
         """
         _response = self._client_wrapper.httpx_client.request(
             "surveys/search",
             method="POST",
             json={
+                "cursor": cursor,
                 "filter": convert_and_respect_annotation_metadata(object_=filter, annotation=Filter, direction="write"),
                 "limit": limit,
             },
@@ -181,14 +188,26 @@ class RawSurveysClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     SearchSurveysResponseBody,
                     parse_obj_as(
                         type_=SearchSurveysResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.pagination is not None:
+                    _parsed_next = _parsed_response.pagination.cursor
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+                    _get_next = lambda: self.search(
+                        cursor=_parsed_next,
+                        filter=filter,
+                        limit=limit,
+                        request_options=request_options,
+                    )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
@@ -469,10 +488,11 @@ class AsyncRawSurveysClient:
     async def search(
         self,
         *,
+        cursor: typing.Optional[str] = OMIT,
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SearchSurveysResponseBody]:
+    ) -> AsyncPager[Survey, SearchSurveysResponseBody]:
         """
         Filterable fields and their allowed operators:
 
@@ -492,6 +512,9 @@ class AsyncRawSurveysClient:
 
         Parameters
         ----------
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same filter.
+
         filter : typing.Optional[Filter]
 
         limit : typing.Optional[int]
@@ -502,13 +525,14 @@ class AsyncRawSurveysClient:
 
         Returns
         -------
-        AsyncHttpResponse[SearchSurveysResponseBody]
+        AsyncPager[Survey, SearchSurveysResponseBody]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
             "surveys/search",
             method="POST",
             json={
+                "cursor": cursor,
                 "filter": convert_and_respect_annotation_metadata(object_=filter, annotation=Filter, direction="write"),
                 "limit": limit,
             },
@@ -520,14 +544,29 @@ class AsyncRawSurveysClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     SearchSurveysResponseBody,
                     parse_obj_as(
                         type_=SearchSurveysResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.pagination is not None:
+                    _parsed_next = _parsed_response.pagination.cursor
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.search(
+                            cursor=_parsed_next,
+                            filter=filter,
+                            limit=limit,
+                            request_options=request_options,
+                        )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
