@@ -4474,6 +4474,14 @@ client.feature_requests.search()
 <dl>
 <dd>
 
+**cursor:** `typing.Optional[str]` — The pagination cursor returned by the previous page. Reuse the same query and filters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[int]` — The maximum number of feature requests to return. Defaults to 100, max 1000.
     
 </dd>
@@ -4482,7 +4490,7 @@ client.feature_requests.search()
 <dl>
 <dd>
 
-**query:** `typing.Optional[str]` — A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+**query:** `typing.Optional[str]` — A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
     
 </dd>
 </dl>
@@ -6867,6 +6875,8 @@ Thread selection:
 * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
 * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
 Empty thread_id, message_id, and thread_name values are treated as omitted.
 
 **Rate limit:** 30 requests per minute
@@ -6928,6 +6938,14 @@ client.issues.create_note(
 <dd>
 
 **attachment_urls:** `typing.Optional[typing.List[str]]` — URLs of files to attach to this internal note.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_info:** `typing.Optional[CreateIssueNoteEmailInfo]` 
     
 </dd>
 </dl>
@@ -8043,6 +8061,17 @@ client.milestones.create(
 <dl>
 <dd>
 
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8380,6 +8409,17 @@ client.milestones.update(
 <dd>
 
 **due_date:** `typing.Optional[str]` — Due date for this milestone, in RFC 3339 format. Set to an empty string to clear it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
     
 </dd>
 </dl>
@@ -9087,6 +9127,14 @@ client.surveys.search()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — The pagination cursor returned by the previous page. Reuse the same filter.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -9968,6 +10016,17 @@ client.tasks.create(
 <dl>
 <dd>
 
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **milestone_id:** `typing.Optional[str]` — Milestone ID for this task
     
 </dd>
@@ -10400,6 +10459,17 @@ client.tasks.update(
 <dd>
 
 **due_date:** `typing.Optional[str]` — Due date for this task, in RFC 3339 format. Set to an empty string to clear it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
     
 </dd>
 </dl>

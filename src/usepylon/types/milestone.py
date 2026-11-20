@@ -13,6 +13,11 @@ class Milestone(UniversalBaseModel):
     account: typing.Optional[MiniAccount] = None
     created_at: dt.datetime
     due_date: typing.Optional[dt.datetime] = None
+    due_date_is_date_only: bool = pydantic.Field()
+    """
+    When true, due_date represents a calendar date in UTC without timezone conversion.
+    """
+
     id: str
     name: str
     project: typing.Optional[MiniProject] = None

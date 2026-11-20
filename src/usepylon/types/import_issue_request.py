@@ -27,6 +27,11 @@ class ImportIssueRequest(UniversalBaseModel):
     An array of attachment URLs to attach to this issue.
     """
 
+    body_html: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The issue description in HTML. If omitted or blank after sanitization, the description defaults to the first message's body, when present.
+    """
+
     created_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     CreatedAt is the time the issue was created (RFC3339).
@@ -35,6 +40,11 @@ class ImportIssueRequest(UniversalBaseModel):
     custom_fields: typing.Optional[typing.List[CustomFieldValue]] = pydantic.Field(default=None)
     """
     An array of custom fields to be used on this issue.
+    """
+
+    customer_portal_visible: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the issue is visible in the customer portal. Defaults to true when omitted.
     """
 
     external_issues: typing.Optional[typing.List[ImportExternalIssue]] = pydantic.Field(default=None)
@@ -48,6 +58,12 @@ class ImportIssueRequest(UniversalBaseModel):
     FirstResponseTime is the time the issue was first responded to (RFC3339).
     """
 
+    idempotency_key: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Optional key of at most 255 bytes, scoped to the organization and retained for 14 days.
+    Reuse the same key and request body to safely retry an import.
+    """
+
     issue_number: typing.Optional[int] = pydantic.Field(default=None)
     """
     An optional issue number to preserve from the platform the issue is being imported from.
@@ -56,9 +72,9 @@ class ImportIssueRequest(UniversalBaseModel):
     When set, it must be positive and lower than the organization's current ticket number counter.
     """
 
-    messages: typing.List[ImportIssueMessage] = pydantic.Field()
+    messages: typing.Optional[typing.List[ImportIssueMessage]] = pydantic.Field(default=None)
     """
-    Messages to be imported for this issue. At least one message is required.
+    Messages to import for this issue. Omit this field or pass an empty array for an issue without messages.
     """
 
     partner_account_id: typing.Optional[str] = pydantic.Field(default=None)

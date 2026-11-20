@@ -10,6 +10,7 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.create_issue_ai_response_response_body import CreateIssueAiResponseResponseBody
 from ..types.create_issue_draft_reply_response_body import CreateIssueDraftReplyResponseBody
+from ..types.create_issue_note_email_info import CreateIssueNoteEmailInfo
 from ..types.create_issue_note_response_body import CreateIssueNoteResponseBody
 from ..types.create_issue_reply_email_info import CreateIssueReplyEmailInfo
 from ..types.create_issue_reply_response_body import CreateIssueReplyResponseBody
@@ -1065,6 +1066,7 @@ class IssuesClient:
         *,
         body_html: str,
         attachment_urls: typing.Optional[typing.Sequence[str]] = OMIT,
+        email_info: typing.Optional[CreateIssueNoteEmailInfo] = OMIT,
         message_id: typing.Optional[str] = OMIT,
         thread_id: typing.Optional[str] = OMIT,
         thread_name: typing.Optional[str] = OMIT,
@@ -1081,6 +1083,8 @@ class IssuesClient:
         * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
         * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+        Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
         Empty thread_id, message_id, and thread_name values are treated as omitted.
 
         **Rate limit:** 30 requests per minute
@@ -1095,6 +1099,8 @@ class IssuesClient:
 
         attachment_urls : typing.Optional[typing.Sequence[str]]
             URLs of files to attach to this internal note.
+
+        email_info : typing.Optional[CreateIssueNoteEmailInfo]
 
         message_id : typing.Optional[str]
             The ID of an internal note whose thread should receive the new note. Use the top-level `id` from GET /issues/{id}/messages. Cannot be combined with thread_id.
@@ -1132,6 +1138,7 @@ class IssuesClient:
             issue_id,
             body_html=body_html,
             attachment_urls=attachment_urls,
+            email_info=email_info,
             message_id=message_id,
             thread_id=thread_id,
             thread_name=thread_name,
@@ -2428,6 +2435,7 @@ class AsyncIssuesClient:
         *,
         body_html: str,
         attachment_urls: typing.Optional[typing.Sequence[str]] = OMIT,
+        email_info: typing.Optional[CreateIssueNoteEmailInfo] = OMIT,
         message_id: typing.Optional[str] = OMIT,
         thread_id: typing.Optional[str] = OMIT,
         thread_name: typing.Optional[str] = OMIT,
@@ -2444,6 +2452,8 @@ class AsyncIssuesClient:
         * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
         * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+        Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
         Empty thread_id, message_id, and thread_name values are treated as omitted.
 
         **Rate limit:** 30 requests per minute
@@ -2458,6 +2468,8 @@ class AsyncIssuesClient:
 
         attachment_urls : typing.Optional[typing.Sequence[str]]
             URLs of files to attach to this internal note.
+
+        email_info : typing.Optional[CreateIssueNoteEmailInfo]
 
         message_id : typing.Optional[str]
             The ID of an internal note whose thread should receive the new note. Use the top-level `id` from GET /issues/{id}/messages. Cannot be combined with thread_id.
@@ -2503,6 +2515,7 @@ class AsyncIssuesClient:
             issue_id,
             body_html=body_html,
             attachment_urls=attachment_urls,
+            email_info=email_info,
             message_id=message_id,
             thread_id=thread_id,
             thread_name=thread_name,
