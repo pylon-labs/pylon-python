@@ -65,7 +65,7 @@ class RawHighlightsClient:
         Returns
         -------
         HttpResponse[CreateAccountHighlightResponseBody]
-
+            Contains the created account highlight.
         """
         _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
             {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
@@ -191,7 +191,7 @@ class RawHighlightsClient:
         Returns
         -------
         HttpResponse[DeleteAccountHighlightResponseBody]
-
+            Response for successful highlight deletion.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"accounts/{encode_path_param(account_id)}/highlights/{encode_path_param(highlight_id)}",
@@ -317,7 +317,7 @@ class RawHighlightsClient:
         Returns
         -------
         HttpResponse[UpdateAccountHighlightResponseBody]
-
+            Contains the updated account highlight.
         """
         _response = self._client_wrapper.httpx_client.request(
             f"accounts/{encode_path_param(account_id)}/highlights/{encode_path_param(highlight_id)}",
@@ -456,7 +456,7 @@ class AsyncRawHighlightsClient:
         Returns
         -------
         AsyncHttpResponse[CreateAccountHighlightResponseBody]
-
+            Contains the created account highlight.
         """
         _request_options_with_retries_disabled: typing.Optional[RequestOptions] = (
             {**request_options, "max_retries": 0} if request_options is not None else {"max_retries": 0}
@@ -582,7 +582,7 @@ class AsyncRawHighlightsClient:
         Returns
         -------
         AsyncHttpResponse[DeleteAccountHighlightResponseBody]
-
+            Response for successful highlight deletion.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"accounts/{encode_path_param(account_id)}/highlights/{encode_path_param(highlight_id)}",
@@ -708,7 +708,7 @@ class AsyncRawHighlightsClient:
         Returns
         -------
         AsyncHttpResponse[UpdateAccountHighlightResponseBody]
-
+            Contains the updated account highlight.
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"accounts/{encode_path_param(account_id)}/highlights/{encode_path_param(highlight_id)}",

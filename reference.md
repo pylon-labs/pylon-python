@@ -471,34 +471,34 @@ Optionally pass `search_text` for fuzzy matching. Results are intersected with a
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
- `domains` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
- `external_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
- `external_channel_type` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
- `external_ids` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
- `internal_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
- `internal_slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
- `internal_slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
- `issue_count_last_90_days` | `equals` |
- `last_broadcast_sent_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
- `last_customer_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
- `last_vendor_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
- `name` | `equals`, `in`, `not_in`, `string_contains`, `contains`, `does_not_contain` |
- `number_of_users_in_channel` | `equals` |
- `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to`, `does_not_contain` |
- `parent_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
- `partner_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
- `primary_channel_id` | `equals`, `in`, `not_in`, `does_not_contain` |
- `primary_domain` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
- `slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
- `slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
- `source` | `equals`, `in`, `not_in`, `does_not_contain` |
- `state` | `equals`, `in`, `not_in`, `does_not_contain` |
- `tags` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
- `type` | `equals`, `in`, `not_in`, `does_not_contain` |
+Field | Allowed operators |
+--- | --- |
+`account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+`domains` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+`external_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+`external_channel_type` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+`external_ids` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+`internal_channel_ids` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+`internal_slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+`internal_slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+`issue_count_last_90_days` | `equals` |
+`last_broadcast_sent_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+`last_customer_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+`last_vendor_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last` |
+`name` | `equals`, `in`, `not_in`, `string_contains`, `contains`, `does_not_contain` |
+`number_of_users_in_channel` | `equals` |
+`owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to`, `does_not_contain` |
+`parent_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+`partner_account_id` | `equals`, `in`, `not_in`, `does_not_contain`, `is_set`, `is_unset` |
+`primary_channel_id` | `equals`, `in`, `not_in`, `does_not_contain` |
+`primary_domain` | `equals`, `contains`, `does_not_contain`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
+`slack_channel_id` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+`slack_channel_name` | `equals`, `in`, `not_in`, `does_not_contain`, `string_contains`, `string_does_not_contain` |
+`source` | `equals`, `in`, `not_in`, `does_not_contain` |
+`state` | `equals`, `in`, `not_in`, `does_not_contain` |
+`tags` | `equals`, `contains`, `does_not_contain`, `in`, `not_in` |
+`type` | `equals`, `in`, `not_in`, `does_not_contain` |
 
 ### Filter syntax and operators
 
@@ -508,23 +508,23 @@ See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventi
 
 Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
- Field | Values and behavior |
- --- | --- |
- `state` | `enabled` or `disabled`. |
- `name` | `contains` is an alias for `string_contains`. |
- `account_id` | `id` is also accepted as a field name. |
- `tags` | A tag name or ID. |
+Field | Values and behavior |
+--- | --- |
+`state` | `enabled` or `disabled`. |
+`name` | `contains` is an alias for `string_contains`. |
+`account_id` | `id` is also accepted as a field name. |
+`tags` | A tag name or ID. |
 
 ### Custom fields
 
 Set `field` to the custom field's slug. If a custom field has the same slug as a built-in field, the custom field is matched instead, except for these fields:
 
-`account_id`
-`domains`
-`tags`
-`name`
-`external_ids`
-`owner_id`
+- `account_id`
+- `domains`
+- `tags`
+- `name`
+- `external_ids`
+- `owner_id`
 
 **Rate limit:** 120 requests per minute
 </dd>
@@ -1466,11 +1466,11 @@ client.audit_logs.list()
 Returns a filtered, paginated list of audit log entries for the organization.
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
- `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
- `object_id` | `equals`, `in`, `not_in` |
+Field | Allowed operators |
+--- | --- |
+`action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+`action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
+`object_id` | `equals`, `in`, `not_in` |
 
 ### Filter syntax and operators
 
@@ -1480,9 +1480,9 @@ See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventi
 
 Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
- Field | Values and behavior |
- --- | --- |
- `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
+Field | Values and behavior |
+--- | --- |
+`object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
 
 **Rate limit:** 30 requests per minute
 </dd>
@@ -1737,12 +1737,12 @@ client.call_recordings.create(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `source` | `equals`, `in`, `not_in` |
- `title` | `equals`, `string_contains` |
- `start_time` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`source` | `equals`, `in`, `not_in` |
+`title` | `equals`, `string_contains` |
+`start_time` | `time_is_after`, `time_is_before`, `time_range` |
 
 ### Filter syntax and operators
 
@@ -2407,12 +2407,12 @@ client.contacts.merge(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `id` | `equals`, `in`, `not_in` |
- `email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
- `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
- `account_id` | `equals`, `in`, `not_in` |
+Field | Allowed operators |
+--- | --- |
+`id` | `equals`, `in`, `not_in` |
+`email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+`name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+`account_id` | `equals`, `in`, `not_in` |
 
 ### Filter syntax and operators
 
@@ -2778,10 +2778,7 @@ If no email is marked as primary, the first email becomes the primary.
 <dl>
 <dd>
 
-**name:** `typing.Optional[str]` 
-
-in: body
-The name of the contact.
+**name:** `typing.Optional[str]` — The name of the contact.
     
 </dd>
 </dl>
@@ -3683,12 +3680,12 @@ client.custom_objects.bulk_update(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
- `account` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `is_set`, `is_unset` |
+`account` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
 ### Filter syntax and operators
 
@@ -3698,9 +3695,9 @@ See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventi
 
 Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
- Field | Values and behavior |
- --- | --- |
- `account` | The built-in Account relationship field on every custom object type. Use account IDs as values. |
+Field | Values and behavior |
+--- | --- |
+`account` | The built-in Account relationship field on every custom object type. Use account IDs as values. |
 
 ### Custom fields
 
@@ -3710,12 +3707,12 @@ Set `field` to the custom field's slug.
 
 A `{type}` of `opportunity` is an alias for the opportunities API and filters on a different set of fields:
 
- Field | Allowed operators |
- --- | --- |
- `name` | `equals`, `in`, `not_in`, `string_contains` |
- `account_id` | `equals`, `in`, `not_in` |
- `source` | `equals`, `in`, `not_in` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`name` | `equals`, `in`, `not_in`, `string_contains` |
+`account_id` | `equals`, `in`, `not_in` |
+`source` | `equals`, `in`, `not_in` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
 
 **Rate limit:** 120 requests per minute
 </dd>
@@ -4474,6 +4471,14 @@ client.feature_requests.search()
 <dl>
 <dd>
 
+**cursor:** `typing.Optional[str]` — The pagination cursor returned by the previous page. Reuse the same query and filters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[int]` — The maximum number of feature requests to return. Defaults to 100, max 1000.
     
 </dd>
@@ -4482,7 +4487,7 @@ client.feature_requests.search()
 <dl>
 <dd>
 
-**query:** `typing.Optional[str]` — A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+**query:** `typing.Optional[str]` — A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
     
 </dd>
 </dl>
@@ -5525,6 +5530,14 @@ client.issues.create(
 <dl>
 <dd>
 
+**type:** `typing.Optional[CreateIssueRequestType]` — Set to "ticket" to create the issue as a ticket. Issues with destination "slack" are otherwise created as conversations so that new top-level channel messages can be grouped into them; all other issues are created as tickets.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **user_id:** `typing.Optional[str]` — The internal Pylon user to attribute the first message to. This does not assign the user as the requester. Only one of user_id or contact_id can be provided. If neither is set, the API token's user is used.
     
 </dd>
@@ -5863,59 +5876,59 @@ client.issues.merge(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
- `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `customer_portal_visible` | `equals`, `in`, `not_in` |
- `ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `follower_user_id` | `equals`, `in`, `not_in` |
- `follower_contact_id` | `equals`, `in`, `not_in` |
- `state` | `equals`, `in`, `not_in` |
- `tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
- `subject` | `string_contains`, `string_does_not_contain` |
- `body_html` | `string_contains`, `string_does_not_contain` |
- `assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
- `team_id` | `equals`, `in`, `not_in` |
- `issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `issue_is_issue_group` | `equals`, `in`, `not_in` |
- `resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
- `latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
- `slack_channel_id` | `equals`, `in`, `not_in` |
- `workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `reopened` | `equals`, `in`, `not_in` |
- `number` | `equals`, `in`, `not_in` |
- `source` | `equals`, `in`, `not_in` |
- `first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
- `latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
- `latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
- `partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `is_snoozed` | `equals`, `in`, `not_in` |
- `requester_email` | the operators of the requester's `email` |
- `parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
- `email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
- `first_message_from` | `equals`, `in`, `not_in`, `is_set` |
- `last_message_from` | `equals`, `in`, `not_in`, `is_set` |
- `latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
- `number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
- `message_redaction_used` | `equals`, `in`, `not_in` |
- `time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
- `from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
- `cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
- `ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
- `asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
- `linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
- `shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `product_ticket_completion` | `equals` |
- `number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
- `created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
- `product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+Field | Allowed operators |
+--- | --- |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
+`account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`customer_portal_visible` | `equals`, `in`, `not_in` |
+`ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`follower_user_id` | `equals`, `in`, `not_in` |
+`follower_contact_id` | `equals`, `in`, `not_in` |
+`state` | `equals`, `in`, `not_in` |
+`tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
+`subject` | `string_contains`, `string_does_not_contain` |
+`body_html` | `string_contains`, `string_does_not_contain` |
+`assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
+`team_id` | `equals`, `in`, `not_in` |
+`issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`issue_is_issue_group` | `equals`, `in`, `not_in` |
+`resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
+`latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+`slack_channel_id` | `equals`, `in`, `not_in` |
+`workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`reopened` | `equals`, `in`, `not_in` |
+`number` | `equals`, `in`, `not_in` |
+`source` | `equals`, `in`, `not_in` |
+`first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+`latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+`latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+`partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`is_snoozed` | `equals`, `in`, `not_in` |
+`requester_email` | the operators of the requester's `email` |
+`parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
+`email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+`first_message_from` | `equals`, `in`, `not_in`, `is_set` |
+`last_message_from` | `equals`, `in`, `not_in`, `is_set` |
+`latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+`number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+`message_redaction_used` | `equals`, `in`, `not_in` |
+`time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
+`from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
+`cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+`ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+`asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+`linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
+`shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`product_ticket_completion` | `equals` |
+`number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+`created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+`product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
 
 ### Filter syntax and operators
 
@@ -5925,81 +5938,81 @@ See [Search filters](https://docs.usepylon.com/pylon-docs/developer/api/conventi
 
 Standard `state` values:
 
-`new`
-`waiting_on_you`
-`waiting_on_customer`
-`on_hold`
-`closed`
+- `new`
+- `waiting_on_you`
+- `waiting_on_customer`
+- `on_hold`
+- `closed`
 
 Custom status slugs are also supported.
 
- Field | Values and behavior |
- --- | --- |
- `issue_type` | `conversation` or `ticket`. |
- `is_snoozed` | `true` or `false`. |
- `customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
- `reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
- `parent_issue_group_id` | The ID of the issue group the issue belongs to. |
- `product_area` | A product area slug, such as `billing`. |
- `tags` | A tag name or ID. |
+Field | Values and behavior |
+--- | --- |
+`issue_type` | `conversation` or `ticket`. |
+`is_snoozed` | `true` or `false`. |
+`customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
+`reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
+`parent_issue_group_id` | The ID of the issue group the issue belongs to. |
+`product_area` | A product area slug, such as `billing`. |
+`tags` | A tag name or ID. |
 
 ### Messages, timestamps, and counts
 
 Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
- Field | Values and behavior |
- --- | --- |
- `subject` | The issue title. `title` is also accepted as a field name. |
- `subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
- `latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
- `latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
- `first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
- `time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
- `number_of_touches` | The issue's `number_of_touches` value. |
- `number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
- `message_redaction_used` | `true` or `false`. |
+Field | Values and behavior |
+--- | --- |
+`subject` | The issue title. `title` is also accepted as a field name. |
+`subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
+`latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
+`latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
+`first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
+`time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
+`number_of_touches` | The issue's `number_of_touches` value. |
+`number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
+`message_redaction_used` | `true` or `false`. |
 
 ### Sources, channels, and email
 
- Field | Values and behavior |
- --- | --- |
- `source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
- `slack_channel_id` | The Slack channel ID where the issue was created. |
- `workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
- `requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
- `ccs` | The CC addresses on the issue's latest email. |
- `cc_email` | The CC recipients recorded on the issue. |
+Field | Values and behavior |
+--- | --- |
+`source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
+`slack_channel_id` | The Slack channel ID where the issue was created. |
+`workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
+`requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
+`ccs` | The CC addresses on the issue's latest email. |
+`cc_email` | The CC recipients recorded on the issue. |
 
 For `from_email`, `ccs`, and `cc_email`, use an address such as `jane@acme.com`, or `string_contains` with `@acme.com` to match a domain.
 
 `created_in_channel_id` matches the channel where the issue was created. The value depends on the operator:
 
- Operators | Matches | Example |
- --- | --- | --- |
- `equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
- `string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
+Operators | Matches | Example |
+--- | --- | --- |
+`equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
+`string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
 
 ### Linked engineering tickets
 
 Use the linked ticket's `external_id` from the issue's `external_issues` entry. Each integration uses a different ID format:
 
- Field | ID format | Example |
- --- | --- | --- |
- `linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
- `jira_product_issue` | Jira issue numeric ID. | `10042` |
- `github_product_issue` | `owner/repo/number`. | `acme/api/123` |
- `shortcut_product_issue` | Story numeric ID. | `1234` |
- `asana_product_issue` | Task numeric ID. | `1204567890123456` |
+Field | ID format | Example |
+--- | --- | --- |
+`linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
+`jira_product_issue` | Jira issue numeric ID. | `10042` |
+`github_product_issue` | `owner/repo/number`. | `acme/api/123` |
+`shortcut_product_issue` | Story numeric ID. | `1234` |
+`asana_product_issue` | Task numeric ID. | `1204567890123456` |
 
 Human-readable ticket keys such as `ENG-123`, `PROJ-42`, and `sc-1234` aren't accepted for these filters.
 
 `product_issue_source` accepts:
 
-`asana`
-`github`
-`jira`
-`linear`
-`shortcut`
+- `asana`
+- `github`
+- `jira`
+- `linear`
+- `shortcut`
 
 `product_ticket_completion` accepts `any_done` or `all_done`.
 
@@ -6867,6 +6880,8 @@ Thread selection:
 * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
 * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
 Empty thread_id, message_id, and thread_name values are treated as omitted.
 
 **Rate limit:** 30 requests per minute
@@ -6928,6 +6943,14 @@ client.issues.create_note(
 <dd>
 
 **attachment_urls:** `typing.Optional[typing.List[str]]` — URLs of files to attach to this internal note.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**email_info:** `typing.Optional[CreateIssueNoteEmailInfo]` 
     
 </dd>
 </dl>
@@ -8043,6 +8066,17 @@ client.milestones.create(
 <dl>
 <dd>
 
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8069,15 +8103,15 @@ client.milestones.create(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `project_id` | `equals`, `in`, `not_in` |
- `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
- `started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
- `completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+Field | Allowed operators |
+--- | --- |
+`project_id` | `equals`, `in`, `not_in` |
+`account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+`started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+`completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
 
 ### Filter syntax and operators
 
@@ -8387,6 +8421,17 @@ client.milestones.update(
 <dl>
 <dd>
 
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **name:** `typing.Optional[str]` — Name for this milestone
     
 </dd>
@@ -8561,14 +8606,14 @@ client.projects.create(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `account_id` | `equals`, `in`, `not_in`, `is_set` |
- `status` | `equals`, `in`, `not_in` |
- `owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `is_archived` | `equals` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`account_id` | `equals`, `in`, `not_in`, `is_set` |
+`status` | `equals`, `in`, `not_in` |
+`owner_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`is_archived` | `equals` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
 ### Filter syntax and operators
 
@@ -8580,9 +8625,9 @@ Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
 `status` accepts:
 
-`not_started`
-`in_progress`
-`completed`
+- `not_started`
+- `in_progress`
+- `completed`
 
 ### Custom fields
 
@@ -9040,9 +9085,9 @@ client.surveys.list()
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
 ### Filter syntax and operators
 
@@ -9087,6 +9132,14 @@ client.surveys.search()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — The pagination cursor returned by the previous page. Reuse the same filter.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -9670,10 +9723,7 @@ client.tags.update(
 <dl>
 <dd>
 
-**value:** `typing.Optional[str]` 
-
-in: body
-The name of the tag.
+**value:** `typing.Optional[str]` — The name of the tag.
     
 </dd>
 </dl>
@@ -9968,6 +10018,17 @@ client.tasks.create(
 <dl>
 <dd>
 
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **milestone_id:** `typing.Optional[str]` — Milestone ID for this task
     
 </dd>
@@ -10026,16 +10087,16 @@ client.tasks.create(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `account_id` | `equals`, `in`, `not_in`, `is_set` |
- `project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
- `status` | `equals`, `in`, `not_in` |
- `assignee_id` | `equals`, `in`, `not_in`, `is_set` |
- `milestone_id` | `equals`, `in`, `not_in`, `is_set` |
- `created_at` | `time_is_after`, `time_is_before`, `time_range` |
- `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
- `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+Field | Allowed operators |
+--- | --- |
+`account_id` | `equals`, `in`, `not_in`, `is_set` |
+`project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+`status` | `equals`, `in`, `not_in` |
+`assignee_id` | `equals`, `in`, `not_in`, `is_set` |
+`milestone_id` | `equals`, `in`, `not_in`, `is_set` |
+`created_at` | `time_is_after`, `time_is_before`, `time_range` |
+`due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+`updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
 ### Filter syntax and operators
 
@@ -10047,9 +10108,9 @@ Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
 `status` accepts:
 
-`not_started`
-`in_progress`
-`completed`
+- `not_started`
+- `in_progress`
+- `completed`
 
 ### Custom fields
 
@@ -10400,6 +10461,17 @@ client.tasks.update(
 <dd>
 
 **due_date:** `typing.Optional[str]` — Due date for this task, in RFC 3339 format. Set to an empty string to clear it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**due_date_is_date_only:** `typing.Optional[bool]` 
+
+Interpret due_date as a calendar date in UTC, without timezone conversion.
+Must be supplied with a nonempty due_date when true.
     
 </dd>
 </dl>
@@ -12119,9 +12191,9 @@ client.users.invite(
 
 Filterable fields and their allowed operators:
 
- Field | Allowed operators |
- --- | --- |
- `email` | `equals`, `in`, `not_in` |
+Field | Allowed operators |
+--- | --- |
+`email` | `equals`, `in`, `not_in` |
 
 ### Filter syntax and operators
 
@@ -12957,8 +13029,8 @@ client.accounts.relationships.delete(
 
 Returns custom activities for the specified account, ordered from newest to oldest.
 The {id} parameter accepts either:
-Internal account ID (UUID format)
-External ID (any string format)
+- Internal account ID (UUID format)
+- External ID (any string format)
 
 **Rate limit:** 300 requests per minute
 </dd>
@@ -13074,8 +13146,8 @@ client.accounts.activities.list(
 <dd>
 
 The {id} parameter accepts either:
-Internal account ID (UUID format)
-External ID (any string format)
+- Internal account ID (UUID format)
+- External ID (any string format)
 
 **Rate limit:** 120 requests per minute
 </dd>
@@ -13210,8 +13282,8 @@ client.accounts.activities.create(
 
 Returns email threads synced to the specified account from connected Gmail and Outlook inboxes, ordered by their latest email from newest to oldest.
 The {id} parameter accepts either:
-Internal account ID (UUID format)
-External ID (any string format)
+- Internal account ID (UUID format)
+- External ID (any string format)
 
 **Rate limit:** 120 requests per minute
 </dd>

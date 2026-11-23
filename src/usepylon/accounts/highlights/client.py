@@ -63,7 +63,7 @@ class HighlightsClient:
         Returns
         -------
         CreateAccountHighlightResponseBody
-
+            Contains the created account highlight.
 
         Examples
         --------
@@ -108,7 +108,7 @@ class HighlightsClient:
         Returns
         -------
         DeleteAccountHighlightResponseBody
-
+            Response for successful highlight deletion.
 
         Examples
         --------
@@ -159,7 +159,7 @@ class HighlightsClient:
         Returns
         -------
         UpdateAccountHighlightResponseBody
-
+            Contains the updated account highlight.
 
         Examples
         --------
@@ -228,7 +228,7 @@ class AsyncHighlightsClient:
         Returns
         -------
         CreateAccountHighlightResponseBody
-
+            Contains the created account highlight.
 
         Examples
         --------
@@ -281,7 +281,7 @@ class AsyncHighlightsClient:
         Returns
         -------
         DeleteAccountHighlightResponseBody
-
+            Response for successful highlight deletion.
 
         Examples
         --------
@@ -340,7 +340,7 @@ class AsyncHighlightsClient:
         Returns
         -------
         UpdateAccountHighlightResponseBody
-
+            Contains the updated account highlight.
 
         Examples
         --------

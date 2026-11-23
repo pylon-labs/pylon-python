@@ -5,11 +5,13 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.filter import Filter
 from ..types.get_survey_response_body import GetSurveyResponseBody
 from ..types.get_surveys_response_body import GetSurveysResponseBody
 from ..types.search_surveys_response_body import SearchSurveysResponseBody
+from ..types.survey import Survey
 from .raw_client import AsyncRawSurveysClient, RawSurveysClient
 
 if typing.TYPE_CHECKING:
@@ -66,16 +68,17 @@ class SurveysClient:
     def search(
         self,
         *,
+        cursor: typing.Optional[str] = OMIT,
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SearchSurveysResponseBody:
+    ) -> SyncPager[Survey, SearchSurveysResponseBody]:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 
@@ -89,6 +92,9 @@ class SurveysClient:
 
         Parameters
         ----------
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same filter.
+
         filter : typing.Optional[Filter]
 
         limit : typing.Optional[int]
@@ -99,7 +105,7 @@ class SurveysClient:
 
         Returns
         -------
-        SearchSurveysResponseBody
+        SyncPager[Survey, SearchSurveysResponseBody]
 
 
         Examples
@@ -109,10 +115,14 @@ class SurveysClient:
         client = Pylon(
             token="YOUR_TOKEN",
         )
-        client.surveys.search()
+        response = client.surveys.search()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.search(filter=filter, limit=limit, request_options=request_options)
-        return _response.data
+        return self._raw_client.search(cursor=cursor, filter=filter, limit=limit, request_options=request_options)
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSurveyResponseBody:
         """
@@ -212,16 +222,17 @@ class AsyncSurveysClient:
     async def search(
         self,
         *,
+        cursor: typing.Optional[str] = OMIT,
         filter: typing.Optional[Filter] = OMIT,
         limit: typing.Optional[int] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SearchSurveysResponseBody:
+    ) -> AsyncPager[Survey, SearchSurveysResponseBody]:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 
@@ -235,6 +246,9 @@ class AsyncSurveysClient:
 
         Parameters
         ----------
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same filter.
+
         filter : typing.Optional[Filter]
 
         limit : typing.Optional[int]
@@ -245,7 +259,7 @@ class AsyncSurveysClient:
 
         Returns
         -------
-        SearchSurveysResponseBody
+        AsyncPager[Survey, SearchSurveysResponseBody]
 
 
         Examples
@@ -260,13 +274,18 @@ class AsyncSurveysClient:
 
 
         async def main() -> None:
-            await client.surveys.search()
+            response = await client.surveys.search()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search(filter=filter, limit=limit, request_options=request_options)
-        return _response.data
+        return await self._raw_client.search(cursor=cursor, filter=filter, limit=limit, request_options=request_options)
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> GetSurveyResponseBody:
         """

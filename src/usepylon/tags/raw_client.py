@@ -671,7 +671,6 @@ class RawTagsClient:
             The hex code of the tag's color.
 
         value : typing.Optional[str]
-            in: body
             The name of the tag.
 
         request_options : typing.Optional[RequestOptions]
@@ -1423,7 +1422,6 @@ class AsyncRawTagsClient:
             The hex code of the tag's color.
 
         value : typing.Optional[str]
-            in: body
             The name of the tag.
 
         request_options : typing.Optional[RequestOptions]

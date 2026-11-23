@@ -243,12 +243,12 @@ class RawCallRecordingsClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `source` | `equals`, `in`, `not_in` |
-         `title` | `equals`, `string_contains` |
-         `start_time` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `source` | `equals`, `in`, `not_in` |
+        `title` | `equals`, `string_contains` |
+        `start_time` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 
@@ -939,12 +939,12 @@ class AsyncRawCallRecordingsClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `source` | `equals`, `in`, `not_in` |
-         `title` | `equals`, `string_contains` |
-         `start_time` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `source` | `equals`, `in`, `not_in` |
+        `title` | `equals`, `string_contains` |
+        `start_time` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 

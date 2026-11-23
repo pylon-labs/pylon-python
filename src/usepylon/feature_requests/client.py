@@ -3,11 +3,13 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.create_feature_request_evidence_response_body import CreateFeatureRequestEvidenceResponseBody
 from ..types.create_feature_request_response_body import CreateFeatureRequestResponseBody
 from ..types.custom_field_value import CustomFieldValue
 from ..types.delete_feature_request_response_body import DeleteFeatureRequestResponseBody
+from ..types.feature_request_search_result import FeatureRequestSearchResult
 from ..types.get_feature_request_response_body import GetFeatureRequestResponseBody
 from ..types.link_feature_request_external_issue_response_body import LinkFeatureRequestExternalIssueResponseBody
 from ..types.merge_feature_requests_response_body import MergeFeatureRequestsResponseBody
@@ -137,11 +139,12 @@ class FeatureRequestsClient:
         self,
         *,
         account_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        cursor: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         query: typing.Optional[str] = OMIT,
         request_statuses: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SearchFeatureRequestsResponseBody:
+    ) -> SyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]:
         """
         Returns feature requests matching the given criteria. Supports semantic search, status filtering, and pagination.
 
@@ -152,11 +155,14 @@ class FeatureRequestsClient:
         account_ids : typing.Optional[typing.Sequence[str]]
             Filter by one or more account IDs. Returns only feature requests with evidence linked to any of the given accounts.
 
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same query and filters.
+
         limit : typing.Optional[int]
             The maximum number of feature requests to return. Defaults to 100, max 1000.
 
         query : typing.Optional[str]
-            A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+            A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
 
         request_statuses : typing.Optional[typing.Sequence[str]]
             Filter by one or more request statuses. Each value can be a built-in status (new, in_progress, closed, archived) or a custom status slug.
@@ -166,7 +172,7 @@ class FeatureRequestsClient:
 
         Returns
         -------
-        SearchFeatureRequestsResponseBody
+        SyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]
 
 
         Examples
@@ -176,16 +182,21 @@ class FeatureRequestsClient:
         client = Pylon(
             token="YOUR_TOKEN",
         )
-        client.feature_requests.search()
+        response = client.feature_requests.search()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.search(
+        return self._raw_client.search(
             account_ids=account_ids,
+            cursor=cursor,
             limit=limit,
             query=query,
             request_statuses=request_statuses,
             request_options=request_options,
         )
-        return _response.data
 
     def get(
         self,
@@ -603,11 +614,12 @@ class AsyncFeatureRequestsClient:
         self,
         *,
         account_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        cursor: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         query: typing.Optional[str] = OMIT,
         request_statuses: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SearchFeatureRequestsResponseBody:
+    ) -> AsyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]:
         """
         Returns feature requests matching the given criteria. Supports semantic search, status filtering, and pagination.
 
@@ -618,11 +630,14 @@ class AsyncFeatureRequestsClient:
         account_ids : typing.Optional[typing.Sequence[str]]
             Filter by one or more account IDs. Returns only feature requests with evidence linked to any of the given accounts.
 
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same query and filters.
+
         limit : typing.Optional[int]
             The maximum number of feature requests to return. Defaults to 100, max 1000.
 
         query : typing.Optional[str]
-            A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+            A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
 
         request_statuses : typing.Optional[typing.Sequence[str]]
             Filter by one or more request statuses. Each value can be a built-in status (new, in_progress, closed, archived) or a custom status slug.
@@ -632,7 +647,7 @@ class AsyncFeatureRequestsClient:
 
         Returns
         -------
-        SearchFeatureRequestsResponseBody
+        AsyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]
 
 
         Examples
@@ -647,19 +662,25 @@ class AsyncFeatureRequestsClient:
 
 
         async def main() -> None:
-            await client.feature_requests.search()
+            response = await client.feature_requests.search()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.search(
+        return await self._raw_client.search(
             account_ids=account_ids,
+            cursor=cursor,
             limit=limit,
             query=query,
             request_statuses=request_statuses,
             request_options=request_options,
         )
-        return _response.data
 
     async def get(
         self,
