@@ -60,7 +60,12 @@ class Task(UniversalBaseModel):
 
     due_date: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    The due date of the task in RFC3339 format.
+    Due date in RFC3339 format. Date-only deadlines use UTC midnight; interpret the UTC calendar day when due_date_is_date_only is true.
+    """
+
+    due_date_is_date_only: bool = pydantic.Field()
+    """
+    Whether due_date is a calendar date without a specific time or timezone.
     """
 
     external_issues: typing.Optional[typing.List[ExternalIssue]] = pydantic.Field(default=None)

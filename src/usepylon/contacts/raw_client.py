@@ -496,12 +496,12 @@ class RawContactsClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `id` | `equals`, `in`, `not_in` |
-         `email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `account_id` | `equals`, `in`, `not_in` |
+        Field | Allowed operators |
+        --- | --- |
+        `id` | `equals`, `in`, `not_in` |
+        `email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `account_id` | `equals`, `in`, `not_in` |
 
         ### Filter syntax and operators
 
@@ -899,7 +899,6 @@ class RawContactsClient:
             An array of external IDs to be used on this contact. If provided, the contact's external IDs will be updated to the given external IDs.
 
         name : typing.Optional[str]
-            in: body
             The name of the contact.
 
         phone_numbers : typing.Optional[typing.Sequence[str]]
@@ -1614,12 +1613,12 @@ class AsyncRawContactsClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `id` | `equals`, `in`, `not_in` |
-         `email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `account_id` | `equals`, `in`, `not_in` |
+        Field | Allowed operators |
+        --- | --- |
+        `id` | `equals`, `in`, `not_in` |
+        `email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `name` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `account_id` | `equals`, `in`, `not_in` |
 
         ### Filter syntax and operators
 
@@ -2020,7 +2019,6 @@ class AsyncRawContactsClient:
             An array of external IDs to be used on this contact. If provided, the contact's external IDs will be updated to the given external IDs.
 
         name : typing.Optional[str]
-            in: body
             The name of the contact.
 
         phone_numbers : typing.Optional[typing.Sequence[str]]

@@ -55,6 +55,7 @@ if typing.TYPE_CHECKING:
     from .create_issue_draft_reply_response_body import CreateIssueDraftReplyResponseBody
     from .create_issue_draft_reply_response_data import CreateIssueDraftReplyResponseData
     from .create_issue_group_response_body import CreateIssueGroupResponseBody
+    from .create_issue_note_email_info import CreateIssueNoteEmailInfo
     from .create_issue_note_response_body import CreateIssueNoteResponseBody
     from .create_issue_note_response_data import CreateIssueNoteResponseData
     from .create_issue_reply_email_info import CreateIssueReplyEmailInfo
@@ -394,6 +395,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateIssueDraftReplyResponseBody": ".create_issue_draft_reply_response_body",
     "CreateIssueDraftReplyResponseData": ".create_issue_draft_reply_response_data",
     "CreateIssueGroupResponseBody": ".create_issue_group_response_body",
+    "CreateIssueNoteEmailInfo": ".create_issue_note_email_info",
     "CreateIssueNoteResponseBody": ".create_issue_note_response_body",
     "CreateIssueNoteResponseData": ".create_issue_note_response_data",
     "CreateIssueReplyEmailInfo": ".create_issue_reply_email_info",
@@ -757,6 +759,7 @@ __all__ = [
     "CreateIssueDraftReplyResponseBody",
     "CreateIssueDraftReplyResponseData",
     "CreateIssueGroupResponseBody",
+    "CreateIssueNoteEmailInfo",
     "CreateIssueNoteResponseBody",
     "CreateIssueNoteResponseData",
     "CreateIssueReplyEmailInfo",

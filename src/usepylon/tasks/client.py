@@ -101,6 +101,7 @@ class TasksClient:
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         due_date: typing.Optional[dt.datetime] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         milestone_id: typing.Optional[str] = OMIT,
         parent_task_id: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
@@ -140,6 +141,10 @@ class TasksClient:
 
         due_date : typing.Optional[dt.datetime]
             Due date for this task, in RFC 3339 format
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         milestone_id : typing.Optional[str]
             Milestone ID for this task
@@ -181,6 +186,7 @@ class TasksClient:
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
             milestone_id=milestone_id,
             parent_task_id=parent_task_id,
             project_id=project_id,
@@ -200,16 +206,16 @@ class TasksClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `account_id` | `equals`, `in`, `not_in`, `is_set` |
-         `project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `status` | `equals`, `in`, `not_in` |
-         `assignee_id` | `equals`, `in`, `not_in`, `is_set` |
-         `milestone_id` | `equals`, `in`, `not_in`, `is_set` |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `account_id` | `equals`, `in`, `not_in`, `is_set` |
+        `project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `status` | `equals`, `in`, `not_in` |
+        `assignee_id` | `equals`, `in`, `not_in`, `is_set` |
+        `milestone_id` | `equals`, `in`, `not_in`, `is_set` |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 
@@ -221,9 +227,9 @@ class TasksClient:
 
         `status` accepts:
 
-        `not_started`
-        `in_progress`
-        `completed`
+        - `not_started`
+        - `in_progress`
+        - `completed`
 
         ### Custom fields
 
@@ -343,6 +349,7 @@ class TasksClient:
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         due_date: typing.Optional[str] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         milestone_id: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
         status: typing.Optional[TaskStatus] = OMIT,
@@ -382,6 +389,10 @@ class TasksClient:
 
         due_date : typing.Optional[str]
             Due date for this task, in RFC 3339 format. Set to an empty string to clear it.
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         milestone_id : typing.Optional[str]
             Milestone ID for this task
@@ -423,6 +434,7 @@ class TasksClient:
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
             milestone_id=milestone_id,
             project_id=project_id,
             status=status,
@@ -629,6 +641,7 @@ class AsyncTasksClient:
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         due_date: typing.Optional[dt.datetime] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         milestone_id: typing.Optional[str] = OMIT,
         parent_task_id: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
@@ -668,6 +681,10 @@ class AsyncTasksClient:
 
         due_date : typing.Optional[dt.datetime]
             Due date for this task, in RFC 3339 format
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         milestone_id : typing.Optional[str]
             Milestone ID for this task
@@ -717,6 +734,7 @@ class AsyncTasksClient:
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
             milestone_id=milestone_id,
             parent_task_id=parent_task_id,
             project_id=project_id,
@@ -736,16 +754,16 @@ class AsyncTasksClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `account_id` | `equals`, `in`, `not_in`, `is_set` |
-         `project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `status` | `equals`, `in`, `not_in` |
-         `assignee_id` | `equals`, `in`, `not_in`, `is_set` |
-         `milestone_id` | `equals`, `in`, `not_in`, `is_set` |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        Field | Allowed operators |
+        --- | --- |
+        `account_id` | `equals`, `in`, `not_in`, `is_set` |
+        `project_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `status` | `equals`, `in`, `not_in` |
+        `assignee_id` | `equals`, `in`, `not_in`, `is_set` |
+        `milestone_id` | `equals`, `in`, `not_in`, `is_set` |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
 
         ### Filter syntax and operators
 
@@ -757,9 +775,9 @@ class AsyncTasksClient:
 
         `status` accepts:
 
-        `not_started`
-        `in_progress`
-        `completed`
+        - `not_started`
+        - `in_progress`
+        - `completed`
 
         ### Custom fields
 
@@ -906,6 +924,7 @@ class AsyncTasksClient:
         custom_fields: typing.Optional[typing.Sequence[CustomFieldValue]] = OMIT,
         customer_portal_visible: typing.Optional[bool] = OMIT,
         due_date: typing.Optional[str] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         milestone_id: typing.Optional[str] = OMIT,
         project_id: typing.Optional[str] = OMIT,
         status: typing.Optional[TaskStatus] = OMIT,
@@ -945,6 +964,10 @@ class AsyncTasksClient:
 
         due_date : typing.Optional[str]
             Due date for this task, in RFC 3339 format. Set to an empty string to clear it.
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         milestone_id : typing.Optional[str]
             Milestone ID for this task
@@ -994,6 +1017,7 @@ class AsyncTasksClient:
             custom_fields=custom_fields,
             customer_portal_visible=customer_portal_visible,
             due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
             milestone_id=milestone_id,
             project_id=project_id,
             status=status,

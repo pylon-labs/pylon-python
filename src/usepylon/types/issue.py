@@ -64,9 +64,14 @@ class Issue(UniversalBaseModel):
     The business hours time in seconds it took for the issue to be resolved, if any.
     """
 
+    business_hours_time_in_state_seconds: typing.Optional[typing.Dict[str, int]] = pydantic.Field(default=None)
+    """
+    A map of status slug to the business hours time in seconds the issue has spent in that status. Keys match the issue's state field and GET /issue-statuses. Includes both base statuses (e.g. "new", "waiting_on_you") and custom statuses.
+    """
+
     business_hours_time_in_status_seconds: typing.Optional[typing.Dict[str, int]] = pydantic.Field(default=None)
     """
-    A map of status slug to the business hours time in seconds the issue has spent in that status. Includes both base statuses (e.g. "new", "waiting_on_you") and custom statuses.
+    Deprecated: Use business_hours_time_in_state_seconds. Keys use the same legacy names as time_in_status_seconds.
     """
 
     chat_widget_info: typing.Optional[IssueChatWidgetInfo] = None
@@ -209,7 +214,7 @@ class Issue(UniversalBaseModel):
     """
     The source of the issue.
     
-    Known values: `slack`, `microsoft_teams`, `microsoft_teams_chat`, `chat_widget`, `customer_portal`, `email`, `manual`, `form`, `discord`, `google_chat`, `whatsapp`, `sms`, `telegram`, `phone`. This list is not exhaustive.
+    Known values: `slack`, `microsoft_teams`, `microsoft_teams_chat`, `chat_widget`, `customer_portal`, `email`, `manual`, `form`, `discord`, `google_chat`, `whatsapp`, `sms`, `telegram`, `phone`, `support_api`. This list is not exhaustive.
     """
 
     state: str = pydantic.Field()
@@ -228,9 +233,14 @@ class Issue(UniversalBaseModel):
     The team-scoped SLAs on the issue, if any. One entry per team, mirroring the issue-level first response and resolution SLA fields.
     """
 
+    time_in_state_seconds: typing.Optional[typing.Dict[str, int]] = pydantic.Field(default=None)
+    """
+    A map of status slug to the time in seconds the issue has spent in that status. Keys match the issue's state field and GET /issue-statuses. Includes both base statuses (e.g. "new", "waiting_on_you") and custom statuses.
+    """
+
     time_in_status_seconds: typing.Optional[typing.Dict[str, int]] = pydantic.Field(default=None)
     """
-    A map of status slug to the time in seconds the issue has spent in that status. Includes both base statuses (e.g. "new", "waiting_on_you") and custom statuses.
+    Deprecated: Use time_in_state_seconds. Base statuses use legacy keys that differ from status slugs: "open" (New), "in_progress" (Waiting on You), "on_hold" (Waiting on Customer), "waiting_on_action" (On Hold), and "closed" (Closed). Custom statuses use their slug.
     """
 
     title: str = pydantic.Field()

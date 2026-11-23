@@ -41,6 +41,7 @@ class MilestonesClient:
         project_id: str,
         account_id: typing.Optional[str] = OMIT,
         due_date: typing.Optional[dt.datetime] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateMilestoneResponseBody:
         """
@@ -61,6 +62,10 @@ class MilestonesClient:
 
         due_date : typing.Optional[dt.datetime]
             Due date for this milestone, in RFC 3339 format
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -83,7 +88,12 @@ class MilestonesClient:
         )
         """
         _response = self._raw_client.create(
-            name=name, project_id=project_id, account_id=account_id, due_date=due_date, request_options=request_options
+            name=name,
+            project_id=project_id,
+            account_id=account_id,
+            due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
+            request_options=request_options,
         )
         return _response.data
 
@@ -98,15 +108,15 @@ class MilestonesClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `project_id` | `equals`, `in`, `not_in` |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
-         `completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        Field | Allowed operators |
+        --- | --- |
+        `project_id` | `equals`, `in`, `not_in` |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        `completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
 
         ### Filter syntax and operators
 
@@ -229,6 +239,7 @@ class MilestonesClient:
         id: str,
         *,
         due_date: typing.Optional[str] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateMilestoneResponseBody:
@@ -244,6 +255,10 @@ class MilestonesClient:
 
         due_date : typing.Optional[str]
             Due date for this milestone, in RFC 3339 format. Set to an empty string to clear it.
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         name : typing.Optional[str]
             Name for this milestone
@@ -267,7 +282,13 @@ class MilestonesClient:
             id="id",
         )
         """
-        _response = self._raw_client.update(id, due_date=due_date, name=name, request_options=request_options)
+        _response = self._raw_client.update(
+            id,
+            due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
+            name=name,
+            request_options=request_options,
+        )
         return _response.data
 
 
@@ -293,6 +314,7 @@ class AsyncMilestonesClient:
         project_id: str,
         account_id: typing.Optional[str] = OMIT,
         due_date: typing.Optional[dt.datetime] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateMilestoneResponseBody:
         """
@@ -313,6 +335,10 @@ class AsyncMilestonesClient:
 
         due_date : typing.Optional[dt.datetime]
             Due date for this milestone, in RFC 3339 format
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -343,7 +369,12 @@ class AsyncMilestonesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            name=name, project_id=project_id, account_id=account_id, due_date=due_date, request_options=request_options
+            name=name,
+            project_id=project_id,
+            account_id=account_id,
+            due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
+            request_options=request_options,
         )
         return _response.data
 
@@ -358,15 +389,15 @@ class AsyncMilestonesClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `project_id` | `equals`, `in`, `not_in` |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
-         `completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        Field | Allowed operators |
+        --- | --- |
+        `project_id` | `equals`, `in`, `not_in` |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `due_date` | `time_is_after`, `time_is_before`, `time_range`, `is_set`, `is_unset` |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `started_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
+        `completed_at` | `time_is_after`, `time_is_before`, `time_range`, `is_set` |
 
         ### Filter syntax and operators
 
@@ -516,6 +547,7 @@ class AsyncMilestonesClient:
         id: str,
         *,
         due_date: typing.Optional[str] = OMIT,
+        due_date_is_date_only: typing.Optional[bool] = OMIT,
         name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> UpdateMilestoneResponseBody:
@@ -531,6 +563,10 @@ class AsyncMilestonesClient:
 
         due_date : typing.Optional[str]
             Due date for this milestone, in RFC 3339 format. Set to an empty string to clear it.
+
+        due_date_is_date_only : typing.Optional[bool]
+            Interpret due_date as a calendar date in UTC, without timezone conversion.
+            Must be supplied with a nonempty due_date when true.
 
         name : typing.Optional[str]
             Name for this milestone
@@ -562,5 +598,11 @@ class AsyncMilestonesClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(id, due_date=due_date, name=name, request_options=request_options)
+        _response = await self._raw_client.update(
+            id,
+            due_date=due_date,
+            due_date_is_date_only=due_date_is_date_only,
+            name=name,
+            request_options=request_options,
+        )
         return _response.data

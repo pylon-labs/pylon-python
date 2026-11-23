@@ -23,6 +23,7 @@ from ..errors.too_many_requests_error import TooManyRequestsError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.create_issue_ai_response_response_body import CreateIssueAiResponseResponseBody
 from ..types.create_issue_draft_reply_response_body import CreateIssueDraftReplyResponseBody
+from ..types.create_issue_note_email_info import CreateIssueNoteEmailInfo
 from ..types.create_issue_note_response_body import CreateIssueNoteResponseBody
 from ..types.create_issue_reply_email_info import CreateIssueReplyEmailInfo
 from ..types.create_issue_reply_response_body import CreateIssueReplyResponseBody
@@ -46,6 +47,7 @@ from ..types.snooze_issue_response_body import SnoozeIssueResponseBody
 from ..types.update_issue_response_body import UpdateIssueResponseBody
 from ..types.update_issues_response_body import UpdateIssuesResponseBody
 from .types.create_issue_request_priority import CreateIssueRequestPriority
+from .types.create_issue_request_type import CreateIssueRequestType
 from .types.link_external_incident_request_body_source import LinkExternalIncidentRequestBodySource
 from .types.update_issue_request_body_tags_apply_mode import UpdateIssueRequestBodyTagsApplyMode
 from .types.update_issue_request_body_type import UpdateIssueRequestBodyType
@@ -228,6 +230,7 @@ class RawIssuesClient:
         requester_phone_number: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         team_id: typing.Optional[str] = OMIT,
+        type: typing.Optional[CreateIssueRequestType] = OMIT,
         user_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateIssueResponseBody]:
@@ -299,6 +302,9 @@ class RawIssuesClient:
         team_id : typing.Optional[str]
             The ID of the team this issue should be assigned to.
 
+        type : typing.Optional[CreateIssueRequestType]
+            Set to "ticket" to create the issue as a ticket. Issues with destination "slack" are otherwise created as conversations so that new top-level channel messages can be grouped into them; all other issues are created as tickets.
+
         user_id : typing.Optional[str]
             The internal Pylon user to attribute the first message to. This does not assign the user as the requester. Only one of user_id or contact_id can be provided. If neither is set, the API token's user is used.
 
@@ -341,6 +347,7 @@ class RawIssuesClient:
                 "tags": tags,
                 "team_id": team_id,
                 "title": title,
+                "type": type,
                 "user_id": user_id,
             },
             headers={
@@ -838,59 +845,59 @@ class RawIssuesClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `customer_portal_visible` | `equals`, `in`, `not_in` |
-         `ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `follower_user_id` | `equals`, `in`, `not_in` |
-         `follower_contact_id` | `equals`, `in`, `not_in` |
-         `state` | `equals`, `in`, `not_in` |
-         `tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
-         `subject` | `string_contains`, `string_does_not_contain` |
-         `body_html` | `string_contains`, `string_does_not_contain` |
-         `assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
-         `team_id` | `equals`, `in`, `not_in` |
-         `issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `issue_is_issue_group` | `equals`, `in`, `not_in` |
-         `resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `slack_channel_id` | `equals`, `in`, `not_in` |
-         `workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `reopened` | `equals`, `in`, `not_in` |
-         `number` | `equals`, `in`, `not_in` |
-         `source` | `equals`, `in`, `not_in` |
-         `first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `is_snoozed` | `equals`, `in`, `not_in` |
-         `requester_email` | the operators of the requester's `email` |
-         `parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
-         `email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `first_message_from` | `equals`, `in`, `not_in`, `is_set` |
-         `last_message_from` | `equals`, `in`, `not_in`, `is_set` |
-         `latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
-         `message_redaction_used` | `equals`, `in`, `not_in` |
-         `time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
-         `from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
-         `cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
-         `shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `product_ticket_completion` | `equals` |
-         `number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
-         `created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        Field | Allowed operators |
+        --- | --- |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `customer_portal_visible` | `equals`, `in`, `not_in` |
+        `ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `follower_user_id` | `equals`, `in`, `not_in` |
+        `follower_contact_id` | `equals`, `in`, `not_in` |
+        `state` | `equals`, `in`, `not_in` |
+        `tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
+        `subject` | `string_contains`, `string_does_not_contain` |
+        `body_html` | `string_contains`, `string_does_not_contain` |
+        `assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
+        `team_id` | `equals`, `in`, `not_in` |
+        `issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `issue_is_issue_group` | `equals`, `in`, `not_in` |
+        `resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `slack_channel_id` | `equals`, `in`, `not_in` |
+        `workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `reopened` | `equals`, `in`, `not_in` |
+        `number` | `equals`, `in`, `not_in` |
+        `source` | `equals`, `in`, `not_in` |
+        `first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `is_snoozed` | `equals`, `in`, `not_in` |
+        `requester_email` | the operators of the requester's `email` |
+        `parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
+        `email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `first_message_from` | `equals`, `in`, `not_in`, `is_set` |
+        `last_message_from` | `equals`, `in`, `not_in`, `is_set` |
+        `latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+        `message_redaction_used` | `equals`, `in`, `not_in` |
+        `time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
+        `from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
+        `cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
+        `shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `product_ticket_completion` | `equals` |
+        `number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+        `created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
 
         ### Filter syntax and operators
 
@@ -900,81 +907,81 @@ class RawIssuesClient:
 
         Standard `state` values:
 
-        `new`
-        `waiting_on_you`
-        `waiting_on_customer`
-        `on_hold`
-        `closed`
+        - `new`
+        - `waiting_on_you`
+        - `waiting_on_customer`
+        - `on_hold`
+        - `closed`
 
         Custom status slugs are also supported.
 
-         Field | Values and behavior |
-         --- | --- |
-         `issue_type` | `conversation` or `ticket`. |
-         `is_snoozed` | `true` or `false`. |
-         `customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
-         `reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
-         `parent_issue_group_id` | The ID of the issue group the issue belongs to. |
-         `product_area` | A product area slug, such as `billing`. |
-         `tags` | A tag name or ID. |
+        Field | Values and behavior |
+        --- | --- |
+        `issue_type` | `conversation` or `ticket`. |
+        `is_snoozed` | `true` or `false`. |
+        `customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
+        `reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
+        `parent_issue_group_id` | The ID of the issue group the issue belongs to. |
+        `product_area` | A product area slug, such as `billing`. |
+        `tags` | A tag name or ID. |
 
         ### Messages, timestamps, and counts
 
         Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
-         Field | Values and behavior |
-         --- | --- |
-         `subject` | The issue title. `title` is also accepted as a field name. |
-         `subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
-         `latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
-         `latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
-         `first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
-         `time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
-         `number_of_touches` | The issue's `number_of_touches` value. |
-         `number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
-         `message_redaction_used` | `true` or `false`. |
+        Field | Values and behavior |
+        --- | --- |
+        `subject` | The issue title. `title` is also accepted as a field name. |
+        `subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
+        `latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
+        `latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
+        `first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
+        `time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
+        `number_of_touches` | The issue's `number_of_touches` value. |
+        `number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
+        `message_redaction_used` | `true` or `false`. |
 
         ### Sources, channels, and email
 
-         Field | Values and behavior |
-         --- | --- |
-         `source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
-         `slack_channel_id` | The Slack channel ID where the issue was created. |
-         `workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
-         `requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
-         `ccs` | The CC addresses on the issue's latest email. |
-         `cc_email` | The CC recipients recorded on the issue. |
+        Field | Values and behavior |
+        --- | --- |
+        `source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
+        `slack_channel_id` | The Slack channel ID where the issue was created. |
+        `workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
+        `requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
+        `ccs` | The CC addresses on the issue's latest email. |
+        `cc_email` | The CC recipients recorded on the issue. |
 
         For `from_email`, `ccs`, and `cc_email`, use an address such as `jane@acme.com`, or `string_contains` with `@acme.com` to match a domain.
 
         `created_in_channel_id` matches the channel where the issue was created. The value depends on the operator:
 
-         Operators | Matches | Example |
-         --- | --- | --- |
-         `equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
-         `string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
+        Operators | Matches | Example |
+        --- | --- | --- |
+        `equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
+        `string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
 
         ### Linked engineering tickets
 
         Use the linked ticket's `external_id` from the issue's `external_issues` entry. Each integration uses a different ID format:
 
-         Field | ID format | Example |
-         --- | --- | --- |
-         `linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
-         `jira_product_issue` | Jira issue numeric ID. | `10042` |
-         `github_product_issue` | `owner/repo/number`. | `acme/api/123` |
-         `shortcut_product_issue` | Story numeric ID. | `1234` |
-         `asana_product_issue` | Task numeric ID. | `1204567890123456` |
+        Field | ID format | Example |
+        --- | --- | --- |
+        `linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
+        `jira_product_issue` | Jira issue numeric ID. | `10042` |
+        `github_product_issue` | `owner/repo/number`. | `acme/api/123` |
+        `shortcut_product_issue` | Story numeric ID. | `1234` |
+        `asana_product_issue` | Task numeric ID. | `1204567890123456` |
 
         Human-readable ticket keys such as `ENG-123`, `PROJ-42`, and `sc-1234` aren't accepted for these filters.
 
         `product_issue_source` accepts:
 
-        `asana`
-        `github`
-        `jira`
-        `linear`
-        `shortcut`
+        - `asana`
+        - `github`
+        - `jira`
+        - `linear`
+        - `shortcut`
 
         `product_ticket_completion` accepts `any_done` or `all_done`.
 
@@ -2087,6 +2094,7 @@ class RawIssuesClient:
         *,
         body_html: str,
         attachment_urls: typing.Optional[typing.Sequence[str]] = OMIT,
+        email_info: typing.Optional[CreateIssueNoteEmailInfo] = OMIT,
         message_id: typing.Optional[str] = OMIT,
         thread_id: typing.Optional[str] = OMIT,
         thread_name: typing.Optional[str] = OMIT,
@@ -2103,6 +2111,8 @@ class RawIssuesClient:
         * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
         * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+        Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
         Empty thread_id, message_id, and thread_name values are treated as omitted.
 
         **Rate limit:** 30 requests per minute
@@ -2117,6 +2127,8 @@ class RawIssuesClient:
 
         attachment_urls : typing.Optional[typing.Sequence[str]]
             URLs of files to attach to this internal note.
+
+        email_info : typing.Optional[CreateIssueNoteEmailInfo]
 
         message_id : typing.Optional[str]
             The ID of an internal note whose thread should receive the new note. Use the top-level `id` from GET /issues/{id}/messages. Cannot be combined with thread_id.
@@ -2147,6 +2159,9 @@ class RawIssuesClient:
             json={
                 "attachment_urls": attachment_urls,
                 "body_html": body_html,
+                "email_info": convert_and_respect_annotation_metadata(
+                    object_=email_info, annotation=CreateIssueNoteEmailInfo, direction="write"
+                ),
                 "message_id": message_id,
                 "thread_id": thread_id,
                 "thread_name": thread_name,
@@ -2707,6 +2722,7 @@ class AsyncRawIssuesClient:
         requester_phone_number: typing.Optional[str] = OMIT,
         tags: typing.Optional[typing.Sequence[str]] = OMIT,
         team_id: typing.Optional[str] = OMIT,
+        type: typing.Optional[CreateIssueRequestType] = OMIT,
         user_id: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateIssueResponseBody]:
@@ -2778,6 +2794,9 @@ class AsyncRawIssuesClient:
         team_id : typing.Optional[str]
             The ID of the team this issue should be assigned to.
 
+        type : typing.Optional[CreateIssueRequestType]
+            Set to "ticket" to create the issue as a ticket. Issues with destination "slack" are otherwise created as conversations so that new top-level channel messages can be grouped into them; all other issues are created as tickets.
+
         user_id : typing.Optional[str]
             The internal Pylon user to attribute the first message to. This does not assign the user as the requester. Only one of user_id or contact_id can be provided. If neither is set, the API token's user is used.
 
@@ -2820,6 +2839,7 @@ class AsyncRawIssuesClient:
                 "tags": tags,
                 "team_id": team_id,
                 "title": title,
+                "type": type,
                 "user_id": user_id,
             },
             headers={
@@ -3317,59 +3337,59 @@ class AsyncRawIssuesClient:
         """
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `created_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `customer_portal_visible` | `equals`, `in`, `not_in` |
-         `ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `follower_user_id` | `equals`, `in`, `not_in` |
-         `follower_contact_id` | `equals`, `in`, `not_in` |
-         `state` | `equals`, `in`, `not_in` |
-         `tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
-         `subject` | `string_contains`, `string_does_not_contain` |
-         `body_html` | `string_contains`, `string_does_not_contain` |
-         `assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
-         `team_id` | `equals`, `in`, `not_in` |
-         `issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `issue_is_issue_group` | `equals`, `in`, `not_in` |
-         `resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `slack_channel_id` | `equals`, `in`, `not_in` |
-         `workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `reopened` | `equals`, `in`, `not_in` |
-         `number` | `equals`, `in`, `not_in` |
-         `source` | `equals`, `in`, `not_in` |
-         `first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `is_snoozed` | `equals`, `in`, `not_in` |
-         `requester_email` | the operators of the requester's `email` |
-         `parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
-         `email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `first_message_from` | `equals`, `in`, `not_in`, `is_set` |
-         `last_message_from` | `equals`, `in`, `not_in`, `is_set` |
-         `latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
-         `number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
-         `message_redaction_used` | `equals`, `in`, `not_in` |
-         `time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
-         `from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
-         `cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
-         `shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
-         `product_ticket_completion` | `equals` |
-         `number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
-         `created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
-         `product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        Field | Allowed operators |
+        --- | --- |
+        `created_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `customer_portal_visible` | `equals`, `in`, `not_in` |
+        `ticket_form_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `requester_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `follower_user_id` | `equals`, `in`, `not_in` |
+        `follower_contact_id` | `equals`, `in`, `not_in` |
+        `state` | `equals`, `in`, `not_in` |
+        `tags` | `contains`, `does_not_contain`, `in`, `not_in`, `includes_exactly` |
+        `subject` | `string_contains`, `string_does_not_contain` |
+        `body_html` | `string_contains`, `string_does_not_contain` |
+        `assignee_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset`, `belongs_to`, `not_belongs_to` |
+        `team_id` | `equals`, `in`, `not_in` |
+        `issue_type` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `issue_is_issue_group` | `equals`, `in`, `not_in` |
+        `resolved_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `latest_message_activity_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `updated_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `slack_channel_id` | `equals`, `in`, `not_in` |
+        `workspace_email` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `reopened` | `equals`, `in`, `not_in` |
+        `number` | `equals`, `in`, `not_in` |
+        `source` | `equals`, `in`, `not_in` |
+        `first_response_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `latest_customer_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `latest_vendor_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `partner_account_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `is_snoozed` | `equals`, `in`, `not_in` |
+        `requester_email` | the operators of the requester's `email` |
+        `parent_issue_group_id` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `number_of_touches` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals` |
+        `email_subject` | `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `first_message_from` | `equals`, `in`, `not_in`, `is_set` |
+        `last_message_from` | `equals`, `in`, `not_in`, `is_set` |
+        `latest_public_message_activity_at` | `time_is_after`, `time_is_before`, `time_range`, `time_is_in_last`, `time_is_not_in_last`, `is_set`, `is_unset` |
+        `number_of_customer_messages` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+        `message_redaction_used` | `equals`, `in`, `not_in` |
+        `time_to_first_response` | `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set` |
+        `from_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set` |
+        `cc_email` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `ccs` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `asana_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `github_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `jira_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `linear_product_issue` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `is_set`, `is_unset` |
+        `shortcut_product_issue` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `product_issue_source` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
+        `product_ticket_completion` | `equals` |
+        `number_of_child_issues` | `equals`, `greater_than`, `greater_than_or_equals`, `less_than`, `less_than_or_equals`, `is_set`, `is_unset` |
+        `created_in_channel_id` | `equals`, `in`, `not_in`, `string_contains`, `starts_with`, `ends_with`, `is_set`, `is_unset` |
+        `product_area` | `equals`, `in`, `not_in`, `is_set`, `is_unset` |
 
         ### Filter syntax and operators
 
@@ -3379,81 +3399,81 @@ class AsyncRawIssuesClient:
 
         Standard `state` values:
 
-        `new`
-        `waiting_on_you`
-        `waiting_on_customer`
-        `on_hold`
-        `closed`
+        - `new`
+        - `waiting_on_you`
+        - `waiting_on_customer`
+        - `on_hold`
+        - `closed`
 
         Custom status slugs are also supported.
 
-         Field | Values and behavior |
-         --- | --- |
-         `issue_type` | `conversation` or `ticket`. |
-         `is_snoozed` | `true` or `false`. |
-         `customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
-         `reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
-         `parent_issue_group_id` | The ID of the issue group the issue belongs to. |
-         `product_area` | A product area slug, such as `billing`. |
-         `tags` | A tag name or ID. |
+        Field | Values and behavior |
+        --- | --- |
+        `issue_type` | `conversation` or `ticket`. |
+        `is_snoozed` | `true` or `false`. |
+        `customer_portal_visible` | `true` or `false`. Issue groups always match `false`. |
+        `reopened` | `true` or `false`. Set the first time an issue is reopened after being resolved; stays set and records no timestamp. |
+        `parent_issue_group_id` | The ID of the issue group the issue belongs to. |
+        `product_area` | A product area slug, such as `billing`. |
+        `tags` | A tag name or ID. |
 
         ### Messages, timestamps, and counts
 
         Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
-         Field | Values and behavior |
-         --- | --- |
-         `subject` | The issue title. `title` is also accepted as a field name. |
-         `subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
-         `latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
-         `latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
-         `first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
-         `time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
-         `number_of_touches` | The issue's `number_of_touches` value. |
-         `number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
-         `message_redaction_used` | `true` or `false`. |
+        Field | Values and behavior |
+        --- | --- |
+        `subject` | The issue title. `title` is also accepted as a field name. |
+        `subject`, `body_html` | `contains` and `does_not_contain` are aliases for `string_contains` and `string_does_not_contain`. |
+        `latest_vendor_message_activity_at` | The timestamp of the latest message from your team. |
+        `latest_customer_message_activity_at` | The timestamp of the latest message from the customer. |
+        `first_message_from`, `last_message_from` | `customer`, `vendor`, or a team ID to match messages from that team's members. For example, `"value": "customer"`. |
+        `time_to_first_response` | Seconds by default. Use `"value": "3600"` with `greater_than` for over an hour. `"<N>,seconds"` and `"<N>,milliseconds"` are also accepted. |
+        `number_of_touches` | The issue's `number_of_touches` value. |
+        `number_of_customer_messages`, `number_of_child_issues` | Whole numbers. |
+        `message_redaction_used` | `true` or `false`. |
 
         ### Sources, channels, and email
 
-         Field | Values and behavior |
-         --- | --- |
-         `source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
-         `slack_channel_id` | The Slack channel ID where the issue was created. |
-         `workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
-         `requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
-         `ccs` | The CC addresses on the issue's latest email. |
-         `cc_email` | The CC recipients recorded on the issue. |
+        Field | Values and behavior |
+        --- | --- |
+        `source` | The issue's source, such as `slack`, `email`, `chat_widget`, or `manual`. Issues created with a `custom_issue_source_id` match that custom source's slug. |
+        `slack_channel_id` | The Slack channel ID where the issue was created. |
+        `workspace_email` | The email address connected to the Pylon workspace through which the issue's email conversation is routed. |
+        `requester_email` | Shorthand for a `related_object` filter on the requester's `email`. |
+        `ccs` | The CC addresses on the issue's latest email. |
+        `cc_email` | The CC recipients recorded on the issue. |
 
         For `from_email`, `ccs`, and `cc_email`, use an address such as `jane@acme.com`, or `string_contains` with `@acme.com` to match a domain.
 
         `created_in_channel_id` matches the channel where the issue was created. The value depends on the operator:
 
-         Operators | Matches | Example |
-         --- | --- | --- |
-         `equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
-         `string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
+        Operators | Matches | Example |
+        --- | --- | --- |
+        `equals`, `in`, `not_in` | Channel ID; for email issues, an email address. | `C0123ABCDEF` or `support@acme.com` |
+        `string_contains`, `starts_with`, `ends_with` | Channel name. | `support` |
 
         ### Linked engineering tickets
 
         Use the linked ticket's `external_id` from the issue's `external_issues` entry. Each integration uses a different ID format:
 
-         Field | ID format | Example |
-         --- | --- | --- |
-         `linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
-         `jira_product_issue` | Jira issue numeric ID. | `10042` |
-         `github_product_issue` | `owner/repo/number`. | `acme/api/123` |
-         `shortcut_product_issue` | Story numeric ID. | `1234` |
-         `asana_product_issue` | Task numeric ID. | `1204567890123456` |
+        Field | ID format | Example |
+        --- | --- | --- |
+        `linear_product_issue` | Linear issue UUID. | `2f8c1d3e-6b1a-4c55-9e0f-7a2b3c4d5e6f` |
+        `jira_product_issue` | Jira issue numeric ID. | `10042` |
+        `github_product_issue` | `owner/repo/number`. | `acme/api/123` |
+        `shortcut_product_issue` | Story numeric ID. | `1234` |
+        `asana_product_issue` | Task numeric ID. | `1204567890123456` |
 
         Human-readable ticket keys such as `ENG-123`, `PROJ-42`, and `sc-1234` aren't accepted for these filters.
 
         `product_issue_source` accepts:
 
-        `asana`
-        `github`
-        `jira`
-        `linear`
-        `shortcut`
+        - `asana`
+        - `github`
+        - `jira`
+        - `linear`
+        - `shortcut`
 
         `product_ticket_completion` accepts `any_done` or `all_done`.
 
@@ -4569,6 +4589,7 @@ class AsyncRawIssuesClient:
         *,
         body_html: str,
         attachment_urls: typing.Optional[typing.Sequence[str]] = OMIT,
+        email_info: typing.Optional[CreateIssueNoteEmailInfo] = OMIT,
         message_id: typing.Optional[str] = OMIT,
         thread_id: typing.Optional[str] = OMIT,
         thread_name: typing.Optional[str] = OMIT,
@@ -4585,6 +4606,8 @@ class AsyncRawIssuesClient:
         * If neither is provided, posts to the most recently created Slack-backed internal thread. If none exists, creates a Pylon-only internal thread.
         * thread_name names that newly created Pylon-only thread and is otherwise ignored.
 
+        Notes posted to an internal email thread are sent as email, so email_info must contain at least one recipient across to_emails, cc_emails, and bcc_emails.
+
         Empty thread_id, message_id, and thread_name values are treated as omitted.
 
         **Rate limit:** 30 requests per minute
@@ -4599,6 +4622,8 @@ class AsyncRawIssuesClient:
 
         attachment_urls : typing.Optional[typing.Sequence[str]]
             URLs of files to attach to this internal note.
+
+        email_info : typing.Optional[CreateIssueNoteEmailInfo]
 
         message_id : typing.Optional[str]
             The ID of an internal note whose thread should receive the new note. Use the top-level `id` from GET /issues/{id}/messages. Cannot be combined with thread_id.
@@ -4629,6 +4654,9 @@ class AsyncRawIssuesClient:
             json={
                 "attachment_urls": attachment_urls,
                 "body_html": body_html,
+                "email_info": convert_and_respect_annotation_metadata(
+                    object_=email_info, annotation=CreateIssueNoteEmailInfo, direction="write"
+                ),
                 "message_id": message_id,
                 "thread_id": thread_id,
                 "thread_name": thread_name,

@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import encode_path_param
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -22,6 +23,7 @@ from ..types.create_feature_request_response_body import CreateFeatureRequestRes
 from ..types.custom_field_value import CustomFieldValue
 from ..types.delete_feature_request_response_body import DeleteFeatureRequestResponseBody
 from ..types.error_api_response_body import ErrorApiResponseBody
+from ..types.feature_request_search_result import FeatureRequestSearchResult
 from ..types.get_feature_request_response_body import GetFeatureRequestResponseBody
 from ..types.link_feature_request_external_issue_response_body import LinkFeatureRequestExternalIssueResponseBody
 from ..types.merge_feature_requests_response_body import MergeFeatureRequestsResponseBody
@@ -294,11 +296,12 @@ class RawFeatureRequestsClient:
         self,
         *,
         account_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        cursor: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         query: typing.Optional[str] = OMIT,
         request_statuses: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[SearchFeatureRequestsResponseBody]:
+    ) -> SyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]:
         """
         Returns feature requests matching the given criteria. Supports semantic search, status filtering, and pagination.
 
@@ -309,11 +312,14 @@ class RawFeatureRequestsClient:
         account_ids : typing.Optional[typing.Sequence[str]]
             Filter by one or more account IDs. Returns only feature requests with evidence linked to any of the given accounts.
 
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same query and filters.
+
         limit : typing.Optional[int]
             The maximum number of feature requests to return. Defaults to 100, max 1000.
 
         query : typing.Optional[str]
-            A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+            A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
 
         request_statuses : typing.Optional[typing.Sequence[str]]
             Filter by one or more request statuses. Each value can be a built-in status (new, in_progress, closed, archived) or a custom status slug.
@@ -323,7 +329,7 @@ class RawFeatureRequestsClient:
 
         Returns
         -------
-        HttpResponse[SearchFeatureRequestsResponseBody]
+        SyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]
 
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -331,6 +337,7 @@ class RawFeatureRequestsClient:
             method="POST",
             json={
                 "account_ids": account_ids,
+                "cursor": cursor,
                 "limit": limit,
                 "query": query,
                 "request_statuses": request_statuses,
@@ -343,14 +350,28 @@ class RawFeatureRequestsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     SearchFeatureRequestsResponseBody,
                     parse_obj_as(
                         type_=SearchFeatureRequestsResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.pagination is not None:
+                    _parsed_next = _parsed_response.pagination.cursor
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+                    _get_next = lambda: self.search(
+                        account_ids=account_ids,
+                        cursor=_parsed_next,
+                        limit=limit,
+                        query=query,
+                        request_statuses=request_statuses,
+                        request_options=request_options,
+                    )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),
@@ -1455,11 +1476,12 @@ class AsyncRawFeatureRequestsClient:
         self,
         *,
         account_ids: typing.Optional[typing.Sequence[str]] = OMIT,
+        cursor: typing.Optional[str] = OMIT,
         limit: typing.Optional[int] = OMIT,
         query: typing.Optional[str] = OMIT,
         request_statuses: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[SearchFeatureRequestsResponseBody]:
+    ) -> AsyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]:
         """
         Returns feature requests matching the given criteria. Supports semantic search, status filtering, and pagination.
 
@@ -1470,11 +1492,14 @@ class AsyncRawFeatureRequestsClient:
         account_ids : typing.Optional[typing.Sequence[str]]
             Filter by one or more account IDs. Returns only feature requests with evidence linked to any of the given accounts.
 
+        cursor : typing.Optional[str]
+            The pagination cursor returned by the previous page. Reuse the same query and filters.
+
         limit : typing.Optional[int]
             The maximum number of feature requests to return. Defaults to 100, max 1000.
 
         query : typing.Optional[str]
-            A search query string for semantic and keyword matching. If omitted, all feature requests are returned (subject to other filters and limit).
+            A search query string for semantic and keyword matching. Pagination covers the ranked search results when a query is provided. Omit the query to list all feature requests matching the filters.
 
         request_statuses : typing.Optional[typing.Sequence[str]]
             Filter by one or more request statuses. Each value can be a built-in status (new, in_progress, closed, archived) or a custom status slug.
@@ -1484,7 +1509,7 @@ class AsyncRawFeatureRequestsClient:
 
         Returns
         -------
-        AsyncHttpResponse[SearchFeatureRequestsResponseBody]
+        AsyncPager[FeatureRequestSearchResult, SearchFeatureRequestsResponseBody]
 
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1492,6 +1517,7 @@ class AsyncRawFeatureRequestsClient:
             method="POST",
             json={
                 "account_ids": account_ids,
+                "cursor": cursor,
                 "limit": limit,
                 "query": query,
                 "request_statuses": request_statuses,
@@ -1504,14 +1530,31 @@ class AsyncRawFeatureRequestsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     SearchFeatureRequestsResponseBody,
                     parse_obj_as(
                         type_=SearchFeatureRequestsResponseBody,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _items = _parsed_response.data
+                _has_next = False
+                _get_next = None
+                if _parsed_response.pagination is not None:
+                    _parsed_next = _parsed_response.pagination.cursor
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.search(
+                            account_ids=account_ids,
+                            cursor=_parsed_next,
+                            limit=limit,
+                            query=query,
+                            request_statuses=request_statuses,
+                            request_options=request_options,
+                        )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
             if _response.status_code == 400:
                 raise BadRequestError(
                     headers=dict(_response.headers),

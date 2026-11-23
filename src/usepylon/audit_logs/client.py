@@ -85,11 +85,11 @@ class AuditLogsClient:
         Returns a filtered, paginated list of audit log entries for the organization.
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `object_id` | `equals`, `in`, `not_in` |
+        Field | Allowed operators |
+        --- | --- |
+        `action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `object_id` | `equals`, `in`, `not_in` |
 
         ### Filter syntax and operators
 
@@ -99,9 +99,9 @@ class AuditLogsClient:
 
         Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
-         Field | Values and behavior |
-         --- | --- |
-         `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
+        Field | Values and behavior |
+        --- | --- |
+        `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
 
         **Rate limit:** 30 requests per minute
 
@@ -220,11 +220,11 @@ class AsyncAuditLogsClient:
         Returns a filtered, paginated list of audit log entries for the organization.
         Filterable fields and their allowed operators:
 
-         Field | Allowed operators |
-         --- | --- |
-         `action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
-         `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
-         `object_id` | `equals`, `in`, `not_in` |
+        Field | Allowed operators |
+        --- | --- |
+        `action` | `equals`, `in`, `not_in`, `string_contains`, `string_does_not_contain` |
+        `action_happened_at` | `time_is_after`, `time_is_before`, `time_range` |
+        `object_id` | `equals`, `in`, `not_in` |
 
         ### Filter syntax and operators
 
@@ -234,9 +234,9 @@ class AsyncAuditLogsClient:
 
         Timestamp values use RFC 3339 format, such as `2026-10-01T00:00:00Z`.
 
-         Field | Values and behavior |
-         --- | --- |
-         `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
+        Field | Values and behavior |
+        --- | --- |
+        `object_id` | The ID of the object the entry is for, matching `object_id` in the returned entries. |
 
         **Rate limit:** 30 requests per minute
 
